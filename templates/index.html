@@ -1,8 +1,29 @@
 {% extends "base.html" %}
+
 {% block content %}
+    <link rel="stylesheet" type="text/css" href="../static/css/index.css">
 
-    <p>グーグルマップのページ・寺基準</p>
+    <p>トップページ</p>
 
-    <a href="/sikoku_map">地図で探す</a>
+    <div class = "container">
+
+        <!--cssや、文字になっているところ（”地図から探すなど”）を変えると飾れる -->
+        <div class = "menus" id = "map_search">
+            <a href="/sikoku_map" id = "map_search_contents">地図から探す</a>
+        </div>
+
+        <div class = "menus" id = "temple_search">
+            <a href="/temple_search" id = "temple_search_contents">お寺から探す</a>
+        </div>
+
+        <div class = "menus" id = "address_search">
+            <a href="" id = "address_search_contents">住所、現在地から探す</a>
+        </div>
+
+        <div class = "menus" id = "information">
+            <a href="" id = "information_contents">お遍路基本情報</a>
+        </div>
+
+    </div>
 
 {% endblock %}

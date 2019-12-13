@@ -1,11 +1,20 @@
 {% extends "base.html" %}
 {% block content %}
+    <link rel="stylesheet" type="text/css" href="../static/css/googleMap_temple.css">
+    <p>グーグルマップのページ・寺基準</p>
+    <!-- <input type="text" value="{{temple_place[0]}}" name="task"> -->
 
-    <p>トップページ</p>
+    <!-- 緯度 -->
+    <input id="lat" type="hidden" value="{{temple_place[0]}}">
+    <!-- 経度 -->
+    <input id="lng" type="hidden" value="{{temple_place[1]}}">
 
+
+    <!-- <script type="text/javascript" src="../static/js/googleMap_temple.js"></script> -->
     <div id="map"></div>
     <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB89bWZUT6HKbzPlR35kyuVcBwiZP8YA5g&callback=initMap">
     </script>
 
+    
 {% endblock %}

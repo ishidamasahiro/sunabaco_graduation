@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+    <link rel="stylesheet" type="text/css" href="../static/css/temple_search.css">
+
+    <p>お寺をプルダウンで選ぶ</p>
+
+    <!-- プルダウンを表示 -->
+    <p>香川</p>
+    <!-- プルダウンを選びボタンを押すと寺の番がapp.pyの/temple_searchに送られる -->
+    <form action="/temple_search_select" method="post">
+        <select name="temple_number">
+            <option value="84">屋島寺</option>
+            <option value="85">八栗寺</option>
+        </select>
+        <input type="submit" name="save" value="GO">
+    </form>
+
+    <p>愛媛</p>
+    <form action="/temple_search_select" method="post">
+        <select name="temple_number">
+            <option value="40">観自在寺</option>
+            <option value="41">龍光寺</option>
+        </select>
+        <input type="submit" name="save" value="GO">
+    </form>
+
+{% endblock %}
