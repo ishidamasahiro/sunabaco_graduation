@@ -4,10 +4,14 @@
     <p>グーグルマップのページ・寺基準</p>
     <!-- <input type="text" value="{{temple_place[0]}}" name="task"> -->
 
+    <!-- 住所 -->
+    <input id="address" type="hidden" value="{{temple_place[0]}}">
     <!-- 緯度 -->
-    <input id="lat" type="hidden" value="{{temple_place[0]}}">
+    <input id="lat" type="hidden" value="{{temple_place[1]}}">
     <!-- 経度 -->
-    <input id="lng" type="hidden" value="{{temple_place[1]}}">
+    <input id="lng" type="hidden" value="{{temple_place[2]}}">
+    <!-- 吹き出しの説明文 -->
+    <input id="information" type="hidden" value="{{temple_place[3]}}">
 
 
     <!-- <script type="text/javascript" src="../static/js/googleMap_temple.js"></script> -->

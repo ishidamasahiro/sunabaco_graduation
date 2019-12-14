@@ -29,8 +29,11 @@ def temple_search_select():
     conn = sqlite3.connect("ohenro.db")
     c = conn.cursor()
     #寺の番でdbから呼び出す
-    c.execute("select lat,lng from temple_place where temple_number = ?",(temple_number,))
-    temple_place = c.fetchone()#リスト型になる[lat,lng]
+    c.execute("select address,lat,lng,information from temple_place where temple_number = ?",(temple_number,))
+    temple_place = c.fetchone()#リスト型になる[address,lat,lng,informaton]
+    
+    
+    
     conn.close()
     
     return render_template("googleMap_temple.html",temple_place = temple_place)
