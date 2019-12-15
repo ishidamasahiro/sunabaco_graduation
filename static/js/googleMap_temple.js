@@ -3,20 +3,27 @@ let geocoder;//住所から座標を取得
 let latlng;//住所から緯度経度を取得
 let map;
 
-let marker = [];
+let temple_marker;
+let gourmet_marker = [];
+//let gourmet_address_provisional = [];
+//let gourmet_address_provisional2 = [];
+let gourmet_address = [];
 
-let markerData = [ // マーカーを立てる場所名・住所
-    {
-        name: '八栗寺',
-        address: "香川県高松市牟礼町牟礼３４１６"
-    }, {
-        name: '山田屋',
-        address: "香川県高松市牟礼町牟礼３１８６"
-    }, {
-        name: '喫茶店',
-        address: "香川県高松市牟礼町牟礼３２１４−１"
-    }
-];
+// let markerData = [ // マーカーを立てる場所名・住所
+//     {
+//         name: '八栗寺',
+//         address: "香川県高松市牟礼町牟礼３４１６"
+//     }, {
+//         name: '山田屋',
+//         address: "香川県高松市牟礼町牟礼３１８６"
+//     }, {
+//         name: '喫茶店',
+//         address: "香川県高松市牟礼町牟礼３２１４−１"
+//     }
+// ];
+
+//住所をデータベースからもってくる
+//ピンごとに吹き出しを表示する
 
 function initialize() {
     geocoder = new google.maps.Geocoder();
@@ -30,14 +37,78 @@ function initialize() {
 
 function initMap() {
 
-    //let address = document.getElementById( "address" ).value;//住所
     initialize();
 
-    for (let i = 0; i < markerData.length; i++) {//ピンを多数立てるためにリストの数だけ回す
-        //execCallback(myCallback,geocoder,i);
+    //寺のピンを立てる---------------------------------------------
+    let temple_address = document.getElementById( "temple_address" ).value;//寺の住所
+    //console.log("temple_address:" + temple_address)
+    geocoder.geocode({
+        //"address" : markerData[i].address
+         "address" : temple_address //座標を探す住所を入れる
+    }, function(results, status) { // 結果
+        if (status === google.maps.GeocoderStatus.OK) { // ステータスがOKの場合
+            let bounds = new google.maps.LatLngBounds();
+            latlng = results[0].geometry.location;
+            bounds.extend(latlng);
+
+            //ここまでしなくていい？
+            // for (let i in results) {
+            //     if (results[i].geometry) {
+            //         // 緯度経度を取得
+            //         latlng = results[i].geometry.location;
+            //         // 検索結果地が含まれるように範囲を拡大
+            //         bounds.extend(latlng);
+            //     }
+            // }
+            //console.log(latlng);
+
+            //地図の中心を設定
+            map.setCenter(latlng);
+            
+            //マーカーを立てる
+            temple_marker = new google.maps.Marker({
+                position: latlng,
+                map: map
+            });
+
+            // //吹き出し
+            // var information = document.getElementById( "information" ).value;//吹き出しの説明文
+            // var info_html = "<div class='information'>" + information + "</div>";//informationをhtmlに変換
+            // // console.log(info_html);
+            // infoWindow = new google.maps.InfoWindow({
+            //     content: info_html // 吹き出しに表示する内容 改行したいときはdb内で<br>を記述
+            // });
+
+            // //マーカーをクリックしたとき吹き出しを表示
+            // marker.addListener('click', function() {
+            //     infoWindow.open(map, marker);
+            // });
+        } else { // 失敗した場合
+            console.group('Error');
+            console.log(results);
+            console.log(status);
+        }
+    });
+
+    //グルメのピン-----------------------------------------------------------
+    //グルメの住所を受け取るが、文字列としてうけとってしまう
+    gourmet_address = document.getElementById( "gourmet_address" ).value;
+    //console.log("gourmet_address_provisional:" + gourmet_address_provisional);
+
+    //なので含まれている記号で分けて配列化する
+    //アドレスに記号が含まれていたら？まだわからん。
+    gourmet_address = gourmet_address.split(/[(',)\s]/);
+    //console.log("gourmet_address_provisional2:" + gourmet_address_provisional);
+
+    //nullが大量に含まれた配列になるので抜き取る
+    //最初と最後にどうしてもnullができてしまうが今は気にせず
+    gourmet_address = gourmet_address.filter(Boolean);
+    //console.log("gourmet_address:" + gourmet_address);
+
+    for (let i = 0; i < gourmet_address.length; i++) {//ピンを多数立てるためにリストの数だけ回す
         geocoder.geocode({
-            "address" : markerData[i].address
-            // "address" : address //座標を探す住所を入れる
+            "address" : gourmet_address[i]
+            //"address" : temple_address //座標を探す住所を入れる
         }, function(results, status) { // 結果
             if (status === google.maps.GeocoderStatus.OK) { // ステータスがOKの場合
                 let bounds = new google.maps.LatLngBounds();
@@ -55,13 +126,8 @@ function initMap() {
                 // }
                 //console.log(latlng);
 
-                //地図の中心を設定
-                if(i === 0){
-                    map.setCenter(latlng);
-                }
-
                 //マーカーを立てる
-                marker[i] = new google.maps.Marker({
+                gourmet_marker[i] = new google.maps.Marker({
                     position: latlng,
                     map: map
                 });
@@ -87,6 +153,7 @@ function initMap() {
 
         });
     }
+
 }
 
 

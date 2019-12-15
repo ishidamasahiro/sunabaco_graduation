@@ -26,17 +26,34 @@ def temple_search_select():
     temple_number = request.form.get("temple_number")
     
     #データベースから寺の位置情報を持ってくる
-    conn = sqlite3.connect("ohenro.db")
-    c = conn.cursor()
+    conn_temple = sqlite3.connect("temple.db")
+    c_temple = conn_temple.cursor()
     #寺の番でdbから呼び出す
-    c.execute("select address,lat,lng,information from temple_place where temple_number = ?",(temple_number,))
-    temple_place = c.fetchone()#リスト型になる[address,lat,lng,informaton]
+    c_temple.execute("select address,lat,lng,information from temple_place where temple_number = ?",(temple_number,))
+    temple_place = c_temple.fetchone()#リスト型になる[address,lat,lng,informaton]
     
+    conn_temple.close()
     
+    #グルメ
+    conn_gourmet = sqlite3.connect("gourmet.db")
+    c_gourmet = conn_gourmet.cursor()
+    #寺の番でdbから呼び出す
+    #もし複数の寺にかかる施設があるというならtempule_numberを/80/81/82/といった具合に登録して*/80/*でlike検索してはどうか？
+    c_gourmet.execute("select address from gourmet_place where temple_number = ?",(temple_number,))
+    gourmet_address = c_gourmet.fetchall()
+    #[('香川県高松市牟礼町牟礼３１８６',), ('香川県高松市牟礼町牟礼３２１４−１',)]
     
-    conn.close()
+    c_gourmet.execute("select information from gourmet_place where temple_number = ?",(temple_number,))
+    gourmet_information = c_gourmet.fetchall()
+    #gourmet_information = str(gourmet_information) + ","
+    #[('山田屋',), ('Remza<br>喫茶店?',)],
     
-    return render_template("googleMap_temple.html",temple_place = temple_place)
+    #print(temple_place)
+    #print(gourmet_address)
+    print(gourmet_information)
+    conn_gourmet.close()
+    
+    return render_template("googleMap_temple.html",temple_place = temple_place,gourmet_address = gourmet_address,gourmet_information = gourmet_information)
 #-----------------------------------------------------------------------------
 
 #-----------------------------------------------------------------------------
@@ -60,7 +77,7 @@ def kagawa_arie01_map():
 def googleMap_temple(temple_number):
     
     #データベースから寺の位置情報を持ってくる
-    conn = sqlite3.connect("ohenro.db")
+    conn = sqlite3.connect("temple.db")
     c = conn.cursor()
     #寺の番でdbから呼び出す
     c.execute("select lat,lng from temple_place where temple_number = ?",(temple_number,))

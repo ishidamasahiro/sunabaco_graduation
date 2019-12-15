@@ -4,14 +4,25 @@
     <p>グーグルマップのページ・寺基準</p>
     <!-- <input type="text" value="{{temple_place[0]}}" name="task"> -->
 
-    <!-- 住所 -->
-    <input id="address" type="hidden" value="{{temple_place[0]}}">
+    <!-- 寺の住所 -->
+    <input id="temple_address" type="hidden" value="{{temple_place[0]}}">
     <!-- 緯度 -->
     <input id="lat" type="hidden" value="{{temple_place[1]}}">
     <!-- 経度 -->
     <input id="lng" type="hidden" value="{{temple_place[2]}}">
     <!-- 吹き出しの説明文 -->
     <input id="information" type="hidden" value="{{temple_place[3]}}">
+
+
+    <!-- html内のfor文はpython式 -->
+    <!-- {% for i in gourmet_address %}
+        <input class="gourmet_address[]" name = "gourmet_address[][address]" value = "{{i}}" >
+    {% endfor %} -->
+
+    <!-- グルメの住所 -->
+    <input id="gourmet_address" type="hidden" size = "50" value="{{gourmet_address}}">
+
+    <!-- <input id="gourmet_information[]" size="50" value="{{gourmet_information}}"> -->
 
 
     <!-- <script type="text/javascript" src="../static/js/googleMap_temple.js"></script> -->
