@@ -45,12 +45,14 @@ def temple_search_select():
     
     c_gourmet.execute("select information from gourmet_place where temple_number = ?",(temple_number,))
     gourmet_information = c_gourmet.fetchall()
+    #[('山田屋',), ('Remza<br>喫茶店?',)]
+    
     #gourmet_information = str(gourmet_information) + ","
     #[('山田屋',), ('Remza<br>喫茶店?',)],
     
     #print(temple_place)
     #print(gourmet_address)
-    print(gourmet_information)
+    #print(gourmet_information)
     conn_gourmet.close()
     
     return render_template("googleMap_temple.html",temple_place = temple_place,gourmet_address = gourmet_address,gourmet_information = gourmet_information)

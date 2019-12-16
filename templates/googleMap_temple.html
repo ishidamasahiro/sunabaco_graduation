@@ -7,11 +7,11 @@
     <!-- 寺の住所 -->
     <input id="temple_address" type="hidden" value="{{temple_place[0]}}">
     <!-- 緯度 -->
-    <input id="lat" type="hidden" value="{{temple_place[1]}}">
+    <!-- <input id="lat" type="hidden" value="{{temple_place[1]}}"> -->
     <!-- 経度 -->
-    <input id="lng" type="hidden" value="{{temple_place[2]}}">
+    <!-- <input id="lng" type="hidden" value="{{temple_place[2]}}"> -->
     <!-- 吹き出しの説明文 -->
-    <input id="information" type="hidden" value="{{temple_place[3]}}">
+    <input id="temple_information" type="hidden" value="{{temple_place[3]}}">
 
 
     <!-- html内のfor文はpython式 -->
@@ -21,15 +21,16 @@
 
     <!-- グルメの住所 -->
     <input id="gourmet_address" type="hidden" size = "50" value="{{gourmet_address}}">
-
-    <!-- <input id="gourmet_information[]" size="50" value="{{gourmet_information}}"> -->
+    <!-- グルメの説明文 -->
+    <input id="gourmet_information" size="50" value="{{gourmet_information}}">
 
 
     <!-- <script type="text/javascript" src="../static/js/googleMap_temple.js"></script> -->
     <div id="map"></div>
     <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB89bWZUT6HKbzPlR35kyuVcBwiZP8YA5g&callback=initMap">
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyASLi-n8-pABIIdHDkXXi0SLD42n5-mtX4&callback=initMap">
     </script>
 
+<!-- src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB89bWZUT6HKbzPlR35kyuVcBwiZP8YA5g&callback=initMap"> -->
     
 {% endblock %}

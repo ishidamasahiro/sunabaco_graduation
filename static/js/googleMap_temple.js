@@ -1,13 +1,17 @@
-let infoWindow = [];//吹き出し
+//let infoWindow = [];//吹き出し
 let geocoder;//住所から座標を取得
 let latlng;//住所から緯度経度を取得
 let map;
 
 let temple_marker;
+
 let gourmet_marker = [];
 //let gourmet_address_provisional = [];
 //let gourmet_address_provisional2 = [];
 let gourmet_address = [];
+let gourmet_information = [];//グルメの吹き出しの中身
+let gourmet_information_html = [];//グルメの吹き出し
+let gourmet_infoWindow = [];
 
 // let markerData = [ // マーカーを立てる場所名・住所
 //     {
@@ -22,9 +26,6 @@ let gourmet_address = [];
 //     }
 // ];
 
-//住所をデータベースからもってくる
-//ピンごとに吹き出しを表示する
-
 function initialize() {
     geocoder = new google.maps.Geocoder();
     var latlng = new google.maps.LatLng(-34.397, 150.644);
@@ -35,12 +36,14 @@ function initialize() {
     map = new google.maps.Map(document.getElementById('map'), mapOptions);
 }
 
+//dbへの入力でtext型のものは全て全角で入力すること（html以外は。少なくとも[](',)スペース は使わない）
 function initMap() {
 
     initialize();
 
     //寺のピンを立てる---------------------------------------------
     let temple_address = document.getElementById( "temple_address" ).value;//寺の住所
+    let temple_information = document.getElementById( "temple_information" ).value;
     //console.log("temple_address:" + temple_address)
     geocoder.geocode({
         //"address" : markerData[i].address
@@ -73,16 +76,17 @@ function initMap() {
 
             // //吹き出し
             // var information = document.getElementById( "information" ).value;//吹き出しの説明文
-            // var info_html = "<div class='information'>" + information + "</div>";//informationをhtmlに変換
+            var temple_info_html = "<div class='information'>" + temple_information + "</div>";//informationをhtmlに変換
             // // console.log(info_html);
-            // infoWindow = new google.maps.InfoWindow({
-            //     content: info_html // 吹き出しに表示する内容 改行したいときはdb内で<br>を記述
-            // });
+            let temple_infoWindow = new google.maps.InfoWindow({
+                content: temple_info_html // 吹き出しに表示する内容 改行したいときはdb内で<br>を記述
+            });
 
-            // //マーカーをクリックしたとき吹き出しを表示
-            // marker.addListener('click', function() {
-            //     infoWindow.open(map, marker);
-            // });
+            //マーカーをクリックしたとき吹き出しを表示
+            temple_marker.addListener('click', function() {
+                temple_infoWindow.open(map, temple_marker);
+            });
+
         } else { // 失敗した場合
             console.group('Error');
             console.log(results);
@@ -101,9 +105,21 @@ function initMap() {
     //console.log("gourmet_address_provisional2:" + gourmet_address_provisional);
 
     //nullが大量に含まれた配列になるので抜き取る
-    //最初と最後にどうしてもnullができてしまうが今は気にせず
+    //最初と最後にどうしても無駄ができてしまうが今は気にせず
     gourmet_address = gourmet_address.filter(Boolean);
     //console.log("gourmet_address:" + gourmet_address);
+
+
+    //グルメの情報
+    gourmet_information = document.getElementById( "gourmet_information" ).value;
+    //console.log("gourmet_address_provisional:" + gourmet_address_provisional);
+
+    gourmet_information = gourmet_information.split(/[(',)\s]/);
+    //console.log("gourmet_address_provisional2:" + gourmet_address_provisional);
+
+    gourmet_information = gourmet_information.filter(Boolean);
+    console.log("gourmet_information:" + gourmet_information);
+
 
     for (let i = 0; i < gourmet_address.length; i++) {//ピンを多数立てるためにリストの数だけ回す
         geocoder.geocode({
@@ -132,18 +148,18 @@ function initMap() {
                     map: map
                 });
 
-                // //吹き出し
-                // var information = document.getElementById( "information" ).value;//吹き出しの説明文
-                // var info_html = "<div class='information'>" + information + "</div>";//informationをhtmlに変換
-                // // console.log(info_html);
-                // infoWindow = new google.maps.InfoWindow({
-                //     content: info_html // 吹き出しに表示する内容 改行したいときはdb内で<br>を記述
-                // });
+                //吹き出し
+                //var information = document.getElementById( "information" ).value;//吹き出しの説明文
+                gourmet_information_html[i] = "<div class='information'>" + gourmet_information[i] + "</div>";//informationをhtmlに変換
+                // console.log(info_html);
+                gourmet_infoWindow[i] = new google.maps.InfoWindow({
+                    content: gourmet_information_html[i] // 吹き出しに表示する内容 改行したいときはdb内で<br>を記述
+                });
 
-                // //マーカーをクリックしたとき吹き出しを表示
-                // marker.addListener('click', function() {
-                //     infoWindow.open(map, marker);
-                // });
+                //マーカーをクリックしたとき吹き出しを表示
+                gourmet_marker[i].addListener('click', function() {
+                    gourmet_infoWindow[i].open(map, gourmet_marker[i]);
+                });
     //-------------------------------------------------------------------------
             } else { // 失敗した場合
                 console.group('Error');
