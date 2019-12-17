@@ -6,12 +6,14 @@
 
     <!-- 寺の住所 -->
     <input id="temple_address" type="hidden" value="{{temple_place[0]}}">
-    <!-- 緯度 -->
-    <!-- <input id="lat" type="hidden" value="{{temple_place[1]}}"> -->
-    <!-- 経度 -->
-    <!-- <input id="lng" type="hidden" value="{{temple_place[2]}}"> -->
+    <!-- 寺の番号 -->
+    <input id="temple_number" type="hidden" value="{{temple_place[1]}}">
+    <!-- 寺の名前 -->
+    <input id="temple_name" type="hidden" value="{{temple_place[2]}}">
     <!-- 吹き出しの説明文 -->
     <input id="temple_information" type="hidden" value="{{temple_place[3]}}">
+    <!-- 寺の電話番号 -->
+    <input id="temple_phone_number" type="hidden" value="{{temple_place[4]}}">
 
 
     <!-- html内のfor文はpython式 -->
@@ -19,10 +21,47 @@
         <input class="gourmet_address[]" name = "gourmet_address[][address]" value = "{{i}}" >
     {% endfor %} -->
 
+    
     <!-- グルメの住所 -->
-    <input id="gourmet_address" type="hidden" size = "50" value="{{gourmet_address}}">
-    <!-- グルメの説明文 -->
-    <input id="gourmet_information" size="50" value="{{gourmet_information}}">
+    <input id="gourmet_address" type="hidden" value="{{gourmet_address}}">
+    <!-- グルメの寺番号 -->
+    <!-- <input id="gourmet_number" type="hidden" value="{{gourmet_number}}"> -->
+    <!-- グルメの名前 -->
+    <input id="gourmet_name" type="hidden" value="{{gourmet_name}}">
+    <!-- 吹き出しの説明文 -->
+    <input id="gourmet_information" type="hidden" value="{{gourmet_information}}">
+    <!-- グルメの電話番号 -->
+    <input id="gourmet_phone_number" type="hidden" value="{{gourmet_phone_number}}">
+
+
+    <!-- 宿の住所 -->
+    <input id="inn_address" type="hidden" value="{{inn_address}}">
+    <!-- 宿の名前 -->
+    <input id="inn_name" type="hidden" value="{{inn_name}}">
+    <!-- 吹き出しの説明文 -->
+    <input id="inn_information" type="hidden" value="{{inn_information}}">
+    <!-- 宿の電話番号 -->
+    <input id="inn_phone_number" type="hidden" value="{{inn_phone_number}}">
+
+
+    <!-- コンビニの住所 -->
+    <input id="convenience_address" type="hidden" value="{{convenience_address}}">
+    <!-- コンビニの名前 -->
+    <input id="convenience_name" type="hidden" value="{{convenience_name}}">
+    <!-- コンビニの説明文 -->
+    <input id="convenience_information" type="hidden" value="{{convenience_information}}">
+    <!-- コンビニの電話番号 -->
+    <!-- <input id="convenience_phone_number" type="hidden" value="{{convenience_phone_number}}"> -->
+
+
+    <!-- 面白の住所 -->
+    <input id="interesting_address" type="hidden" value="{{interesting_address}}">
+    <!-- 面白の名前 -->
+    <input id="interesting_name" type="hidden" value="{{interesting_name}}">
+    <!-- 面白の説明文 -->
+    <input id="interesting_information" type="hidden" value="{{interesting_information}}">
+    <!-- 面白の電話番号 -->
+    <!-- <input id="convenience_phone_number" type="hidden" value="{{convenience_phone_number}}"> -->
 
 
     <!-- <script type="text/javascript" src="../static/js/googleMap_temple.js"></script> -->

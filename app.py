@@ -29,33 +29,114 @@ def temple_search_select():
     conn_temple = sqlite3.connect("temple.db")
     c_temple = conn_temple.cursor()
     #寺の番でdbから呼び出す
-    c_temple.execute("select address,lat,lng,information from temple_place where temple_number = ?",(temple_number,))
-    temple_place = c_temple.fetchone()#リスト型になる[address,lat,lng,informaton]
+    c_temple.execute("select address,temple_number,name,information,phone_number from temple_place where temple_number = ?",(temple_number,))
+    temple_place = c_temple.fetchone()#リスト型になる[address,temple_number,name,informaton,phone_number]
     
     conn_temple.close()
     
-    #グルメ
+    #--------グルメ-------------------------------------------------------------------
     conn_gourmet = sqlite3.connect("gourmet.db")
     c_gourmet = conn_gourmet.cursor()
     #寺の番でdbから呼び出す
     #もし複数の寺にかかる施設があるというならtempule_numberを/80/81/82/といった具合に登録して*/80/*でlike検索してはどうか？
     c_gourmet.execute("select address from gourmet_place where temple_number = ?",(temple_number,))
+    #住所
     gourmet_address = c_gourmet.fetchall()
     #[('香川県高松市牟礼町牟礼３１８６',), ('香川県高松市牟礼町牟礼３２１４−１',)]
     
+    #寺番号
+    # c_gourmet.execute("select temple_number from gourmet_place where temple_number = ?",(temple_number,))
+    # gourmet_number = c_gourmet.fetchall()
+    
+    #名前
+    c_gourmet.execute("select name from gourmet_place where temple_number = ?",(temple_number,))
+    gourmet_name = c_gourmet.fetchall()
+    
+    #情報
     c_gourmet.execute("select information from gourmet_place where temple_number = ?",(temple_number,))
     gourmet_information = c_gourmet.fetchall()
-    #[('山田屋',), ('Remza<br>喫茶店?',)]
     
-    #gourmet_information = str(gourmet_information) + ","
-    #[('山田屋',), ('Remza<br>喫茶店?',)],
-    
-    #print(temple_place)
-    #print(gourmet_address)
-    #print(gourmet_information)
+    #電話番号
+    c_gourmet.execute("select phone_number from gourmet_place where temple_number = ?",(temple_number,))
+    gourmet_phone_number = c_gourmet.fetchall()
+
     conn_gourmet.close()
+    #------------------------------------------------------------------------------------
     
-    return render_template("googleMap_temple.html",temple_place = temple_place,gourmet_address = gourmet_address,gourmet_information = gourmet_information)
+    #--------宿-------------------------------------------------------------------
+    conn_inn = sqlite3.connect("inn.db")
+    c_inn = conn_inn.cursor()
+    #寺の番でdbから呼び出す
+    c_inn.execute("select address from inn_place where temple_number = ?",(temple_number,))
+    #住所
+    inn_address = c_inn.fetchall()
+    
+    #名前
+    c_inn.execute("select name from inn_place where temple_number = ?",(temple_number,))
+    inn_name = c_inn.fetchall()
+    
+    #情報
+    c_inn.execute("select information from inn_place where temple_number = ?",(temple_number,))
+    inn_information = c_inn.fetchall()
+    
+    #電話番号
+    c_inn.execute("select phone_number from inn_place where temple_number = ?",(temple_number,))
+    inn_phone_number = c_inn.fetchall()
+
+    conn_inn.close()
+    #------------------------------------------------------------------------------------
+    
+    #--------コンビニ-------------------------------------------------------------------
+    conn_convenience = sqlite3.connect("convenience.db")
+    c_convenience = conn_convenience.cursor()
+    #寺の番でdbから呼び出す
+    c_convenience.execute("select address from convenience_place where temple_number = ?",(temple_number,))
+    #住所
+    convenience_address = c_convenience.fetchall()
+    
+    #名前
+    c_convenience.execute("select name from convenience_place where temple_number = ?",(temple_number,))
+    convenience_name = c_convenience.fetchall()
+    
+    #情報
+    c_convenience.execute("select information from convenience_place where temple_number = ?",(temple_number,))
+    convenience_information = c_convenience.fetchall()
+    
+    #電話番号
+    # c_convenience.execute("select phone_number from convenience_place where temple_number = ?",(temple_number,))
+    # convenience_phone_number = c_convenience.fetchall()
+
+    conn_convenience.close()
+    #------------------------------------------------------------------------------------
+    
+    #--------面白いところ-------------------------------------------------------------------
+    conn_interesting = sqlite3.connect("interesting.db")
+    c_interesting = conn_interesting.cursor()
+    #寺の番でdbから呼び出す
+    c_interesting.execute("select address from interesting_place where temple_number = ?",(temple_number,))
+    #住所
+    interesting_address = c_interesting.fetchall()
+    
+    #名前
+    c_interesting.execute("select name from interesting_place where temple_number = ?",(temple_number,))
+    interesting_name = c_interesting.fetchall()
+    
+    #情報
+    c_interesting.execute("select information from interesting_place where temple_number = ?",(temple_number,))
+    interesting_information = c_interesting.fetchall()
+    
+    #電話番号
+    # c_convenience.execute("select phone_number from convenience_place where temple_number = ?",(temple_number,))
+    # convenience_phone_number = c_convenience.fetchall()
+
+    conn_interesting.close()
+    #------------------------------------------------------------------------------------
+    
+    return render_template("googleMap_temple.html",temple_place = temple_place,
+                            gourmet_address = gourmet_address,gourmet_information = gourmet_information,gourmet_name = gourmet_name,gourmet_phone_number = gourmet_phone_number,
+                            inn_address = inn_address,inn_name = inn_name,inn_information = inn_information,inn_phone_number = inn_phone_number,
+                            convenience_address = convenience_address,convenience_name = convenience_name,convenience_information = convenience_information,
+                            interesting_address = interesting_address,interesting_name = interesting_name,interesting_information = interesting_information)
 #-----------------------------------------------------------------------------
 
 #-----------------------------------------------------------------------------

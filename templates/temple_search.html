@@ -1,27 +1,160 @@
 {% extends "base.html" %}
 {% block content %}
-    <link rel="stylesheet" type="text/css" href="../static/css/temple_search.css">
+<link rel="stylesheet" type="text/css" href="../static/css/temple_search.css">
 
-    <p>お寺をプルダウンで選ぶ</p>
+<header>
+    <div class="header_temple_search_select">
+        <div class="logo_temple_search_select">
+            <a href="#"></a>
+        </div>
+        <div class="title_temple_search_select">
+            <p>てくてくおへんろ</p>
+            <p>お寺からえらぶ</p>
+        </div>
+        <div class="hum_menu"> <!-- このクラスがハンバーガーボタンになる -->
+            <a href="javascript">
+                <span></span>
+                <span></span>
+                <span></span>
+            </a>
+        </div>
+    </div>
+</header>
 
-    <!-- プルダウンを表示 -->
-    <p>香川</p>
-    <!-- プルダウンを選びボタンを押すと寺の番がapp.pyの/temple_search_selectに送られる -->
-    <form action="/temple_search_select" method="post">
-        <select name="temple_number">
-            <option value="84">屋島寺</option>
-            <option value="85">八栗寺</option>
-        </select>
-        <input type="submit" name="save" value="GO">
-    </form>
+<div class="pulldown_wrapper">
+    <div class="pulldown_container">
+        <div class="pulldown_tokushima">
+        <!-- プルダウンを表示 -->
+            <p>徳島県</p>
+            <!-- プルダウンを選びボタンを押すと寺の番がapp.pyの/temple_search_selectに送られる -->
+            <form class ="pulldown, tokushima" action="/temple_search_select" method="post">
+                <select name="temple_number">
+                    <option value="1">1番札所 霊山寺</option>
+                    <option value="2">2番札所 極楽寺</option>
+                    <option value="3">3番札所 金泉寺</option>
+                    <option value="4">4番札所 大日寺</option>
+                    <option value="5">5番札所 地蔵寺</option>
+                    <option value="6">6番札所 安楽寺</option>
+                    <option value="7">7番札所 十楽寺</option>
+                    <option value="8">8番札所 熊谷寺</option>
+                    <option value="9">9番札所 法輪寺</option>
+                    <option value="10">10番札所 切幡寺</option>
+                    <option value="11">11番札所 藤井寺</option>
+                    <option value="12">12番札所 焼山寺</option>
+                    <option value="13">13番札所 大日寺</option>
+                    <option value="14">14番札所 常楽寺</option>
+                    <option value="15">15番札所 国分寺</option>
+                    <option value="16">16番札所 観音寺</option>
+                    <option value="17">17番札所 井戸寺</option>
+                    <option value="18">18番札所 恩山寺</option>
+                    <option value="19">19番札所 立江寺</option>
+                    <option value="20">20番札所 鶴林寺</option>
+                    <option value="21">21番札所 太龍寺</option>
+                    <option value="22">22番札所 平等寺</option>
+                    <option value="23">23番札所 薬王寺</option>
+                </select>
+                <input type="submit" name="save" value="GO">
+            </form>
+        </div>
 
-    <p>愛媛</p>
-    <form action="/temple_search_select" method="post">
-        <select name="temple_number">
-            <option value="40">観自在寺</option>
-            <option value="41">龍光寺</option>
-        </select>
-        <input type="submit" name="save" value="GO">
-    </form>
+        <div class="pulldown_kochi">
+            <p>高知県</p>
+            <form class ="pulldown, kochi" action="/temple_search_select" method="post">
+                <select name="temple_number">
+                    <option value="24">24番札所 最御崎寺(東寺)</option>
+                    <option value="25">25番札所 津照寺(津寺)</option>
+                    <option value="26">26番札所 金剛頂寺(西寺)</option>
+                    <option value="27">27番札所 神峯寺</option>
+                    <option value="28">28番札所 大日寺</option>
+                    <option value="29">29番札所 国分寺</option>
+                    <option value="30">30番札所 善楽寺</option>
+                    <option value="31">31番札所 竹林寺</option>
+                    <option value="32">32番札所 禅師峰寺</option>
+                    <option value="33">33番札所 雪蹊寺</option>
+                    <option value="34">34番札所 種間寺</option>
+                    <option value="35">35番札所 清瀧寺</option>
+                    <option value="36">36番札所 青龍寺</option>
+                    <option value="37">37番札所 岩本寺</option>
+                    <option value="38">38番札所 金剛福寺</option>
+                    <option value="39">39番札所 延光寺</option>
+                </select>
+                <input type="submit" name="save" value="GO">
+            </form>
+        </div>
+
+        <div class="pulldown_ehime">
+            <p>愛媛県</p>
+            <form class="pulldown, ehime" action="/temple_search_select" method="post">
+                <select name="temple_number">
+                    <option value="40">40番札所 観自在寺</option>
+                    <option value="41">41番札所 龍光寺</option>
+                    <option value="42">42番札所 佛木寺</option>
+                    <option value="43">43番札所 明石寺</option>
+                    <option value="44">44番札所 大寶寺</option>
+                    <option value="45">45番札所 岩屋寺</option>
+                    <option value="46">46番札所 浄瑠璃寺</option>
+                    <option value="47">47番札所 八坂寺</option>
+                    <option value="48">48番札所 西林寺</option>
+                    <option value="49">49番札所 浄土寺</option>
+                    <option value="50">50番札所 繁多寺</option>
+                    <option value="51">51番札所 石手寺</option>
+                    <option value="52">52番札所 太山寺</option>
+                    <option value="53">53番札所 圓明寺</option>
+                    <option value="54">54番札所 延命寺</option>
+                    <option value="55">55番札所 南光坊</option>
+                    <option value="56">56番札所 泰山寺</option>
+                    <option value="57">57番札所 栄福寺</option>
+                    <option value="58">58番札所 仙遊寺</option>
+                    <option value="59">59番札所 国分寺</option>
+                    <option value="60">60番札所 横峰寺</option>
+                    <option value="61">61番札所 香園寺</option>
+                    <option value="62">62番札所 宝寿寺</option>
+                    <option value="63">63番札所 吉祥寺</option>
+                    <option value="64">64番札所 前神寺</option>
+                    <option value="65">65番札所 三角寺</option>
+                    <option value="66">66番札所 雲辺寺</option>
+                </select>
+                <input type="submit" name="save" value="GO">
+            </form>
+        </div>
+
+        <div class="pulldown_kagawa">
+            <p>香川県</p>
+            <form class="pulldown, kagawa" action="/temple_search_select" method="post">
+                <select name="temple_number">
+                    <option value="67">67番札所 大興寺(小松尾寺)</option>
+                    <option value="68">68番札所 神恵院(琴弾八幡)</option>
+                    <option value="69">69番札所 観音寺</option>
+                    <option value="70">70番札所 本山寺</option>
+                    <option value="71">71番札所 弥谷寺</option>
+                    <option value="72">72番札所 曼荼羅寺</option>
+                    <option value="73">73番札所 出釈迦寺</option>
+                    <option value="74">74番札所 甲山寺</option>
+                    <option value="75">75番札所 善通寺</option>
+                    <option value="76">76番札所 金倉寺</option>
+                    <option value="77">77番札所 道隆寺</option>
+                    <option value="78">78番札所 郷照寺</option>
+                    <option value="79">79番札所 天皇寺(高照院)</option>
+                    <option value="80">80番札所 國分寺</option>
+                    <option value="81">81番札所 白峯寺</option>
+                    <option value="82">82番札所 根香寺</option>
+                    <option value="83">83番札所 一宮寺</option>
+                    <option value="84">84番札所 屋島寺</option>
+                    <option value="85">85番札所 八栗寺</option>
+                    <option value="86">86番札所 志度寺</option>
+                    <option value="87">87番札所 長尾寺</option>
+                    <option value="88">88番札所 大窪寺</option>
+                </select>
+                <input type="submit" name="save" value="GO">
+            </form>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <div class="footer_temple_search_select">
+        <p>てくてくおへんろ</p>
+    </div>
+</footer>
 
 {% endblock %}
