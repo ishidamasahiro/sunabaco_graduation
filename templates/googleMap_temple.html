@@ -5,15 +5,19 @@
     <!-- <input type="text" value="{{temple_place[0]}}" name="task"> -->
 
     <!-- 寺の住所 -->
-    <input id="temple_address" type="hidden" value="{{temple_place[0]}}">
+    <!-- <input id="temple_address" type="hidden" value="{{temple_place[0]}}"> -->
     <!-- 寺の番号 -->
-    <input id="temple_number" type="hidden" value="{{temple_place[1]}}">
+    <input id="temple_number" type="hidden" value="{{temple_place[0]}}">
     <!-- 寺の名前 -->
-    <input id="temple_name" type="hidden" value="{{temple_place[2]}}">
+    <input id="temple_name" type="hidden" value="{{temple_place[1]}}">
     <!-- 吹き出しの説明文 -->
-    <input id="temple_information" type="hidden" value="{{temple_place[3]}}">
+    <input id="temple_information" type="hidden" value="{{temple_place[2]}}">
+    <!-- 緯度 -->
+    <input id="temple_lat" type="hidden" value="{{temple_place[3]}}">
+    <!-- 経度 -->
+    <input id="temple_lng" type="hidden" value="{{temple_place[4]}}">
     <!-- 寺の電話番号 -->
-    <input id="temple_phone_number" type="hidden" value="{{temple_place[4]}}">
+    <!-- <input id="temple_phone_number" type="hidden" value="{{temple_place[4]}}"> -->
 
 
     <!-- html内のfor文はpython式 -->
@@ -23,11 +27,15 @@
 
     
     <!-- グルメの住所 -->
-    <input id="gourmet_address" type="hidden" value="{{gourmet_address}}">
+    <!-- <input id="gourmet_address" type="hidden" value="{{gourmet_address}}"> -->
     <!-- グルメの寺番号 -->
     <!-- <input id="gourmet_number" type="hidden" value="{{gourmet_number}}"> -->
     <!-- グルメの名前 -->
     <input id="gourmet_name" type="hidden" value="{{gourmet_name}}">
+    <!-- グルメの緯度 -->
+    <input id="gourmet_lat" type="hidden" value="{{gourmet_lat}}">
+    <!-- グルメの経度 -->
+    <input id="gourmet_lng" type="hidden" value="{{gourmet_lng}}">
     <!-- 吹き出しの説明文 -->
     <input id="gourmet_information" type="hidden" value="{{gourmet_information}}">
     <!-- グルメの電話番号 -->
@@ -35,32 +43,44 @@
 
 
     <!-- 宿の住所 -->
-    <input id="inn_address" type="hidden" value="{{inn_address}}">
+    <!-- <input id="inn_address" type="hidden" value="{{inn_address}}"> -->
     <!-- 宿の名前 -->
     <input id="inn_name" type="hidden" value="{{inn_name}}">
     <!-- 吹き出しの説明文 -->
     <input id="inn_information" type="hidden" value="{{inn_information}}">
     <!-- 宿の電話番号 -->
     <input id="inn_phone_number" type="hidden" value="{{inn_phone_number}}">
+    <!-- 宿の緯度 -->
+    <input id="inn_lat" type="hidden" value="{{inn_lat}}">
+    <!-- 宿の経度 -->
+    <input id="inn_lng" type="hidden" value="{{inn_lng}}">
 
 
     <!-- コンビニの住所 -->
-    <input id="convenience_address" type="hidden" value="{{convenience_address}}">
+    <!-- <input id="convenience_address" type="hidden" value="{{convenience_address}}"> -->
     <!-- コンビニの名前 -->
     <input id="convenience_name" type="hidden" value="{{convenience_name}}">
+    <!-- 宿の緯度 -->
+    <input id="convenience_lat" type="hidden" value="{{convenience_lat}}">
+    <!-- 宿の経度 -->
+    <input id="convenience_lng" type="hidden" value="{{convenience_lng}}">
     <!-- コンビニの説明文 -->
-    <input id="convenience_information" type="hidden" value="{{convenience_information}}">
+    <!-- <input id="convenience_information" type="hidden" value="{{convenience_information}}"> -->
     <!-- コンビニの電話番号 -->
     <!-- <input id="convenience_phone_number" type="hidden" value="{{convenience_phone_number}}"> -->
 
 
-    <!-- 面白の住所 -->
-    <input id="interesting_address" type="hidden" value="{{interesting_address}}">
-    <!-- 面白の名前 -->
+    <!-- スポットの住所 -->
+    <!-- <input id="interesting_address" type="hidden" value="{{interesting_address}}"> -->
+    <!-- スポットの名前 -->
     <input id="interesting_name" type="hidden" value="{{interesting_name}}">
-    <!-- 面白の説明文 -->
+    <!-- スポットの説明文 -->
     <input id="interesting_information" type="hidden" value="{{interesting_information}}">
-    <!-- 面白の電話番号 -->
+    <!-- スポットの緯度 -->
+    <input id="interesting_lat" type="hidden" value="{{interesting_lat}}">
+    <!-- スポットの経度 -->
+    <input id="interesting_lng" type="hidden" value="{{interesting_lng}}">
+    <!-- スポットの電話番号 -->
     <!-- <input id="convenience_phone_number" type="hidden" value="{{convenience_phone_number}}"> -->
 
 
@@ -70,6 +90,63 @@
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyASLi-n8-pABIIdHDkXXi0SLD42n5-mtX4&callback=initMap">
     </script>
 
-<!-- src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB89bWZUT6HKbzPlR35kyuVcBwiZP8YA5g&callback=initMap"> -->
-    
+    <!-- 次の札所 -->
+    <div>{{route_BandA[1][0]}}番札所 {{route_BandA[1][1]}}まで{{route_distance[1][0]}}km</div>
+    <form class ="" action="/route_map" method="post">
+        <input name="Start_temple_number" type="hidden" value="{{temple_place[0]}}">
+        <input name="Goal_temple_number" type="hidden" value="{{route_BandA[1][0]}}">
+        <input type="submit" name="save" value="ルート案内">
+    </form>
+    <!-- 前の札所 -->
+    <div>{{route_BandA[0][0]}}番札所 {{route_BandA[0][1]}}まで{{route_distance[0][0]}}km</div>
+    <form class ="" action="/route_map" method="post">
+        <input name="Start_temple_number" type="hidden" value="{{temple_place[0]}}">
+        <input name="Goal_temple_number" type="hidden" value="{{route_BandA[0][0]}}">
+        <input type="submit" name="save" value="ルート案内">
+    </form>
+
+    <!-- プルダウン -->
+    <div class="">
+        <!-- プルダウンを表示 -->
+            <p>選べ</p>
+            <!-- プルダウンを選びボタンを押すと寺の番がapp.pyの/temple_search_selectに送られる -->
+            <form class ="" action="/route_map" method="post">
+                <select name="Goal_temple_number">
+                    <option value="1">1番札所 霊山寺</option>
+                    <option value="2">2番札所 極楽寺</option>
+                    <option value="3">3番札所 金泉寺</option>
+                    <option value="4">4番札所 大日寺</option>
+                    <option value="5">5番札所 地蔵寺</option>
+                    <option value="6">6番札所 安楽寺</option>
+                    <option value="7">7番札所 十楽寺</option>
+                    <option value="8">8番札所 熊谷寺</option>
+                    <option value="9">9番札所 法輪寺</option>
+                    <option value="10">10番札所 切幡寺</option>
+                    <option value="11">11番札所 藤井寺</option>
+                    <option value="12">12番札所 焼山寺</option>
+                    <option value="13">13番札所 大日寺</option>
+                    <option value="14">14番札所 常楽寺</option>
+                    <option value="15">15番札所 国分寺</option>
+                    <option value="16">16番札所 観音寺</option>
+                    <option value="17">17番札所 井戸寺</option>
+                    <option value="18">18番札所 恩山寺</option>
+                    <option value="19">19番札所 立江寺</option>
+                    <option value="20">20番札所 鶴林寺</option>
+                    <option value="21">21番札所 太龍寺</option>
+                    <option value="22">22番札所 平等寺</option>
+                    <option value="23">23番札所 薬王寺</option>
+                    <option value="24">24番札所 最御崎寺(東寺)</option>
+                    <option value="25">25番札所 津照寺(津寺)</option>
+                    <option value="26">26番札所 金剛頂寺(西寺)</option>
+                    <option value="27">27番札所 神峯寺</option>
+                    <option value="28">28番札所 大日寺</option>
+                </select>
+                <input name="Start_temple_number" type="hidden" value="{{temple_place[0]}}">
+                <input type="submit" name="save" value="ルート案内">
+            </form>
+        </div>
+
+
+    <!-- src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB89bWZUT6HKbzPlR35kyuVcBwiZP8YA5g&callback=initMap"> -->
+    <script type="text/javascript" src="../static/js/googleMap_temple.js"></script>
 {% endblock %}

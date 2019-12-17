@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+    <link rel="stylesheet" type="text/css" href="../static/css/route_map.css">
+    
+    <div>スタート{{Start_temple_number}}</div>
+    <div>ゴール{{Goal_temple_number}}</div>
+
+    <input id="Start_temple_number" type="hidden" value="{{Start_temple_number}}">
+    <input id="Goal_temple_number" type="hidden" value="{{Goal_temple_number}}">
+    <input id="temple_number" type="hidden" value="{{temple_number}}">
+    <input id="temple_name" type="hidden" value="{{temple_name}}">
+    <input id="temple_information" type="hidden" value="{{temple_information}}">
+    <input id="temple_lat" type="hidden" value="{{temple_lat}}">
+    <input id="temple_lng" type="hidden" value="{{temple_lng}}">
+
+    <div id="map"></div>
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyASLi-n8-pABIIdHDkXXi0SLD42n5-mtX4&callback=initMap">
+    </script>
+
+    <script type="text/javascript" src="../static/js/route_map.js"></script>
+{% endblock %}
