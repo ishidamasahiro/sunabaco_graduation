@@ -45,6 +45,11 @@ def temple_search_select():
     
     c_BandA.execute("select temple_number,name from temple_place where temple_number = ? or temple_number = ?",(before_temple, after_temple))
     route_BandA = c_BandA.fetchall()#[(22, '平等寺'), (24, '最御崎寺(東寺)')]
+    #1番,88番札所の時は配列の並べ替え
+    #print(route_BandA)
+    if int(temple_number) == 1 or int(temple_number) == 88:
+        #print("ok")
+        route_BandA.reverse()
     #print(route_BandA)
     conn_temple.close()
     
@@ -56,7 +61,7 @@ def temple_search_select():
     #print(route_distance)
     conn_distance.close()
     
-    #ルートナンバーをhtmlに渡す
+    #ルートナンバーをhtmlに渡す?
     
     #--------グルメ-------------------------------------------------------------------
     conn_gourmet = sqlite3.connect("gourmet.db")
@@ -232,6 +237,103 @@ def route_map():
     c_temple.execute("select lng from temple_place where temple_number = ? or temple_number = ?",(Start_temple_number,Goal_temple_number))
     temple_lng = c_temple.fetchall()
     
+    #conn_temple.close()
+    
+    #----------経由する寺の情報----------
+    #データベースから寺の位置情報を持ってくる
+    #conn_temple = sqlite3.connect("temple.db")
+    #c_temple = conn_temple.cursor()
+    
+    #寺の番でdbから呼び出す
+    #Start_temple_number
+    #Goal_temple_number
+    
+    #スタートとゴールが2つ以上離れている場合（1<>88間は最短をいくことにしているので除外）
+    if int(Goal_temple_number) - int(Start_temple_number) != 1 and int(Goal_temple_number) - int(Start_temple_number) != -87 and int(Goal_temple_number) - int(Start_temple_number) != 87:
+        
+        #経由する寺番号
+        waypoints_temple_number = []
+        #順巡り
+        if(int(Start_temple_number) < int(Goal_temple_number)):
+            for num in range(int(Start_temple_number), int(Goal_temple_number)):
+                if num != int(Start_temple_number):
+                    c_temple.execute("select temple_number from temple_place where temple_number = ?",(num,))
+                    waypoints_temple_number.append(c_temple.fetchone())
+        #23>28 [24, 25, 26, 27]
+
+        #逆めぐり
+        if(int(Start_temple_number) > int(Goal_temple_number)):
+            for num in range(int(Goal_temple_number),int(Start_temple_number)):
+                if num != int(Goal_temple_number):
+                    c_temple.execute("select temple_number from temple_place where temple_number = ?",(num,))
+                    waypoints_temple_number.append(c_temple.fetchone())
+        #23>10 [11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22]
+                
+        #経由する寺名
+        waypoints_temple_name = []
+        #順巡り
+        if(int(Start_temple_number) < int(Goal_temple_number)):
+            for num in range(int(Start_temple_number), int(Goal_temple_number)):
+                if num != int(Start_temple_number):
+                    c_temple.execute("select name from temple_place where temple_number = ?",(num,))
+                    waypoints_temple_name.append(c_temple.fetchone())
+                    
+        #逆巡り
+        if(int(Start_temple_number) > int(Goal_temple_number)):
+            for num in range(int(Goal_temple_number),int(Start_temple_number)):
+                if num != int(Goal_temple_number):
+                    c_temple.execute("select name from temple_place where temple_number = ?",(num,))
+                    waypoints_temple_name.append(c_temple.fetchone())
+                    
+        #情報
+        waypoints_temple_information = []
+        #順巡り
+        if(int(Start_temple_number) < int(Goal_temple_number)):
+            for num in range(int(Start_temple_number), int(Goal_temple_number)):
+                if num != int(Start_temple_number):
+                    c_temple.execute("select information from temple_place where temple_number = ?",(num,))
+                    waypoints_temple_information.append(c_temple.fetchone())
+                    
+        #逆巡り
+        if(int(Start_temple_number) > int(Goal_temple_number)):
+            for num in range(int(Goal_temple_number),int(Start_temple_number)):
+                if num != int(Goal_temple_number):
+                    c_temple.execute("select information from temple_place where temple_number = ?",(num,))
+                    waypoints_temple_information.append(c_temple.fetchone())
+
+
+        #緯度
+        waypoints_temple_lat = []
+        #順巡り
+        if(int(Start_temple_number) < int(Goal_temple_number)):
+            for num in range(int(Start_temple_number), int(Goal_temple_number)):
+                if num != int(Start_temple_number):
+                    c_temple.execute("select lat from temple_place where temple_number = ?",(num,))
+                    waypoints_temple_lat.append(c_temple.fetchone())
+                    
+        #逆巡り
+        if(int(Start_temple_number) > int(Goal_temple_number)):
+            for num in range(int(Goal_temple_number),int(Start_temple_number)):
+                if num != int(Goal_temple_number):
+                    c_temple.execute("select lat from temple_place where temple_number = ?",(num,))
+                    waypoints_temple_lat.append(c_temple.fetchone())
+
+        #経度
+        waypoints_temple_lng = []
+        #順巡り
+        if(int(Start_temple_number) < int(Goal_temple_number)):
+            for num in range(int(Start_temple_number), int(Goal_temple_number)):
+                if num != int(Start_temple_number):
+                    c_temple.execute("select lng from temple_place where temple_number = ?",(num,))
+                    waypoints_temple_lng.append(c_temple.fetchone())
+                    
+        #逆巡り
+        if(int(Start_temple_number) > int(Goal_temple_number)):
+            for num in range(int(Goal_temple_number),int(Start_temple_number)):
+                if num != int(Goal_temple_number):
+                    c_temple.execute("select lng from temple_place where temple_number = ?",(num,))
+                    waypoints_temple_lng.append(c_temple.fetchone())
+    
     conn_temple.close()
     
     return render_template("route_map.html",
@@ -241,7 +343,13 @@ def route_map():
                             temple_name = temple_name,
                             temple_number = temple_number,
                             Start_temple_number = Start_temple_number,
-                            Goal_temple_number = Goal_temple_number)
+                            Goal_temple_number = Goal_temple_number,
+                            waypoints_temple_number = waypoints_temple_number,
+                            waypoints_temple_name = waypoints_temple_name,
+                            waypoints_temple_information = waypoints_temple_information,
+                            waypoints_temple_lat = waypoints_temple_lat,
+                            waypoints_temple_lng = waypoints_temple_lng
+                            )
 
 #-----------------------------------------------------------------------------
 #-----四国地図-----
