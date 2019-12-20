@@ -1,53 +1,91 @@
-.container{
+/*背景*/
+.background{
+    background-image: url("../img/cloud.svg");
+    background-size: 40%;
+    opacity: 0.5;
+}
+
+.top_container{
+    width: 80%;
+    margin: 0 auto
+}
+/*テキスト*/
+.text{
+    width: 100%;
+}
+
+.text p{
+    width: 80%;
+    margin: 0 auto;
+    background-color: white;
+}
+
+/* メニューボタン */
+.menu_wrapper{
+    margin-top: 10px;
+    padding-bottom: 20px;
+}
+
+.menu_container{
     display: flex;
+    justify-content: center;
     flex-wrap: wrap;
+    width: 80%;
+    margin: 0 auto;
 }
 
-/* メニューひとつひとつのサイズ */
 .menus{
-    width:100%;
-    height: 100px;
+    flex: auto;
+    width: 50%;
+    display: flex;
+    border-radius: 10px;
+    height: 140px;
 }
 
-/* 地図から探すの設定 */
+.menus_link{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; 
+    border: 2px solid #fff;
+}
+
+/* メニューアイコン */
+#map_search img{
+    width: 50%;
+    height: auto;
+    padding-top: 20px;
+}
+
+.menus img{
+    width: 40%;
+    height: auto;
+    padding-top: 20px;
+}
+
+.menus p{
+    margin-top: auto;
+    text-align: center;
+}
+
+/* 地図からえらぶの設定 */
 #map_search{
-    background-color: #FCB8AD;
+    background-color: #F4B6DB;
 }
 
-#map_search_contents{
-    display: block;
-    width:100%;
-    height:100%;
-}
-
-/* お寺から探すの設定 */
+/* お寺からえらぶの設定 */
 #temple_search{
-    background-color:  #A5CFDF;
+    background-color:  #92D4F5;
 }
 
-#temple_search_contents{
-    display: block;
-    width:100%;
-    height:100%;
-}
-/* 住所から探すの設定 */
+/* 住所からえらぶの設定 */
 #address_search{
-    background-color: #DDBFE4;
-}
-
-#address_search_contents{
-    display: block;
-    width:100%;
-    height:100%;
+    background-color: #CBE069;
 }
 
 /* お遍路基本情報 */
 #information{
-    background-color: #F0EB4D;
+    background-color: #F7B563;
 }
 
-#information_contents{
-    display: block;
-    width:100%;
-    height:100%;
-}

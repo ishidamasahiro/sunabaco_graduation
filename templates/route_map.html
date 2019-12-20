@@ -21,11 +21,89 @@
     <input id="waypoints_temple_lat" type="hidden" value="{{waypoints_temple_lat}}">
     <input id="waypoints_temple_lng" type="hidden" value="{{waypoints_temple_lng}}">
 
+    <!-- 寺周辺の物件 -->
+    <!-- グルメ -->
+    <!-- <input id="waypoints_temple_number" type="hidden" value="{{waypoints_temple_number}}"> -->
+    <input id="SandG_gourmet_name" type="hidden" value="{{SandG_gourmet_name}}">
+    <input id="SandG_gourmet_information" type="hidden" value="{{SandG_gourmet_information}}">
+    <input id="SandG_gourmet_lat" type="hidden" value="{{SandG_gourmet_lat}}">
+    <input id="SandG_gourmet_lng" type="hidden" value="{{SandG_gourmet_lng}}">
+    <input id="SandG_gourmet_phone_number" type="hidden" value="{{SandG_gourmet_phone_number}}">
+
+    <!-- 宿 -->
+    <input id="SandG_inn_name" type="hidden" value="{{SandG_inn_name}}">
+    <input id="SandG_inn_information" type="hidden" value="{{SandG_inn_information}}">
+    <input id="SandG_inn_lat" type="hidden" value="{{SandG_inn_lat}}">
+    <input id="SandG_inn_lng" type="hidden" value="{{SandG_inn_lng}}">
+    <input id="SandG_inn_phone_number" type="hidden" value="{{SandG_inn_phone_number}}">
+
+    <!-- 道の駅 -->
+    <input id="SandG_roadside_station_name" type="hidden" value="{{SandG_roadside_station_name}}">
+    <input id="SandG_roadside_station_information" type="hidden" value="{{SandG_roadside_station_information}}">
+    <input id="SandG_roadside_station_lat" type="hidden" value="{{SandG_roadside_station_lat}}">
+    <input id="SandG_roadside_station_lng" type="hidden" value="{{SandG_roadside_station_lng}}">
+    <!-- <input id="SandG_roadside_station_phone_number" type="hidden" value="{{SandG_roadside_station_phone_number}}"> -->
+
+    <!-- 立ち寄りスポット -->
+    <input id="SandG_interesting_name" type="hidden" value="{{SandG_interesting_name}}">
+    <input id="SandG_interesting_information" type="hidden" value="{{SandG_interesting_information}}">
+    <input id="SandG_interesting_lat" type="hidden" value="{{SandG_interesting_lat}}">
+    <input id="SandG_interesting_lng" type="hidden" value="{{SandG_interesting_lng}}">
+
+    <!-- コンビニ -->
+    <input id="SandG_convenience_name" type="hidden" value="{{SandG_convenience_name}}">
+    <!-- <input id="SandG_interesting_information" type="hidden" value="{{SandG_interesting_information}}"> -->
+    <input id="SandG_convenience_lat" type="hidden" value="{{SandG_convenience_lat}}">
+    <input id="SandG_convenience_lng" type="hidden" value="{{SandG_convenience_lng}}">
+
+
+
+    <!-- ルート上の物件 -->
+    <!-- グルメ -->
+    <input id="route_gourmet_name" type="hidden" value="{{route_gourmet_name}}">
+    <input id="route_gourmet_information" type="hidden" value="{{route_gourmet_information}}">
+    <input id="route_gourmet_lat" type="hidden" value="{{route_gourmet_lat}}">
+    <input id="route_gourmet_lng" type="hidden" value="{{route_gourmet_lng}}">
+    <input id="route_gourmet_phone_number" type="hidden" value="{{route_gourmet_phone_number}}">
+
+    <!-- 宿 -->
+    <input id="route_inn_name" type="hidden" value="{{route_inn_name}}">
+    <input id="route_inn_information" type="hidden" value="{{route_inn_information}}">
+    <input id="route_inn_lat" type="hidden" value="{{route_inn_lat}}">
+    <input id="route_inn_lng" type="hidden" value="{{route_inn_lng}}">
+    <input id="route_inn_phone_number" type="hidden" value="{{route_inn_phone_number}}">
+
+    <!-- 道の駅 -->
+    <input id="route_roadside_station_name" type="hidden" value="{{route_roadside_station_name}}">
+    <input id="route_roadside_station_information" type="hidden" value="{{route_roadside_station_information}}">
+    <input id="route_roadside_station_lat" type="hidden" value="{{route_roadside_station_lat}}">
+    <input id="route_roadside_station_lng" type="hidden" value="{{route_roadside_station_lng}}">
+    <!-- <input id="route_roadside_station_phone_number" type="hidden" value="{{route_roadside_station_phone_number}}"> -->
+
+    <!-- 立ち寄りスポット -->
+    <input id="route_interesting_name" type="hidden" value="{{route_interesting_name}}">
+    <input id="route_interesting_information" type="hidden" value="{{route_interesting_information}}">
+    <input id="route_interesting_lat" type="hidden" value="{{route_interesting_lat}}">
+    <input id="route_interesting_lng" type="hidden" value="{{route_interesting_lng}}">
+
+    <!-- コンビニ -->
+    <input id="route_convenience_name" type="hidden" value="{{route_convenience_name}}">
+    <!-- <input id="route_convenience_information" type="hidden" value="{{route_convenience_information}}"> -->
+    <input id="route_convenience_lat" type="hidden" value="{{route_convenience_lat}}">
+    <input id="route_convenience_lng" type="hidden" value="{{route_convenience_lng}}">
 
     <div id="map"></div>
-    <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyASLi-n8-pABIIdHDkXXi0SLD42n5-mtX4&callback=initMap_WayPoints">
-    </script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyASLi-n8-pABIIdHDkXXi0SLD42n5-mtX4&callback=initMap_WayPoints"></script>
+    <!-- <script async defer src="https://maps.googleapis.com/maps/api/staticmap?key=AIzaSyASLi-n8-pABIIdHDkXXi0SLD42n5-mtX4&callback=initMap_WayPoints&center=34.35438421551121,134.13524852917297&zoom=17&format=png&maptype=roadmap&style=element:geometry%7Ccolor:0xebe3cd&style=element:labels.text.fill%7Ccolor:0x523735&style=element:labels.text.stroke%7Ccolor:0xf5f1e6&style=feature:administrative%7Celement:geometry.stroke%7Ccolor:0xc9b2a6&style=feature:administrative.land_parcel%7Celement:geometry.stroke%7Ccolor:0xdcd2be&style=feature:administrative.land_parcel%7Celement:labels%7Cvisibility:off&style=feature:administrative.land_parcel%7Celement:labels.text.fill%7Ccolor:0xae9e90&style=feature:landscape.natural%7Celement:geometry%7Ccolor:0xdfd2ae&style=feature:poi%7Celement:geometry%7Ccolor:0xdfd2ae&style=feature:poi%7Celement:labels.text%7Cvisibility:off&style=feature:poi%7Celement:labels.text.fill%7Ccolor:0x93817c&style=feature:poi.business%7Cvisibility:off&style=feature:poi.park%7Celement:geometry.fill%7Ccolor:0xa5b076&style=feature:poi.park%7Celement:labels.text%7Cvisibility:off&style=feature:poi.park%7Celement:labels.text.fill%7Ccolor:0x447530&style=feature:road%7Celement:geometry%7Ccolor:0xf5f1e6&style=feature:road.arterial%7Celement:geometry%7Ccolor:0xfdfcf8&style=feature:road.highway%7Celement:geometry%7Ccolor:0xf8c967&style=feature:road.highway%7Celement:geometry.stroke%7Ccolor:0xe9bc62&style=feature:road.highway.controlled_access%7Celement:geometry%7Ccolor:0xe98d58&style=feature:road.highway.controlled_access%7Celement:geometry.stroke%7Ccolor:0xdb8555&style=feature:road.local%7Celement:labels%7Cvisibility:off&style=feature:road.local%7Celement:labels.text.fill%7Ccolor:0x806b63&style=feature:transit.line%7Celement:geometry%7Ccolor:0xdfd2ae&style=feature:transit.line%7Celement:labels.text.fill%7Ccolor:0x8f7d77&style=feature:transit.line%7Celement:labels.text.stroke%7Ccolor:0xebe3cd&style=feature:transit.station%7Celement:geometry%7Ccolor:0xdfd2ae&style=feature:water%7Celement:geometry.fill%7Ccolor:0xb9d3c2&style=feature:water%7Celement:labels.text.fill%7Ccolor:0x92998d&size=480x360"></script> -->
+
+
+
+    <div>物件の数</div>
+    <div>グルメ:{{gourmet_articles}}</div>
+    <div>宿:{{inn_articles}}</div>
+    <div>道の駅:{{roadside_station_articles}}</div>
+    <div>スポット:{{interesting_articles}}</div>
+    <div>コンビニ:{{convenience_articles}}</div>
 
     <script type="text/javascript" src="../static/js/route_map.js"></script>
 {% endblock %}

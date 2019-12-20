@@ -58,13 +58,286 @@ let interesting_information = [];//吹き出しの中身
 let interesting_information_html = [];//吹き出しのhtml
 let interesting_infoWindow = [];//吹き出し
 
+//道の駅
+let roadside_station_marker = [];//ピン
+
+let roadside_station_address = [];//住所
+//let convenience_number = [];//番号
+let roadside_station_name = [];//名前
+//let convenience_phone_number = [];//電話番号
+
+let roadside_station_information = [];//吹き出しの中身
+let roadside_station_information_html = [];//吹き出しのhtml
+let roadside_station_infoWindow = [];//吹き出し
+
+
 //mapの初期化
 function initialize() {
     //geocoder = new google.maps.Geocoder();
     latlng = new google.maps.LatLng(-34.397, 150.644);
     var mapOptions = {
-        zoom: 14,
-        center: latlng
+        zoom: 15,
+        center: latlng,
+        styles:
+        [
+            {
+                "elementType": "geometry",
+                "stylers": [
+                {
+                    "color": "#ebe3cd"
+                }
+                ]
+            },
+            {
+                "elementType": "labels.text.fill",
+                "stylers": [
+                {
+                    "color": "#523735"
+                }
+                ]
+            },
+            {
+                "elementType": "labels.text.stroke",
+                "stylers": [
+                {
+                    "color": "#f5f1e6"
+                }
+                ]
+            },
+            {
+                "featureType": "administrative",
+                "elementType": "geometry.stroke",
+                "stylers": [
+                {
+                    "color": "#c9b2a6"
+                }
+                ]
+            },
+            {
+                "featureType": "administrative.land_parcel",
+                "elementType": "geometry.stroke",
+                "stylers": [
+                {
+                    "color": "#dcd2be"
+                }
+                ]
+            },
+            {
+                "featureType": "administrative.land_parcel",
+                "elementType": "labels",
+                "stylers": [
+                {
+                    "visibility": "off"
+                }
+                ]
+            },
+            {
+                "featureType": "administrative.land_parcel",
+                "elementType": "labels.text.fill",
+                "stylers": [
+                {
+                    "color": "#ae9e90"
+                }
+                ]
+            },
+            {
+                "featureType": "landscape.natural",
+                "elementType": "geometry",
+                "stylers": [
+                {
+                    "color": "#dfd2ae"
+                }
+                ]
+            },
+            {
+                "featureType": "poi",
+                "elementType": "geometry",
+                "stylers": [
+                {
+                    "color": "#dfd2ae"
+                }
+                ]
+            },
+            {
+                "featureType": "poi",
+                "elementType": "labels.text",
+                "stylers": [
+                {
+                    "visibility": "off"
+                }
+                ]
+            },
+            {
+                "featureType": "poi",
+                "elementType": "labels.text.fill",
+                "stylers": [
+                {
+                    "color": "#93817c"
+                }
+                ]
+            },
+            {
+                "featureType": "poi.business",
+                "stylers": [
+                {
+                    "visibility": "off"
+                }
+                ]
+            },
+            {
+                "featureType": "poi.park",
+                "elementType": "geometry.fill",
+                "stylers": [
+                {
+                    "color": "#a5b076"
+                }
+                ]
+            },
+            {
+                "featureType": "poi.park",
+                "elementType": "labels.text",
+                "stylers": [
+                {
+                    "visibility": "off"
+                }
+                ]
+            },
+            {
+                "featureType": "poi.park",
+                "elementType": "labels.text.fill",
+                "stylers": [
+                {
+                    "color": "#447530"
+                }
+                ]
+            },
+            {
+                "featureType": "road",
+                "elementType": "geometry",
+                "stylers": [
+                {
+                    "color": "#f5f1e6"
+                }
+                ]
+            },
+            {
+                "featureType": "road.arterial",
+                "elementType": "geometry",
+                "stylers": [
+                {
+                    "color": "#fdfcf8"
+                }
+                ]
+            },
+            {
+                "featureType": "road.highway",
+                "elementType": "geometry",
+                "stylers": [
+                {
+                    "color": "#f8c967"
+                }
+                ]
+            },
+            {
+                "featureType": "road.highway",
+                "elementType": "geometry.stroke",
+                "stylers": [
+                {
+                    "color": "#e9bc62"
+                }
+                ]
+            },
+            {
+                "featureType": "road.highway.controlled_access",
+                "elementType": "geometry",
+                "stylers": [
+                {
+                    "color": "#e98d58"
+                }
+                ]
+            },
+            {
+                "featureType": "road.highway.controlled_access",
+                "elementType": "geometry.stroke",
+                "stylers": [
+                {
+                    "color": "#db8555"
+                }
+                ]
+            },
+            {
+                "featureType": "road.local",
+                "elementType": "labels",
+                "stylers": [
+                {
+                    "visibility": "off"
+                }
+                ]
+            },
+            {
+                "featureType": "road.local",
+                "elementType": "labels.text.fill",
+                "stylers": [
+                {
+                    "color": "#806b63"
+                }
+                ]
+            },
+            {
+                "featureType": "transit.line",
+                "elementType": "geometry",
+                "stylers": [
+                {
+                    "color": "#dfd2ae"
+                }
+                ]
+            },
+            {
+                "featureType": "transit.line",
+                "elementType": "labels.text.fill",
+                "stylers": [
+                {
+                    "color": "#8f7d77"
+                }
+                ]
+            },
+            {
+                "featureType": "transit.line",
+                "elementType": "labels.text.stroke",
+                "stylers": [
+                {
+                    "color": "#ebe3cd"
+                }
+                ]
+            },
+            {
+                "featureType": "transit.station",
+                "elementType": "geometry",
+                "stylers": [
+                {
+                    "color": "#dfd2ae"
+                }
+                ]
+            },
+            {
+                "featureType": "water",
+                "elementType": "geometry.fill",
+                "stylers": [
+                {
+                    "color": "#b9d3c2"
+                }
+                ]
+            },
+            {
+                "featureType": "water",
+                "elementType": "labels.text.fill",
+                "stylers": [
+                {
+                    "color": "#92998d"
+                }
+                ]
+            }
+        ]
     }
     map = new google.maps.Map(document.getElementById('map'), mapOptions);
 }
@@ -96,10 +369,28 @@ function initMap() {
     //     zoom: 14,
     //     center: place
     // });
+
+    //マーカーの画像
+    var image;
+    if(temple_number < 10)
+    {
+        image = "http://127.0.0.1:5000/static/img/temples_pin/temple_pin0" + temple_number + ".png" 
+        //console.log("temple_number < 10");
+    }
+    else{
+        image = "http://127.0.0.1:5000/static/img/temples_pin/temple_pin" + temple_number + ".png" 
+        //console.log("temple_number >= 10");
+    }
+    //console.log("image:::" + image);
+    
     //マーカーを立てる
     temple_marker = new google.maps.Marker({
         position: temple_latlng,
-        map: map
+        map: map,
+        icon:{
+            url:image,
+            scaledSize : new google.maps.Size(50, 32)
+        }
     });
 
     //吹き出し
@@ -241,7 +532,11 @@ function initMap() {
         //マーカーを立てる
         gourmet_marker[i] = new google.maps.Marker({
             position: {lat:parseFloat(gourmet_lat[i]),lng:parseFloat(gourmet_lng[i])},
-            map: map
+            map: map,
+            icon:{
+                url:"http://127.0.0.1:5000/static/img/gourmet_pin.png",
+                scaledSize : new google.maps.Size(41, 54)
+            }
         });
 
         //吹き出し
@@ -311,7 +606,11 @@ function initMap() {
         //マーカーを立てる
         inn_marker[i] = new google.maps.Marker({
             position: {lat:parseFloat(inn_lat[i]),lng:parseFloat(inn_lng[i])},
-            map: map
+            map: map,
+            icon:{
+                url:"http://127.0.0.1:5000/static/img/inn_pin.png",
+                scaledSize : new google.maps.Size(41, 54)
+            }
         });
 
         //吹き出し
@@ -363,7 +662,11 @@ function initMap() {
         //マーカーを立てる
         convenience_marker[i] = new google.maps.Marker({
             position: {lat:parseFloat(convenience_lat[i]),lng:parseFloat(convenience_lng[i])},
-            map: map
+            map: map,
+            icon:{
+                url:"http://127.0.0.1:5000/static/img/convenience_pin.png",
+                scaledSize : new google.maps.Size(41, 54)
+            }
         });
 
         //吹き出し
@@ -422,7 +725,11 @@ function initMap() {
         //マーカーを立てる
         interesting_marker[i] = new google.maps.Marker({
             position: {lat:parseFloat(interesting_lat[i]),lng:parseFloat(interesting_lng[i])},
-            map: map
+            map: map,
+            icon:{
+                url:"http://127.0.0.1:5000/static/img/interesting_pin.png",
+                scaledSize : new google.maps.Size(41, 54)
+            }
         });
 
         //吹き出し
@@ -434,6 +741,60 @@ function initMap() {
         //マーカーをクリックしたとき吹き出しを表示
         interesting_marker[i].addListener('click', function() {
             interesting_infoWindow[i].open(map, interesting_marker[i]);
+        });
+    }
+
+    // //道の駅のピン--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    //名前
+    roadside_station_name = document.getElementById( "roadside_station_name" ).value;
+
+    roadside_station_name = roadside_station_name.split(/[(',)]/);
+
+    roadside_station_name = roadside_station_name.filter(Boolean);
+
+
+    //情報
+    roadside_station_information = document.getElementById( "roadside_station_information" ).value;
+
+    roadside_station_information = roadside_station_information.split(/[(',)]/);
+
+    roadside_station_information = roadside_station_information.filter(Boolean);
+
+    //緯度
+    roadside_station_lat = document.getElementById( "roadside_station_lat" ).value;
+
+    roadside_station_lat = roadside_station_lat.split(/[(',)]/);
+
+    roadside_station_lat = roadside_station_lat.filter(Boolean);
+
+    //経度
+    roadside_station_lng = document.getElementById( "roadside_station_lng" ).value;
+
+    roadside_station_lng = roadside_station_lng.split(/[(',)]/);
+
+    roadside_station_lng = roadside_station_lng.filter(Boolean);
+
+    for (let i = 0; i < roadside_station_name.length; i++) {//ピンを多数立てるためにリストの数だけ回す
+
+        //マーカーを立てる
+        roadside_station_marker[i] = new google.maps.Marker({
+            position: {lat:parseFloat(roadside_station_lat[i]),lng:parseFloat(roadside_station_lng[i])},
+            map: map,
+            icon:{
+                url:"http://127.0.0.1:5000/static/img/roadside_pin.png",
+                scaledSize : new google.maps.Size(41, 54)
+            }
+        });
+
+        //吹き出し
+        roadside_station_information_html[i] = "<div class='information'>" + roadside_station_name[i] + "<br>" + roadside_station_information[i] + "</div>";//informationをhtmlに変換
+        roadside_station_infoWindow[i] = new google.maps.InfoWindow({
+            content: roadside_station_information_html[i] // 吹き出しに表示する内容 改行したいときはdb内で<br>を記述
+        });
+
+        //マーカーをクリックしたとき吹き出しを表示
+        roadside_station_marker[i].addListener('click', function() {
+            roadside_station_infoWindow[i].open(map, roadside_station_marker[i]);
         });
     }
 

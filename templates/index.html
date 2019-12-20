@@ -1,29 +1,48 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <link rel="stylesheet" type="text/css" href="../static/css/index.css">
+<link rel="stylesheet" type="text/css" href="../static/css/index.css">
 
-    <p>トップページ</p>
-
-    <div class = "container">
-
-        <!--cssや、文字になっているところ（”地図から探すなど”）を変えると飾れる -->
-        <div class = "menus" id = "map_search">
-            <a href="/sikoku_map" id = "map_search_contents">地図から探す</a>
-        </div>
-
-        <div class = "menus" id = "temple_search">
-            <a href="/temple_search" id = "temple_search_contents">お寺から探す</a>
-        </div>
-
-        <div class = "menus" id = "address_search">
-            <a href="" id = "address_search_contents">住所、現在地から探す</a>
-        </div>
-
-        <div class = "menus" id = "information">
-            <a href="" id = "information_contents">お遍路基本情報</a>
-        </div>
-
+<div class="background">
+    <div class="top_container">
+        <img src="../static/img/top_logo.svg">
     </div>
+    
+    <div class="text">
+        <p>テキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキスト</p>
+    </div>
+    <div class = "menu_wrapper">
+        <div class="menu_container">
+            <!--cssや、文字になっているところ（”地図から探すなど”）を変えると飾れる -->
+            <div class = "menus" id = "map_search">
+                <a href="/sikoku_map" class="menus_link">
+                    <img src="../static/img/map_select.png" alt="マップ">
+                    <p>エリアでえらぶ</p>
+                </a>
+            </div>
 
+            <div class = "menus" id = "temple_search">
+                <a href="/temple_search" class="menus_link">
+                    <img src="../static/img/tenple_select.png" alt="お寺">
+                    <p>お寺からえらぶ</p>
+                </a>
+            </div>
+
+            <div class = "menus" id = "address_search">
+                <a href="#" class="menus_link">
+                    <img src="../static/img/now_place.png" alt="お遍路さん">
+                    <p>現在地や<br>
+                    住所からえらぶ</p>
+                </a>
+            </div>
+
+            <div class = "menus" id = "information">
+                <a href="#" class="menus_link"><br>
+                    お遍路まめ知識
+                </a>
+            </div>
+        </div>
+    </div>
+    <footer></footer>
+</div>
 {% endblock %}

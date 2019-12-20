@@ -5,15 +5,11 @@
 <header>
     <div class="header_temple_search_select">
         <div class="logo_temple_search_select">
-            <a href="#"></a>
-        </div>
-        <div class="title_temple_search_select">
-            <p>てくてくおへんろ</p>
-            <p>お寺からえらぶ</p>
+            <img src="../static/img/header_logo.png" ><!-- てくてくおへんろロゴ -->
         </div>
         <div class="hum_menu"> <!-- このクラスがハンバーガーボタンになる -->
-            <a href="javascript">
-                <span></span>
+            <a href="#">
+                <span>ハンバーガー</span>
                 <span></span>
                 <span></span>
             </a>
@@ -21,14 +17,22 @@
     </div>
 </header>
 
+<div class="pulldown_top_wrapper">
+    <div class="pulldown_top_container">
+        <img src="../static/img/tenple_select.png"> <!-- お寺アイコン -->
+        <p>お寺からえらぶ</p>
+    </div>
+</div>
+
 <div class="pulldown_wrapper">
     <div class="pulldown_container">
-        <div class="pulldown_tokushima">
+        <div class="pulldown">
         <!-- プルダウンを表示 -->
             <p>徳島県</p>
             <!-- プルダウンを選びボタンを押すと寺の番がapp.pyの/temple_search_selectに送られる -->
-            <form class ="pulldown, tokushima" action="/temple_search_select" method="post">
-                <select name="temple_number">
+            <form  action="/temple_search_select" method="post">
+                <select class ="pulldown_tokushima" name="temple_number">
+                    <option value="" hidden>選択してください</option>
                     <option value="1">1番札所 霊山寺</option>
                     <option value="2">2番札所 極楽寺</option>
                     <option value="3">3番札所 金泉寺</option>
@@ -53,14 +57,15 @@
                     <option value="22">22番札所 平等寺</option>
                     <option value="23">23番札所 薬王寺</option>
                 </select>
-                <input type="submit" name="save" value="GO">
+                <input type="submit" name="save" value="検索">
             </form>
         </div>
 
-        <div class="pulldown_kochi">
+        <div class="pulldown">
             <p>高知県</p>
-            <form class ="pulldown, kochi" action="/temple_search_select" method="post">
-                <select name="temple_number">
+            <form action="/temple_search_select" method="post">
+                <select class ="pulldown_kochi" name="temple_number">
+                    <option value="" hidden>選択してください</option>
                     <option value="24">24番札所 最御崎寺(東寺)</option>
                     <option value="25">25番札所 津照寺(津寺)</option>
                     <option value="26">26番札所 金剛頂寺(西寺)</option>
@@ -78,14 +83,15 @@
                     <option value="38">38番札所 金剛福寺</option>
                     <option value="39">39番札所 延光寺</option>
                 </select>
-                <input type="submit" name="save" value="GO">
+                <input type="submit" name="save" value="検索">
             </form>
         </div>
 
-        <div class="pulldown_ehime">
+        <div class="pulldown">
             <p>愛媛県</p>
-            <form class="pulldown, ehime" action="/temple_search_select" method="post">
-                <select name="temple_number">
+            <form action="/temple_search_select" method="post">
+                <select class="pulldown_ehime" name="temple_number">
+                    <option value="" hidden>選択してください</option>
                     <option value="40">40番札所 観自在寺</option>
                     <option value="41">41番札所 龍光寺</option>
                     <option value="42">42番札所 佛木寺</option>
@@ -114,14 +120,15 @@
                     <option value="65">65番札所 三角寺</option>
                     <option value="66">66番札所 雲辺寺</option>
                 </select>
-                <input type="submit" name="save" value="GO">
+                <input type="submit" name="save" value="検索">
             </form>
         </div>
 
-        <div class="pulldown_kagawa">
+        <div class="pulldown">
             <p>香川県</p>
-            <form class="pulldown, kagawa" action="/temple_search_select" method="post">
-                <select name="temple_number">
+            <form  action="/temple_search_select" method="post">
+                <select class="pulldown_kagawa" name="temple_number">
+                    <option value="" hidden>選択してください</option>
                     <option value="67">67番札所 大興寺(小松尾寺)</option>
                     <option value="68">68番札所 神恵院(琴弾八幡)</option>
                     <option value="69">69番札所 観音寺</option>
@@ -145,16 +152,11 @@
                     <option value="87">87番札所 長尾寺</option>
                     <option value="88">88番札所 大窪寺</option>
                 </select>
-                <input type="submit" name="save" value="GO">
+                <input type="submit" name="save" value="検索">
             </form>
         </div>
     </div>
 </div>
 
-<footer>
-    <div class="footer_temple_search_select">
-        <p>てくてくおへんろ</p>
-    </div>
-</footer>
 
 {% endblock %}
