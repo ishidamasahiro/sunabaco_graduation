@@ -1,3 +1,13 @@
+######################################
+#今後の展望
+#JS,Pythonの処理を関数やクラスにしてまとめることで行を削減
+# (sikoku_map.jsは少しやってる。関数をまとめた別ファイルをつくって使いまわしたい)
+#
+#Python>JS間の変数受け渡しをJSonを使うことで簡略化←こっちもめんどくさそう
+#
+######################################
+
+
 import sqlite3
 import datetime
 from flask import Flask,render_template,request,redirect,session
@@ -56,6 +66,12 @@ def temple_search():
 @app.route("/temple_search_select",methods = ["POST"])
 def temple_search_select():
     temple_number = request.form.get("temple_number")
+    print("temple_number:::::")
+    print(temple_number)
+    
+    #もし000番ならリロード
+    if int(temple_number) == 000:
+        return render_template("temple_search.html")
     
     #データベースから寺の位置情報を持ってくる
     conn_temple = sqlite3.connect("temple.db")
@@ -90,6 +106,10 @@ def temple_search_select():
     c_distance = conn_distance.cursor()
     c_distance.execute("select distance from route where route_number = ? or route_number = ?",("/" + str(before_temple) + "/" + temple_number + "/","/" + temple_number + "/" + str(after_temple) + "/"))
     route_distance = c_distance.fetchall()#[(19.7,), (75.4,)]
+    
+    c_distance.execute("select caution from route where route_number = ? or route_number = ?",("/" + str(before_temple) + "/" + temple_number + "/","/" + temple_number + "/" + str(after_temple) + "/"))
+    route_caution = c_distance.fetchall()
+    
     #print(route_distance)
     conn_distance.close()
     
@@ -331,8 +351,7 @@ def temple_search_select():
                             roadside_station_name = roadside_station_name,roadside_station_information = roadside_station_information,roadside_station_lat = roadside_station_lat,roadside_station_lng = roadside_station_lng,
                             route_BandA = route_BandA,
                             route_distance = route_distance,
-                            
-                            
+                            route_caution = route_caution,
                             )
 #-----------------------------------------------------------------------------
 
@@ -341,6 +360,13 @@ def temple_search_select():
 def route_map():
     Start_temple_number = request.form.get("Start_temple_number")
     Goal_temple_number = request.form.get("Goal_temple_number")
+    
+    #逆順時に寺周辺の施設を検索できるよう変数をつくる
+    pre_Start_temple_number = Start_temple_number
+    pre_Goal_temple_number = Goal_temple_number
+    if pre_Start_temple_number > pre_Goal_temple_number:
+            pre_Start_temple_number = Goal_temple_number
+            pre_Goal_temple_number = Start_temple_number
     
     #----------スタートとゴールの座標を取得----------
     #データベースから寺の位置情報を持ってくる
@@ -542,7 +568,7 @@ def route_map():
     SandG_gourmet_articles = 0
     
     #-------寺周辺-------
-    for i in range(int(Start_temple_number),int(Goal_temple_number)+1):
+    for i in range(int(pre_Start_temple_number),int(pre_Goal_temple_number)+1):
         #名前
         c_gourmet.execute("select name from gourmet_place where temple_number = ?",
                         (i,))
@@ -676,7 +702,7 @@ def route_map():
     SandG_inn_articles = 0
     
     #-------寺周辺-------
-    for i in range(int(Start_temple_number),int(Goal_temple_number)+1):
+    for i in range(int(pre_Start_temple_number),int(pre_Goal_temple_number)+1):
         #名前
         c_inn.execute("select name from inn_place where temple_number = ?",
                         (i,))
@@ -778,7 +804,7 @@ def route_map():
     SandG_roadside_station_articles = 0
     
     #-------寺周辺-------
-    for i in range(int(Start_temple_number),int(Goal_temple_number)+1):
+    for i in range(int(pre_Start_temple_number),int(pre_Goal_temple_number)+1):
         #名前
         c_roadside_station.execute("select name from roadsidestation where temple_number = ?",
                         (i,))
@@ -884,7 +910,7 @@ def route_map():
     SandG_interesting_articles = 0
     
     #-------寺周辺-------
-    for i in range(int(Start_temple_number),int(Goal_temple_number)+1):
+    for i in range(int(pre_Start_temple_number),int(pre_Goal_temple_number)+1):
         #名前
         c_interesting.execute("select name from interesting_place where temple_number = ?",
                         (i,))
@@ -985,7 +1011,7 @@ def route_map():
     SandG_convenience_articles = 0
     
     #-------寺周辺-------
-    for i in range(int(Start_temple_number),int(Goal_temple_number)+1):
+    for i in range(int(pre_Start_temple_number),int(pre_Goal_temple_number)+1):
         #名前
         c_convenience.execute("select name from convenience_place where temple_number = ?",
                         (i,))
@@ -1154,7 +1180,55 @@ def route_map():
 #-----四国地図-----
 @app.route("/sikoku_map")
 def sikoku_map():
-    return render_template("sikoku_map.html")
+    
+    #全ての寺を表示させる
+    all_temple_number = []
+    all_temple_name = []
+    all_temple_information = []
+    all_temple_lat = []
+    all_temple_lng = []
+    Provisional = None
+    
+    #データベースから寺の位置情報を持ってくる
+    conn_temple = sqlite3.connect("temple.db")
+    c_temple = conn_temple.cursor()
+    #寺の番でdbから呼び出す
+    for i in range(88):
+        c_temple.execute("select temple_number from temple_place where temple_number = ?",(i+1,))
+        Provisional = c_temple.fetchone()
+        if Provisional != []:
+            all_temple_number.append(Provisional)
+            
+        c_temple.execute("select name from temple_place where temple_number = ?",(i+1,))
+        Provisional = c_temple.fetchone()
+        if Provisional != []:
+            all_temple_name.append(Provisional)
+            
+        c_temple.execute("select information from temple_place where temple_number = ?",(i+1,))
+        Provisional = c_temple.fetchone()
+        if Provisional != []:
+            all_temple_information.append(Provisional)
+            
+        c_temple.execute("select lat from temple_place where temple_number = ?",(i+1,))
+        Provisional = c_temple.fetchone()
+        if Provisional != []:
+            all_temple_lat.append(Provisional)
+            
+        c_temple.execute("select lng from temple_place where temple_number = ?",(i+1,))
+        Provisional = c_temple.fetchone()
+        if Provisional != []:
+            all_temple_lng.append(Provisional)
+            
+    #print(all_temple_number)
+    
+    return render_template("sikoku_map.html",
+                            all_temple_number = all_temple_number,
+                            all_temple_name = all_temple_name,
+                            all_temple_information = all_temple_information,
+                            all_temple_lat = all_temple_lat,
+                            all_temple_lng = all_temple_lng)
+
+    conn_temple.close()
 
 #-----香川地図-----
 @app.route("/kagawa_map")
@@ -1184,6 +1258,15 @@ def googleMap_temple(temple_number):
     return render_template("googleMap_temple.html",temple_place = temple_place)
 #-----------------------------------------------------------------------------
 
+#-----豆知識-----
+@app.route("/tips")
+def tips():
+    return render_template("tips.html")
+
+#-----現在地や住所からえらぶ-----
+@app.route("/address_search")
+def address_search():
+    return render_template("address_search.html")
 
 
 #おまじない--------------------------------------------

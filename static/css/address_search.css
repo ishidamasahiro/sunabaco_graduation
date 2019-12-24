@@ -31,25 +31,25 @@ p{
 	top: 26px;
 }
 
-.header_temple_search_select{
+.header_address_search{
     display: flex;
     justify-content:space-between;
     align-items:center;
 }
 
 /*ヘッダーロゴ*/
-.header_temple_search_select img{
+.header_address_search img{
     width: 40%;
     height: auto;
     padding-top: 10px;
     padding-bottom: 10px;
 }
 
-.pulldown_top_wrapper{
-    background-color: #92D4F5;
+.address_search_top_wrapper{
+    background-color: #CBE069;
 }
 
-.pulldown_top_container{
+.address_search_top_container{
     display: flex;
     align-items: center;
     justify-content: center;
@@ -57,7 +57,7 @@ p{
 }
 
 /*お寺ロゴ*/
-.pulldown_top_container img{
+.address_search_top_container img{
     width: 15%;
     height: auto;
     padding-top: 10px;
@@ -65,7 +65,7 @@ p{
     padding-right: 20px;
 }
 
-.pulldown_top_container p{
+.address_search_top_container p{
     font-size: 20px;
 }
 
@@ -159,14 +159,3 @@ select.pulldown_tokushima{
     border-color: #228b22;
 }
 
-select.pulldown_kochi{
-    border-color: #4682b4;
-}
-
-select.pulldown_ehime{
-    border-color: #ffa500;
-}
-
-select.pulldown_kagawa{
-    border-color: #ffb6c1;
-}

@@ -28,11 +28,11 @@
     <div class="pulldown_container">
         <div class="pulldown">
         <!-- プルダウンを表示 -->
-            <p>徳島県</p>
+            <p class = "title_tokushima">徳島県</p>
             <!-- プルダウンを選びボタンを押すと寺の番がapp.pyの/temple_search_selectに送られる -->
             <form  action="/temple_search_select" method="post">
                 <select class ="pulldown_tokushima" name="temple_number">
-                    <option value="" hidden>選択してください</option>
+                    <option value="000">選択してください</option>
                     <option value="1">1番札所 霊山寺</option>
                     <option value="2">2番札所 極楽寺</option>
                     <option value="3">3番札所 金泉寺</option>
@@ -65,7 +65,7 @@
             <p>高知県</p>
             <form action="/temple_search_select" method="post">
                 <select class ="pulldown_kochi" name="temple_number">
-                    <option value="" hidden>選択してください</option>
+                    <option value="000">選択してください</option>
                     <option value="24">24番札所 最御崎寺(東寺)</option>
                     <option value="25">25番札所 津照寺(津寺)</option>
                     <option value="26">26番札所 金剛頂寺(西寺)</option>
@@ -91,7 +91,7 @@
             <p>愛媛県</p>
             <form action="/temple_search_select" method="post">
                 <select class="pulldown_ehime" name="temple_number">
-                    <option value="" hidden>選択してください</option>
+                    <option value="000">選択してください</option>
                     <option value="40">40番札所 観自在寺</option>
                     <option value="41">41番札所 龍光寺</option>
                     <option value="42">42番札所 佛木寺</option>
@@ -128,7 +128,7 @@
             <p>香川県</p>
             <form  action="/temple_search_select" method="post">
                 <select class="pulldown_kagawa" name="temple_number">
-                    <option value="" hidden>選択してください</option>
+                    <option value="000">選択してください</option>
                     <option value="67">67番札所 大興寺(小松尾寺)</option>
                     <option value="68">68番札所 神恵院(琴弾八幡)</option>
                     <option value="69">69番札所 観音寺</option>

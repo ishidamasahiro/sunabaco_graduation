@@ -100,19 +100,16 @@
 
     <!-- <script type="text/javascript" src="../static/js/googleMap_temple.js"></script> -->
     <div id="map"></div>
-    <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyASLi-n8-pABIIdHDkXXi0SLD42n5-mtX4&callback=initMap">
-    </script>
-
+    <!-- <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyASLi-n8-pABIIdHDkXXi0SLD42n5-mtX4&callback=initMap"></script> -->
     <!-- 次の札所 -->
-    <div>{{route_BandA[1][0]}}番札所 {{route_BandA[1][1]}}まで{{route_distance[1][0]}}km</div>
+    <div>{{route_BandA[1][0]}}番札所 {{route_BandA[1][1]}}まで{{route_distance[1][0]}}km {{route_caution[1][0]}}</div>
     <form class ="" action="/route_map" method="post">
         <input name="Start_temple_number" type="hidden" value="{{temple_place[0]}}">
         <input name="Goal_temple_number" type="hidden" value="{{route_BandA[1][0]}}">
         <input type="submit" name="save" value="ルート案内">
     </form>
     <!-- 前の札所 -->
-    <div>{{route_BandA[0][0]}}番札所 {{route_BandA[0][1]}}まで{{route_distance[0][0]}}km</div>
+    <div>{{route_BandA[0][0]}}番札所 {{route_BandA[0][1]}}まで{{route_distance[0][0]}}km {{route_caution[0][0]}}</div>
     <form class ="" action="/route_map" method="post">
         <input name="Start_temple_number" type="hidden" value="{{temple_place[0]}}">
         <input name="Goal_temple_number" type="hidden" value="{{route_BandA[0][0]}}">
@@ -222,6 +219,6 @@
         </div>
 
 
-    <!-- src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB89bWZUT6HKbzPlR35kyuVcBwiZP8YA5g&callback=initMap"> -->
     <script type="text/javascript" src="../static/js/googleMap_temple.js"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyASLi-n8-pABIIdHDkXXi0SLD42n5-mtX4&callback=initMap"></script>
 {% endblock %}

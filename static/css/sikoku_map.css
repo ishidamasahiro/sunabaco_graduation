@@ -1,0 +1,9 @@
+/* 吹き出しの中身 */
+.information{
+    color: cyan;
+}
+
+#map {
+    height: 400px;
+    width: 100%;
+}

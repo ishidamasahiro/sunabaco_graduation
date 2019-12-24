@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="../static/css/address_search.css">
+
+<header>
+    <div class="header_address_search">
+            <img src="../static/img/header_logo.png" ><!-- てくてくおへんろロゴ -->
+
+        <div class="hum"><!-- このクラスがハンバーガーボタンになる -->
+            <span class="hum_line hum_line1"></span>
+            <span class="hum_line hum_line2"></span>
+            <span class="hum_line hum_line3"></span>
+        </div>
+    </div>
+</header>
+
+<div class="address_search_top_wrapper">
+    <div class="address_search_top_container">
+        <img src="../static/img/now_place.png"> <!-- 住所から選ぶアイコン -->
+        <p>現在地や住所からえらぶ</p>
+    </div>
+</div>
+
+<div class="pulldown_wrapper">
+    <div class="pulldown_container">
+        <div class="pulldown">
+        <!-- プルダウンを表示 -->
+            <p>住所を入力してください</p>
+            <form  action="/temple_search_select" method="post">
+                <select class ="pulldown_tokushima" name="temple_number">
+                    <option value="" hidden>選択してください</option>
+                </select>
+                <input type="submit" name="save" value="検索">
+            </form>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

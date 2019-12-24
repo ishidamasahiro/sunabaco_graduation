@@ -1,0 +1,110 @@
+/*文字の色*/
+p {
+    color: black;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+/*ハンバーガーメニュー*/
+.hum {
+	position: relative;
+	width: 40px;
+	height: 40px;
+    cursor: pointer;
+    border-radius: 10px;
+	background-color: aqua;
+}
+.hum_line {
+	position: absolute;
+	left: 10px;
+	width: 20px;
+	height: 3px;
+    background-color: #333333;
+}
+.hum_line1 {
+	top: 10px;
+}
+.hum_line2 {
+	top: 18px;
+}
+.hum_line3 {
+	top: 26px;
+}
+
+.header_tips{
+    display: flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+/*ヘッダーロゴ*/
+.header_tips img{
+    width: 40%;
+    height: auto;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.tips_top_wrapper{
+    background-color: #ED7D31;
+}
+
+.tips_top_container{
+    margin: 0 auto;
+    text-align:center;
+    height: 63px;
+}
+
+.tips_top_container p{
+    color: white;
+    font-size: 20px;
+    line-height: 63px;
+}
+
+
+/*背景の雲*/
+.tips_wrapper{
+    background-image: url("../img/cloud.svg");
+    background-size: 40% auto;
+    background-attachment: scroll;
+    opacity: 0.5;
+}
+    /*animation: bgiLoop 10s linear infinite;
+}
+@keyframes bgiLoop {
+    0% { background-position: 0 0;}
+    100% { background-position: -100px 200px;}
+}*/
+
+.title {
+    color: #BFEBFB;
+    font-weight: bolder;
+    margin-bottom: 0px;
+}
+
+/*アイコン説明*/
+.tips_wrapper{
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.tips_container{
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    flex-direction: column;
+    width: 80%;
+    margin: 0 auto;
+}
+
+.tips{
+    margin: 20px 0;
+    background-color: white;
+}
+
+.tips_icon{
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+}

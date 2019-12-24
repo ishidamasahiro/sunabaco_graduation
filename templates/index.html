@@ -8,9 +8,12 @@
         <img src="../static/img/top_logo.svg">
     </div>
     
-    <div class="text">
-        <p>テキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキスト</p>
+    <div class="introduction_text">
+        <p>「てくてくおへんろルートマップ」は四国八十八か所をめぐるお遍路ルート上に、宿や食事など、へんろ旅に必要な情報を掲載しているサイトです。<br>
+            道の途中にある施設の数や位置がわかるから、安心して旅を続けられます。<br>
+            途中の観光スポットや見どころも載っているので、お遍路しながら観光も楽しんじゃいましょう！</p>
     </div>
+
     <div class = "menu_wrapper">
         <div class="menu_container">
             <!--cssや、文字になっているところ（”地図から探すなど”）を変えると飾れる -->
@@ -20,29 +23,63 @@
                     <p>エリアでえらぶ</p>
                 </a>
             </div>
-
             <div class = "menus" id = "temple_search">
                 <a href="/temple_search" class="menus_link">
                     <img src="../static/img/tenple_select.png" alt="お寺">
                     <p>お寺からえらぶ</p>
                 </a>
             </div>
-
             <div class = "menus" id = "address_search">
-                <a href="#" class="menus_link">
+                <a href="/address_search" class="menus_link">
                     <img src="../static/img/now_place.png" alt="お遍路さん">
                     <p>現在地や<br>
                     住所からえらぶ</p>
                 </a>
             </div>
-
             <div class = "menus" id = "information">
-                <a href="#" class="menus_link"><br>
+                <a href="/tips" class="menus_link"><br>
                     お遍路まめ知識
                 </a>
             </div>
         </div>
     </div>
-    <footer></footer>
+    
+    <div class="information_text_wrapper">
+        <div class="information_text_container">
+            <p><span class="title">このマップの使い方</span><br>
+            お寺の名前や地図上からお寺を選びます。そこから次に目指す寺を入力するとその間のルートと施設が表示されます。<br>
+            距離や施設の数も表示されるので、休憩や食事、買い物などの目安にしてください。</p>
+        </div>
+    </div>
+
+    <div class="information_wrapper">
+        <div class="information_container">
+            <p class="title">マップに掲載されている情報とアイコン</p>
+            <div class="icon" id="temple_icon">
+                <img src="" alt="お寺">
+                <p>８８箇所霊場の寺。番号は札番です。</p>
+            </div>
+            <div class="icon" id="hotel_icon">
+                <img src="" alt="宿">
+                <p>宿の位置です。GoogleMapで評価の高いものを掲載しています。</p>
+            </div>
+            <div class="icon" id="restaurant_icon">
+                <img src="" alt="グルメ">
+                <p>軽食などを含めた食事ポイントです。</p>
+            </div>
+            <div class="icon" id="convenience_store_icon">
+                <img src="" alt="コンビニ">
+                <p>コンビニの位置です。</p>
+            </div>
+            <div class="icon" id="road_station_icon">
+                <img src="" alt="道の駅">
+                <p>道の駅の位置です</p>
+            </div>
+            <div class=icon id="sightseeing_spot_icon">
+                <img src="" alt="観光">
+                <p>見どころポイントです。弘法大師ゆかりの場所や、観光スポットなどを示しています。</p>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}
