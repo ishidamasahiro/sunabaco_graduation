@@ -2,7 +2,7 @@
 .background{
     background-image: url("../img/cloud.svg");
     background-size: 40%;
-    opacity: 0.5;
+    /* opacity: 0.5; */
     background-attachment: scroll;
 }
 

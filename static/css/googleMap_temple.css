@@ -1,10 +1,170 @@
-/* 吹き出しの中身 */
-.information{
-    color: cyan;
-}
-
 #map {
     height: 400px;
     width: 100%;
+
+    /* background-image: url("../img/cloud.svg");
+    background-size: 40% auto;
+    height: 100vh;
+    opacity: 0.5; */
 }
 
+/* ページの装飾 */
+/*ハンバーガーメニュー*/
+.hum {
+	position: relative;
+	width: 40px;
+	height: 40px;
+    cursor: pointer;
+    border-radius: 10px;
+	background-color: aqua;
+}
+.hum_line {
+	position: absolute;
+	left: 10px;
+	width: 20px;
+	height: 3px;
+    background-color: #333333;
+}
+.hum_line1 {
+	top: 10px;
+}
+.hum_line2 {
+	top: 18px;
+}
+.hum_line3 {
+	top: 26px;
+}
+
+.header_temple_search_select{
+    display: flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+/*ヘッダーロゴ*/
+.header_temple_search_select img{
+    width: 40%;
+    height: auto;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.pulldown_top_wrapper{
+    background-color: #92D4F5;
+}
+
+.pulldown_top_container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 63px;
+}
+
+/*背景の雲*/
+.wrapper{
+    background-image: url("../img/cloud.svg");
+    background-size: 40% auto;
+    height: 100vh;
+    /* opacity: 0.5; */
+}
+
+/* 一番上の寺名表示 */
+#top_temple_name{
+    color: white;
+    border-radius: 5px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    /* width: 50px; */
+    /* margin-bottom: 5px; */
+    background-color: #92D4F5;
+}
+
+/* 次の寺 */
+#next_temple{
+    color: white;
+    border-radius: 5px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    /* width: 50px; */
+    /* margin-bottom: 5px; */
+    margin-top: 5px;
+    background-color: rgb(99, 218, 182);
+}
+
+/* 前の寺 */
+#previous_temple{
+    color: white;
+    border-radius: 5px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    /* width: 50px; */
+    /* margin-bottom: 5px; */
+    margin-top: 5px;
+    background-color: rgb(206, 218, 106);
+}
+
+/* 注意書き */
+.caution{
+    background-color: rgb(241, 101, 160);
+}
+
+/* ボタン */
+.search_bottom{
+    height:35px; 
+    border-radius: 5px;
+    background-color: cornsilk;
+}
+
+/* プルダウン */
+/* .pulldown_container{
+    width: 100%;
+    margin: 0 auto;
+} */
+
+.pulldown{
+    /* padding-top: 20px; */
+    /* padding-bottom: 20px; */
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; 
+    flex-direction: column;
+    width: 100%;
+    margin: 0 auto;
+}
+
+/* .pulldown_form{
+    width:200px; 
+    height:40px;
+} */
+
+.pulldown p{
+    margin: 10px 0px 0px 0px;
+    color: white;
+    border-radius: 5px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    /* width: 50px; */
+    /* margin-bottom: 5px; */
+    background-color: #92D4F5;
+}
+
+select{
+	-webkit-appearance: none;
+	-moz-appearance: none;
+    appearance: none;
+	font-size: 93%;
+    line-height: 1.1em;
+    border-style: solid;
+    border-radius: 10px;
+    border-width: 3px;
+    width:250px; 
+    height:35px; 
+    background-image: url(../img/ifn0244.png);
+    background-repeat: no-repeat;
+    background-size: 32px 30px;
+    background-position: right 10px center;
+}

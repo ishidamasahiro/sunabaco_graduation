@@ -128,6 +128,7 @@ function initialize() {
     var mapOptions = {
         zoom: 16,
         center: latlng,
+        gestureHandling: "greedy",
         styles:
         [
             {
@@ -706,6 +707,8 @@ function initMap_WayPoints() {
     for(var i = 0; i <= waypoints_temple_lat.length; i++)
     {
         //余計な記号は削除
+        //console.log("waypoints_temple_lat:::" + waypoints_temple_lat);
+        //console.log("waypoints_temple_lat.length:::" + waypoints_temple_lat.length);
         //console.log("in:" + i);
         if(String(waypoints_temple_lat[i]) != strmaekakko &&
             String(waypoints_temple_lat[i]) != strusirokakko &&
@@ -714,6 +717,9 @@ function initMap_WayPoints() {
         {
             //console.log(String(waypoints_temple_lat) == '[');
             //console.log("ok" + i);
+            //console.log("waypoints_temple_lat[i]:::" + waypoints_temple_lat[i]);
+            //console.log("waypoints_temple_lng[i]:::" + waypoints_temple_lng[i]);
+
             waypoints_points.push(new google.maps.LatLng(waypoints_temple_lat[i],waypoints_temple_lng[i]));
         }
     }

@@ -1,125 +1,151 @@
 {% extends "base.html" %}
 {% block content %}
     <link rel="stylesheet" type="text/css" href="../static/css/googleMap_temple.css">
-    <p>グーグルマップのページ・寺基準</p>
-    <div>{{temple_place[0]}}番札所  {{temple_place[1]}}</div>
-    <!-- <input type="text" value="{{temple_place[0]}}" name="task"> -->
+    <link rel="stylesheet" type="text/css" href="../static/css/information.css">
 
-    <!-- 寺の住所 -->
-    <!-- <input id="temple_address" type="hidden" value="{{temple_place[0]}}"> -->
-    <!-- 寺の番号 -->
-    <input id="temple_number" type="hidden" value="{{temple_place[0]}}">
-    <!-- 寺の名前 -->
-    <input id="temple_name" type="hidden" value="{{temple_place[1]}}">
-    <!-- 吹き出しの説明文 -->
-    <input id="temple_information" type="hidden" value="{{temple_place[2]}}">
-    <!-- 緯度 -->
-    <input id="temple_lat" type="hidden" value="{{temple_place[3]}}">
-    <!-- 経度 -->
-    <input id="temple_lng" type="hidden" value="{{temple_place[4]}}">
-    <!-- 寺の電話番号 -->
-    <!-- <input id="temple_phone_number" type="hidden" value="{{temple_place[4]}}"> -->
-
-
-    <!-- html内のfor文はpython式 -->
-    <!-- {% for i in gourmet_address %}
-        <input class="gourmet_address[]" name = "gourmet_address[][address]" value = "{{i}}" >
-    {% endfor %} -->
-
+    <header>
+        <div class="header_temple_search_select">
+            <!-- <div class="logo_temple_search_select"> -->
+                <img src="../static/img/header_logo.png" ><!-- てくてくおへんろロゴ -->
     
-    <!-- グルメの住所 -->
-    <!-- <input id="gourmet_address" type="hidden" value="{{gourmet_address}}"> -->
-    <!-- グルメの寺番号 -->
-    <!-- <input id="gourmet_number" type="hidden" value="{{gourmet_number}}"> -->
-    <!-- グルメの名前 -->
-    <input id="gourmet_name" type="hidden" value="{{gourmet_name}}">
-    <!-- グルメの緯度 -->
-    <input id="gourmet_lat" type="hidden" value="{{gourmet_lat}}">
-    <!-- グルメの経度 -->
-    <input id="gourmet_lng" type="hidden" value="{{gourmet_lng}}">
-    <!-- 吹き出しの説明文 -->
-    <input id="gourmet_information" type="hidden" value="{{gourmet_information}}">
-    <!-- グルメの電話番号 -->
-    <input id="gourmet_phone_number" type="hidden" value="{{gourmet_phone_number}}">
+            <div class="hum"> <!-- このクラスがハンバーガーボタンになる -->
+                <span class="hum_line hum_line1"></span>
+                <span class="hum_line hum_line2"></span>
+                <span class="hum_line hum_line3"></span>
+            </div>
+        </div>
+    </header>
+
+    <div class = "wrapper">
+        <!-- <p>グーグルマップのページ・寺基準</p> -->
+        <div id = "top_temple_name">{{temple_place[0]}}番札所  {{temple_place[1]}}</div>
+        <!-- <input type="text" value="{{temple_place[0]}}" name="task"> -->
+
+        <!-- 寺の住所 -->
+        <!-- <input id="temple_address" type="hidden" value="{{temple_place[0]}}"> -->
+        <!-- 寺の番号 -->
+        <input id="temple_number" type="hidden" value="{{temple_place[0]}}">
+        <!-- 寺の名前 -->
+        <input id="temple_name" type="hidden" value="{{temple_place[1]}}">
+        <!-- 吹き出しの説明文 -->
+        <input id="temple_information" type="hidden" value="{{temple_place[2]}}">
+        <!-- 緯度 -->
+        <input id="temple_lat" type="hidden" value="{{temple_place[3]}}">
+        <!-- 経度 -->
+        <input id="temple_lng" type="hidden" value="{{temple_place[4]}}">
+        <!-- 寺の電話番号 -->
+        <!-- <input id="temple_phone_number" type="hidden" value="{{temple_place[4]}}"> -->
 
 
-    <!-- 宿の住所 -->
-    <!-- <input id="inn_address" type="hidden" value="{{inn_address}}"> -->
-    <!-- 宿の名前 -->
-    <input id="inn_name" type="hidden" value="{{inn_name}}">
-    <!-- 吹き出しの説明文 -->
-    <input id="inn_information" type="hidden" value="{{inn_information}}">
-    <!-- 宿の電話番号 -->
-    <input id="inn_phone_number" type="hidden" value="{{inn_phone_number}}">
-    <!-- 宿の緯度 -->
-    <input id="inn_lat" type="hidden" value="{{inn_lat}}">
-    <!-- 宿の経度 -->
-    <input id="inn_lng" type="hidden" value="{{inn_lng}}">
+        <!-- html内のfor文はpython式 -->
+        <!-- {% for i in gourmet_address %} -->
+            <!-- <input class="gourmet_address[]" name = "gourmet_address[][address]" value = "{{i}}" > -->
+        <!-- {% endfor %} -->
+
+        
+        <!-- グルメの住所 -->
+        <!-- <input id="gourmet_address" type="hidden" value="{{gourmet_address}}"> -->
+        <!-- グルメの寺番号 -->
+        <!-- <input id="gourmet_number" type="hidden" value="{{gourmet_number}}"> -->
+        <!-- グルメの名前 -->
+        <input id="gourmet_name" type="hidden" value="{{gourmet_name}}">
+        <!-- グルメの緯度 -->
+        <input id="gourmet_lat" type="hidden" value="{{gourmet_lat}}">
+        <!-- グルメの経度 -->
+        <input id="gourmet_lng" type="hidden" value="{{gourmet_lng}}">
+        <!-- 吹き出しの説明文 -->
+        <input id="gourmet_information" type="hidden" value="{{gourmet_information}}">
+        <!-- グルメの電話番号 -->
+        <input id="gourmet_phone_number" type="hidden" value="{{gourmet_phone_number}}">
 
 
-    <!-- コンビニの住所 -->
-    <!-- <input id="convenience_address" type="hidden" value="{{convenience_address}}"> -->
-    <!-- コンビニの名前 -->
-    <input id="convenience_name" type="hidden" value="{{convenience_name}}">
-    <!-- 宿の緯度 -->
-    <input id="convenience_lat" type="hidden" value="{{convenience_lat}}">
-    <!-- 宿の経度 -->
-    <input id="convenience_lng" type="hidden" value="{{convenience_lng}}">
-    <!-- コンビニの説明文 -->
-    <!-- <input id="convenience_information" type="hidden" value="{{convenience_information}}"> -->
-    <!-- コンビニの電話番号 -->
-    <!-- <input id="convenience_phone_number" type="hidden" value="{{convenience_phone_number}}"> -->
+        <!-- 宿の住所 -->
+        <!-- <input id="inn_address" type="hidden" value="{{inn_address}}"> -->
+        <!-- 宿の名前 -->
+        <input id="inn_name" type="hidden" value="{{inn_name}}">
+        <!-- 吹き出しの説明文 -->
+        <input id="inn_information" type="hidden" value="{{inn_information}}">
+        <!-- 宿の電話番号 -->
+        <input id="inn_phone_number" type="hidden" value="{{inn_phone_number}}">
+        <!-- 宿の緯度 -->
+        <input id="inn_lat" type="hidden" value="{{inn_lat}}">
+        <!-- 宿の経度 -->
+        <input id="inn_lng" type="hidden" value="{{inn_lng}}">
 
 
-    <!-- スポットの住所 -->
-    <!-- <input id="interesting_address" type="hidden" value="{{interesting_address}}"> -->
-    <!-- スポットの名前 -->
-    <input id="interesting_name" type="hidden" value="{{interesting_name}}">
-    <!-- スポットの説明文 -->
-    <input id="interesting_information" type="hidden" value="{{interesting_information}}">
-    <!-- スポットの緯度 -->
-    <input id="interesting_lat" type="hidden" value="{{interesting_lat}}">
-    <!-- スポットの経度 -->
-    <input id="interesting_lng" type="hidden" value="{{interesting_lng}}">
-    <!-- スポットの電話番号 -->
-    <!-- <input id="convenience_phone_number" type="hidden" value="{{convenience_phone_number}}"> -->
-
-    <!-- 道の駅の住所 -->
-    <!-- <input id="interesting_address" type="hidden" value="{{interesting_address}}"> -->
-    <!-- 道の駅の名前 -->
-    <input id="roadside_station_name" type="hidden" value="{{roadside_station_name}}">
-    <!-- 道の駅の説明文 -->
-    <input id="roadside_station_information" type="hidden" value="{{roadside_station_information}}">
-    <!-- 道の駅の緯度 -->
-    <input id="roadside_station_lat" type="hidden" value="{{roadside_station_lat}}">
-    <!-- 道の駅の経度 -->
-    <input id="roadside_station_lng" type="hidden" value="{{roadside_station_lng}}">
-    <!-- 道の駅の電話番号 -->
-    <!-- <input id="convenience_phone_number" type="hidden" value="{{convenience_phone_number}}"> -->
+        <!-- コンビニの住所 -->
+        <!-- <input id="convenience_address" type="hidden" value="{{convenience_address}}"> -->
+        <!-- コンビニの名前 -->
+        <input id="convenience_name" type="hidden" value="{{convenience_name}}">
+        <!-- 宿の緯度 -->
+        <input id="convenience_lat" type="hidden" value="{{convenience_lat}}">
+        <!-- 宿の経度 -->
+        <input id="convenience_lng" type="hidden" value="{{convenience_lng}}">
+        <!-- コンビニの説明文 -->
+        <!-- <input id="convenience_information" type="hidden" value="{{convenience_information}}"> -->
+        <!-- コンビニの電話番号 -->
+        <!-- <input id="convenience_phone_number" type="hidden" value="{{convenience_phone_number}}"> -->
 
 
-    <!-- <script type="text/javascript" src="../static/js/googleMap_temple.js"></script> -->
-    <div id="map"></div>
-    <!-- <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyASLi-n8-pABIIdHDkXXi0SLD42n5-mtX4&callback=initMap"></script> -->
-    <!-- 次の札所 -->
-    <div>{{route_BandA[1][0]}}番札所 {{route_BandA[1][1]}}まで{{route_distance[1][0]}}km {{route_caution[1][0]}}</div>
-    <form class ="" action="/route_map" method="post">
-        <input name="Start_temple_number" type="hidden" value="{{temple_place[0]}}">
-        <input name="Goal_temple_number" type="hidden" value="{{route_BandA[1][0]}}">
-        <input type="submit" name="save" value="ルート案内">
-    </form>
-    <!-- 前の札所 -->
-    <div>{{route_BandA[0][0]}}番札所 {{route_BandA[0][1]}}まで{{route_distance[0][0]}}km {{route_caution[0][0]}}</div>
-    <form class ="" action="/route_map" method="post">
-        <input name="Start_temple_number" type="hidden" value="{{temple_place[0]}}">
-        <input name="Goal_temple_number" type="hidden" value="{{route_BandA[0][0]}}">
-        <input type="submit" name="save" value="ルート案内">
-    </form>
+        <!-- スポットの住所 -->
+        <!-- <input id="interesting_address" type="hidden" value="{{interesting_address}}"> -->
+        <!-- スポットの名前 -->
+        <input id="interesting_name" type="hidden" value="{{interesting_name}}">
+        <!-- スポットの説明文 -->
+        <input id="interesting_information" type="hidden" value="{{interesting_information}}">
+        <!-- スポットの緯度 -->
+        <input id="interesting_lat" type="hidden" value="{{interesting_lat}}">
+        <!-- スポットの経度 -->
+        <input id="interesting_lng" type="hidden" value="{{interesting_lng}}">
+        <!-- スポットの電話番号 -->
+        <!-- <input id="convenience_phone_number" type="hidden" value="{{convenience_phone_number}}"> -->
 
-    <!-- プルダウン -->
-    <div class="">
-        <!-- プルダウンを表示 -->
-            <p>選べ</p>
+        <!-- 道の駅の住所 -->
+        <!-- <input id="interesting_address" type="hidden" value="{{interesting_address}}"> -->
+        <!-- 道の駅の名前 -->
+        <input id="roadside_station_name" type="hidden" value="{{roadside_station_name}}">
+        <!-- 道の駅の説明文 -->
+        <input id="roadside_station_information" type="hidden" value="{{roadside_station_information}}">
+        <!-- 道の駅の緯度 -->
+        <input id="roadside_station_lat" type="hidden" value="{{roadside_station_lat}}">
+        <!-- 道の駅の経度 -->
+        <input id="roadside_station_lng" type="hidden" value="{{roadside_station_lng}}">
+        <!-- 道の駅の電話番号 -->
+        <!-- <input id="convenience_phone_number" type="hidden" value="{{convenience_phone_number}}"> -->
+
+
+        <!-- <script type="text/javascript" src="../static/js/googleMap_temple.js"></script> -->
+        <div id="map"></div>
+        <!-- <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyASLi-n8-pABIIdHDkXXi0SLD42n5-mtX4&callback=initMap"></script> -->
+        <!-- 次の札所 -->
+        <div id = "next_temple">{{route_BandA[1][0]}}番札所 {{route_BandA[1][1]}}まで{{route_distance[1][0]}}km</div>
+        {% if route_caution[1][0] != "000" %}
+            <div class = "caution">{{route_caution[1][0]}}</div>
+        {% endif %}
+
+        <form action="/route_map" method="post">
+            <input name="Start_temple_number" type="hidden" value="{{temple_place[0]}}">
+            <input name="Goal_temple_number" type="hidden" value="{{route_BandA[1][0]}}">
+            <input class ="search_bottom" type="submit" name="save" value="ルート案内">
+        </form>
+
+        <!-- 前の札所 -->
+        <div id = "previous_temple">{{route_BandA[0][0]}}番札所 {{route_BandA[0][1]}}まで{{route_distance[0][0]}}km</div id = "next_temple">
+        {% if route_caution[0][0] != "000" %}
+            <div class = "caution">{{route_caution[0][0]}}</div>
+        {% endif %}
+
+        <form action="/route_map" method="post">
+            <input name="Start_temple_number" type="hidden" value="{{temple_place[0]}}">
+            <input name="Goal_temple_number" type="hidden" value="{{route_BandA[0][0]}}">
+            <input class ="search_bottom" type="submit" name="save" value="ルート案内">
+        </form>
+    
+
+        <!-- プルダウン -->
+        <div class="pulldown">
+            <!-- プルダウンを表示 -->
+            <p>別のお寺でルート案内</p>
             <!-- プルダウンを選びボタンを押すと寺の番がapp.pyの/temple_search_selectに送られる -->
             <form class ="" action="/route_map" method="post">
                 <select name="Goal_temple_number">
@@ -212,12 +238,12 @@
                     <option value="87">87番札所 長尾寺</option>
                     <option value="88">88番札所 大窪寺</option>
                 </select>
+                <br>
                 <input name="Start_temple_number" type="hidden" value="{{temple_place[0]}}">
-                <input type="submit" name="save" value="ルート案内">
-
+                <input class = "search_bottom" type="submit" name="save" value="ルート案内">
             </form>
         </div>
-
+    </div>
 
     <script type="text/javascript" src="../static/js/googleMap_temple.js"></script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyASLi-n8-pABIIdHDkXXi0SLD42n5-mtX4&callback=initMap"></script>

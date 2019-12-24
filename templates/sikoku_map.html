@@ -1,17 +1,33 @@
 {% extends "base.html" %}
 {% block content %}
     <link rel="stylesheet" type="text/css" href="../static/css/sikoku_map.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/information.css">
 
-    <p>四国の地図を表示するページ</p>
-    <!-- <a href="/kagawa_map">香川</a> -->
+    <header>
+        <div class="header_temple_search_select">
+            <!-- <div class="logo_temple_search_select"> -->
+                <img src="../static/img/header_logo.png" ><!-- てくてくおへんろロゴ -->
+    
+            <div class="hum"> <!-- このクラスがハンバーガーボタンになる -->
+                <span class="hum_line hum_line1"></span>
+                <span class="hum_line hum_line2"></span>
+                <span class="hum_line hum_line3"></span>
+            </div>
+        </div>
+    </header>
 
-    <input type="hidden" id = "all_temple_number" value="{{all_temple_number}}">
-    <input type="hidden" id = "all_temple_name" value="{{all_temple_name}}">
-    <input type="hidden" id = "all_temple_information" value="{{all_temple_information}}">
-    <input type="hidden" id = "all_temple_lat" value="{{all_temple_lat}}">
-    <input type="hidden" id = "all_temple_lng" value="{{all_temple_lng}}">
+    <div class = "wrapper">
+        <p id = "top_name">見たいお寺を選んでね</p>
+        <!-- <a href="/kagawa_map">香川</a> -->
 
-    <div id="map"></div>
+        <input type="hidden" id = "all_temple_number" value="{{all_temple_number}}">
+        <input type="hidden" id = "all_temple_name" value="{{all_temple_name}}">
+        <input type="hidden" id = "all_temple_information" value="{{all_temple_information}}">
+        <input type="hidden" id = "all_temple_lat" value="{{all_temple_lat}}">
+        <input type="hidden" id = "all_temple_lng" value="{{all_temple_lng}}">
+
+        <div id="map"></div>
+    </div>
 
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyASLi-n8-pABIIdHDkXXi0SLD42n5-mtX4&callback=initMap"></script>
     <script type="text/javascript" src="../static/js/sikoku_map.js"></script>

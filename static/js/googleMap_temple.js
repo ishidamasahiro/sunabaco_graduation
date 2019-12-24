@@ -78,6 +78,7 @@ function initialize() {
     var mapOptions = {
         zoom: 15,
         center: latlng,
+        gestureHandling: "greedy",
         styles:
         [
             {

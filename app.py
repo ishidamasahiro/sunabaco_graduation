@@ -50,6 +50,12 @@ G_roadside_station_lng = None
 G_route_BandA = None
 G_route_distance = None
 
+#リストのダブりを消す関数
+def get_unique_list(seq):
+    seen = []
+    return [x for x in seq if x not in seen and not seen.append(x)]
+
+
 
 #-----トップページ-----
 @app.route("/")
@@ -66,8 +72,8 @@ def temple_search():
 @app.route("/temple_search_select",methods = ["POST"])
 def temple_search_select():
     temple_number = request.form.get("temple_number")
-    print("temple_number:::::")
-    print(temple_number)
+    #print("temple_number:::::")
+    #print(temple_number)
     
     #もし000番ならリロード
     if int(temple_number) == 000:
@@ -412,6 +418,7 @@ def route_map():
     waypoints_temple_lat = []
     waypoints_temple_lng = []
     
+    only_two_temples = False#寺が隣り合っているときの判定
     # print("G_temple_place:::")
     # print(G_temple_place)
     
@@ -452,13 +459,49 @@ def route_map():
                             route_distance = G_route_distance
                         )
     
+    
     #寺が隣り合ってるなら
-    if int(Goal_temple_number) - int(Start_temple_number) == 1:
-        waypoints_temple_number.append(Start_temple_number)
-        waypoints_temple_number.append(Goal_temple_number)
+    elif int(Goal_temple_number) - int(Start_temple_number) == 1 or int(Goal_temple_number) - int(Start_temple_number) == -1 or int(Goal_temple_number) - int(Start_temple_number) == 87 or int(Goal_temple_number) - int(Start_temple_number) == -87:
+        #逆めぐり
+        if int(Goal_temple_number) - int(Start_temple_number) == -1:
+            waypoints_temple_number.append(Goal_temple_number)
+            waypoints_temple_number.append(Start_temple_number)
+        
+        #順めぐり
+        else:
+            waypoints_temple_number.append(Start_temple_number)
+            waypoints_temple_number.append(Goal_temple_number)
+            
+        only_two_temples = True
+        
+        #二つの寺名
+        c_temple.execute("select name from temple_place where temple_number = ?",(Start_temple_number,))
+        waypoints_temple_name.append(c_temple.fetchone())
+        c_temple.execute("select name from temple_place where temple_number = ?",(Goal_temple_number,))
+        waypoints_temple_name.append(c_temple.fetchone())
+        
+        #情報
+        c_temple.execute("select information from temple_place where temple_number = ?",(Start_temple_number,))
+        waypoints_temple_information.append(c_temple.fetchone())
+        c_temple.execute("select information from temple_place where temple_number = ?",(Goal_temple_number,))
+        waypoints_temple_information.append(c_temple.fetchone())
+        
+        #緯度
+        c_temple.execute("select lat from temple_place where temple_number = ?",(Start_temple_number,))
+        waypoints_temple_lat.append(c_temple.fetchone())
+        c_temple.execute("select lat from temple_place where temple_number = ?",(Goal_temple_number,))
+        waypoints_temple_lat.append(c_temple.fetchone())
+        
+        #経度
+        c_temple.execute("select lng from temple_place where temple_number = ?",(Start_temple_number,))
+        waypoints_temple_lng.append(c_temple.fetchone())
+        c_temple.execute("select lng from temple_place where temple_number = ?",(Goal_temple_number,))
+        waypoints_temple_lng.append(c_temple.fetchone())
+    
+        
     
     #スタートとゴールが2つ以上離れている場合（1<>88間は最短をいくことにしているので除外）
-    if int(Goal_temple_number) - int(Start_temple_number) != 1 and int(Goal_temple_number) - int(Start_temple_number) != -87 and int(Goal_temple_number) - int(Start_temple_number) != 87:
+    elif int(Goal_temple_number) - int(Start_temple_number) != 1 and int(Goal_temple_number) - int(Start_temple_number) != -87 and int(Goal_temple_number) - int(Start_temple_number) != 87:
         
         #経由する寺番号
         #waypoints_temple_number = []
@@ -629,65 +672,116 @@ def route_map():
     route_gourmet_phone_number = []
     route_gourmet_articles = 0
     #--------ルート上---------
-    for i in range(len(waypoints_temple_number)):
-        
-        # print(waypoints_temple_number)#[(24,), (25,), (26,), (27,), (28,), (29,), (30,)]
-        #print(waypoints_temple_number[i])#(24,)
-        # test1 = str(waypoints_temple_number[i]).replace("(","")
-        # test1 = test1.replace(",","")
-        # test1 = test1.replace(")","")
-        # print(test1)#24
-        
+    if only_two_temples == True:
         #waypoints_temple_number[i]そのままでは使えないので変換
-        str_waypoints_temple_number = str(waypoints_temple_number[i]).replace("(","")
-        str_waypoints_temple_number = str_waypoints_temple_number.replace(",","")
-        str_waypoints_temple_number = str_waypoints_temple_number.replace(")","")
+        str_waypoints_temple_number0 = str(waypoints_temple_number[0]).replace("(","")
+        str_waypoints_temple_number0 = str_waypoints_temple_number0.replace(",","")
+        str_waypoints_temple_number0 = str_waypoints_temple_number0.replace(")","")
+        
+        str_waypoints_temple_number1 = str(waypoints_temple_number[1]).replace("(","")
+        str_waypoints_temple_number1 = str_waypoints_temple_number1.replace(",","")
+        str_waypoints_temple_number1 = str_waypoints_temple_number1.replace(")","")
         
         #名前
-        c_gourmet.execute("select name from gourmet_place where route_number like ?",("%/" + str_waypoints_temple_number + "/%",))
+        c_gourmet.execute("select name from gourmet_place where route_number = ?",("/" + str_waypoints_temple_number0 + "/" + str_waypoints_temple_number1 + "/",))
         Provisional = c_gourmet.fetchall()
         if Provisional != []:
-            route_gourmet_articles += len(Provisional)
             route_gourmet_name.append(Provisional)
-
-        #route_gourmet_name = c_gourmet.fetchall()
-        # print("route_gourmet_name::::::::")
-        # print(route_gourmet_name)#[('さばせ大福',)]
-        # print(route_gourmet_name[0])#('さばせ大福',)
         
         #情報
-        c_gourmet.execute("select information from gourmet_place where route_number like ?",("%/" + str_waypoints_temple_number + "/%",))
-        #route_gourmet_information = c_gourmet.fetchall()
+        c_gourmet.execute("select information from gourmet_place where route_number = ?",("/" + str_waypoints_temple_number0 + "/" + str_waypoints_temple_number1 + "/",))
         Provisional = c_gourmet.fetchall()
         if Provisional != []:
             route_gourmet_information.append(Provisional)
             
-        #print("route_gourmet_information:::")
-        #print(route_gourmet_information)
-        
         #緯度
-        c_gourmet.execute("select lat from gourmet_place where route_number like ?",("%/" + str_waypoints_temple_number + "/%",))
-        #route_gourmet_lat = c_gourmet.fetchall()
+        c_gourmet.execute("select lat from gourmet_place where route_number = ?",("/" + str_waypoints_temple_number0 + "/" + str_waypoints_temple_number1 + "/",))
         Provisional = c_gourmet.fetchall()
         if Provisional != []:
             route_gourmet_lat.append(Provisional)
         
         #経度
-        c_gourmet.execute("select lng from gourmet_place where route_number like ?",("%/" + str_waypoints_temple_number + "/%",))
-        #route_gourmet_lng = c_gourmet.fetchall()
+        c_gourmet.execute("select lng from gourmet_place where route_number = ?",("/" + str_waypoints_temple_number0 + "/" + str_waypoints_temple_number1 + "/",))
         Provisional = c_gourmet.fetchall()
         if Provisional != []:
             route_gourmet_lng.append(Provisional)
         
         #電話番号
-        c_gourmet.execute("select phone_number from gourmet_place where route_number like ?",("%/" + str_waypoints_temple_number + "/%",))
-        #route_gourmet_phone_number = c_gourmet.fetchall()
+        c_gourmet.execute("select phone_number from gourmet_place where route_number = ?",("/" + str_waypoints_temple_number0 + "/" + str_waypoints_temple_number1 + "/",))
         Provisional = c_gourmet.fetchall()
         if Provisional != []:
             route_gourmet_phone_number.append(Provisional)
+        # print("%/" + str_waypoints_temple_number0 + "/%" + str_waypoints_temple_number1 + "/%")
+    else:
+        for i in range(len(waypoints_temple_number)):
+            
+            # print(waypoints_temple_number)#[(24,), (25,), (26,), (27,), (28,), (29,), (30,)]
+            #print(waypoints_temple_number[i])#(24,)
+            # test1 = str(waypoints_temple_number[i]).replace("(","")
+            # test1 = test1.replace(",","")
+            # test1 = test1.replace(")","")
+            # print(test1)#24
+            
+            #waypoints_temple_number[i]そのままでは使えないので変換
+            str_waypoints_temple_number = str(waypoints_temple_number[i]).replace("(","")
+            str_waypoints_temple_number = str_waypoints_temple_number.replace(",","")
+            str_waypoints_temple_number = str_waypoints_temple_number.replace(")","")
+            
+            #名前
+            c_gourmet.execute("select name from gourmet_place where route_number like ?",("%/" + str_waypoints_temple_number + "/%",))
+            Provisional = c_gourmet.fetchall()
+            if Provisional != []:
+                route_gourmet_name.append(Provisional)
+                #Provisional = get_unique_list(Provisional)
+                #route_gourmet_articles += len(Provisional)
+
+            #route_gourmet_name = c_gourmet.fetchall()
+            # print("route_gourmet_name::::::::")
+            # print(route_gourmet_name)#[('さばせ大福',)]
+            # print(route_gourmet_name[0])#('さばせ大福',)
+            
+            #情報
+            c_gourmet.execute("select information from gourmet_place where route_number like ?",("%/" + str_waypoints_temple_number + "/%",))
+            #route_gourmet_information = c_gourmet.fetchall()
+            Provisional = c_gourmet.fetchall()
+            if Provisional != []:
+                route_gourmet_information.append(Provisional)
+                
+            #print("route_gourmet_information:::")
+            #print(route_gourmet_information)
+            
+            #緯度
+            c_gourmet.execute("select lat from gourmet_place where route_number like ?",("%/" + str_waypoints_temple_number + "/%",))
+            #route_gourmet_lat = c_gourmet.fetchall()
+            Provisional = c_gourmet.fetchall()
+            if Provisional != []:
+                route_gourmet_lat.append(Provisional)
+            
+            #経度
+            c_gourmet.execute("select lng from gourmet_place where route_number like ?",("%/" + str_waypoints_temple_number + "/%",))
+            #route_gourmet_lng = c_gourmet.fetchall()
+            Provisional = c_gourmet.fetchall()
+            if Provisional != []:
+                route_gourmet_lng.append(Provisional)
+            
+            #電話番号
+            c_gourmet.execute("select phone_number from gourmet_place where route_number like ?",("%/" + str_waypoints_temple_number + "/%",))
+            #route_gourmet_phone_number = c_gourmet.fetchall()
+            Provisional = c_gourmet.fetchall()
+            if Provisional != []:
+                route_gourmet_phone_number.append(Provisional)
+                
     
     conn_gourmet.close()
     
+    #数をカウント
+    route_gourmet_name = sum(route_gourmet_name,[])
+    route_gourmet_name = get_unique_list(route_gourmet_name)
+    route_gourmet_articles = sum(len(v) for v in route_gourmet_name)
+    
+    print("route_gourmet_articles:::")
+    print(route_gourmet_name)
+    print(route_gourmet_articles)
     
     
     #宿----------
@@ -750,46 +844,92 @@ def route_map():
     route_inn_articles = 0
     
     #--------ルート上---------
-    for i in range(len(waypoints_temple_number)):
-        
+    if only_two_temples == True:
         #waypoints_temple_number[i]そのままでは使えないので変換
-        str_waypoints_temple_number = str(waypoints_temple_number[i]).replace("(","")
-        str_waypoints_temple_number = str_waypoints_temple_number.replace(",","")
-        str_waypoints_temple_number = str_waypoints_temple_number.replace(")","")
+        str_waypoints_temple_number0 = str(waypoints_temple_number[0]).replace("(","")
+        str_waypoints_temple_number0 = str_waypoints_temple_number0.replace(",","")
+        str_waypoints_temple_number0 = str_waypoints_temple_number0.replace(")","")
+        
+        str_waypoints_temple_number1 = str(waypoints_temple_number[1]).replace("(","")
+        str_waypoints_temple_number1 = str_waypoints_temple_number1.replace(",","")
+        str_waypoints_temple_number1 = str_waypoints_temple_number1.replace(")","")
         
         #名前
-        c_inn.execute("select name from inn_place where route_number like ?",("%/" + str_waypoints_temple_number + "/%",))
+        c_inn.execute("select name from inn_place where route_number = ?",("/" + str_waypoints_temple_number0 + "/" + str_waypoints_temple_number1 + "/",))
         Provisional = c_inn.fetchall()
         if Provisional != []:
-            route_inn_articles += len(Provisional)
             route_inn_name.append(Provisional)
-            
+        
         #情報
-        c_inn.execute("select information from inn_place where route_number like ?",("%/" + str_waypoints_temple_number + "/%",))
+        c_inn.execute("select information from inn_place where route_number = ?",("/" + str_waypoints_temple_number0 + "/" + str_waypoints_temple_number1 + "/",))
         Provisional = c_inn.fetchall()
         if Provisional != []:
             route_inn_information.append(Provisional)
             
         #緯度
-        c_inn.execute("select lat from inn_place where route_number like ?",("%/" + str_waypoints_temple_number + "/%",))
+        c_inn.execute("select lat from inn_place where route_number = ?",("/" + str_waypoints_temple_number0 + "/" + str_waypoints_temple_number1 + "/",))
         Provisional = c_inn.fetchall()
         if Provisional != []:
             route_inn_lat.append(Provisional)
         
         #経度
-        c_inn.execute("select lng from inn_place where route_number like ?",("%/" + str_waypoints_temple_number + "/%",))
+        c_inn.execute("select lng from inn_place where route_number = ?",("/" + str_waypoints_temple_number0 + "/" + str_waypoints_temple_number1 + "/",))
         Provisional = c_inn.fetchall()
         if Provisional != []:
             route_inn_lng.append(Provisional)
         
         #電話番号
-        c_inn.execute("select phone_number from inn_place where route_number like ?",("%/" + str_waypoints_temple_number + "/%",))
+        c_inn.execute("select phone_number from inn_place where route_number = ?",("/" + str_waypoints_temple_number0 + "/" + str_waypoints_temple_number1 + "/",))
         Provisional = c_inn.fetchall()
         if Provisional != []:
             route_inn_phone_number.append(Provisional)
-    
+
+    else:
+        for i in range(len(waypoints_temple_number)):
+            
+            #waypoints_temple_number[i]そのままでは使えないので変換
+            str_waypoints_temple_number = str(waypoints_temple_number[i]).replace("(","")
+            str_waypoints_temple_number = str_waypoints_temple_number.replace(",","")
+            str_waypoints_temple_number = str_waypoints_temple_number.replace(")","")
+            
+            #名前
+            c_inn.execute("select name from inn_place where route_number like ?",("%/" + str_waypoints_temple_number + "/%",))
+            Provisional = c_inn.fetchall()
+            if Provisional != []:
+                # route_inn_articles += len(Provisional)
+                route_inn_name.append(Provisional)
+                
+            #情報
+            c_inn.execute("select information from inn_place where route_number like ?",("%/" + str_waypoints_temple_number + "/%",))
+            Provisional = c_inn.fetchall()
+            if Provisional != []:
+                route_inn_information.append(Provisional)
+                
+            #緯度
+            c_inn.execute("select lat from inn_place where route_number like ?",("%/" + str_waypoints_temple_number + "/%",))
+            Provisional = c_inn.fetchall()
+            if Provisional != []:
+                route_inn_lat.append(Provisional)
+            
+            #経度
+            c_inn.execute("select lng from inn_place where route_number like ?",("%/" + str_waypoints_temple_number + "/%",))
+            Provisional = c_inn.fetchall()
+            if Provisional != []:
+                route_inn_lng.append(Provisional)
+            
+            #電話番号
+            c_inn.execute("select phone_number from inn_place where route_number like ?",("%/" + str_waypoints_temple_number + "/%",))
+            Provisional = c_inn.fetchall()
+            if Provisional != []:
+                route_inn_phone_number.append(Provisional)
+                
+
     conn_inn.close()
     
+    #数をカウント
+    route_inn_name = sum(route_inn_name,[])
+    route_inn_name = get_unique_list(route_inn_name)
+    route_inn_articles = sum(len(v) for v in route_inn_name)
     
     
     #道の駅----------
@@ -849,52 +989,106 @@ def route_map():
     route_roadside_station_articles = 0
     
     #--------ルート上---------
-    for i in range(len(waypoints_temple_number)):
-        
+    if only_two_temples == True:
         #waypoints_temple_number[i]そのままでは使えないので変換
-        str_waypoints_temple_number = str(waypoints_temple_number[i]).replace("(","")
-        str_waypoints_temple_number = str_waypoints_temple_number.replace(",","")
-        str_waypoints_temple_number = str_waypoints_temple_number.replace(")","")
+        str_waypoints_temple_number0 = str(waypoints_temple_number[0]).replace("(","")
+        str_waypoints_temple_number0 = str_waypoints_temple_number0.replace(",","")
+        str_waypoints_temple_number0 = str_waypoints_temple_number0.replace(")","")
+        
+        str_waypoints_temple_number1 = str(waypoints_temple_number[1]).replace("(","")
+        str_waypoints_temple_number1 = str_waypoints_temple_number1.replace(",","")
+        str_waypoints_temple_number1 = str_waypoints_temple_number1.replace(")","")
         
         #名前
-        c_roadside_station.execute("select name from roadsidestation where route_number like ?",("%/" + str_waypoints_temple_number + "/%",))
+        c_roadside_station.execute("select name from roadsidestation where route_number = ?",("/" + str_waypoints_temple_number0 + "/" + str_waypoints_temple_number1 + "/",))
         Provisional = c_roadside_station.fetchall()
         if Provisional != []:
-            route_roadside_station_articles += len(Provisional)
             route_roadside_station_name.append(Provisional)
-            
-        # print("str_waypoints_temple_number:::")
-        # print(str_waypoints_temple_number)
-        # print("route_roadside_station_name:::")
-        # print(route_roadside_station_name)
-            
+        
         #情報
-        c_roadside_station.execute("select information from roadsidestation where route_number like ?",("%/" + str_waypoints_temple_number + "/%",))
+        c_roadside_station.execute("select information from roadsidestation where route_number = ?",("/" + str_waypoints_temple_number0 + "/" + str_waypoints_temple_number1 + "/",))
         Provisional = c_roadside_station.fetchall()
         if Provisional != []:
             route_roadside_station_information.append(Provisional)
-        # print("route_roadside_station_information:::")
-        # print(route_roadside_station_information)
             
         #緯度
-        c_roadside_station.execute("select lat from roadsidestation where route_number like ?",("%/" + str_waypoints_temple_number + "/%",))
+        c_roadside_station.execute("select lat from roadsidestation where route_number = ?",("/" + str_waypoints_temple_number0 + "/" + str_waypoints_temple_number1 + "/",))
         Provisional = c_roadside_station.fetchall()
         if Provisional != []:
             route_roadside_station_lat.append(Provisional)
         
         #経度
-        c_roadside_station.execute("select lng from roadsidestation where route_number like ?",("%/" + str_waypoints_temple_number + "/%",))
+        c_roadside_station.execute("select lng from roadsidestation where route_number = ?",("/" + str_waypoints_temple_number0 + "/" + str_waypoints_temple_number1 + "/",))
         Provisional = c_roadside_station.fetchall()
         if Provisional != []:
             route_roadside_station_lng.append(Provisional)
         
         #電話番号
-        # c_roadside_station.execute("select phone_number from roadsidestation where route_number like ?",("%/" + str_waypoints_temple_number + "/%",))
+        # c_roadside_station.execute("select phone_number from roadside_station_place where route_number = ?",("/" + str_waypoints_temple_number0 + "/" + str_waypoints_temple_number1 + "/",))
         # Provisional = c_roadside_station.fetchall()
         # if Provisional != []:
         #     route_roadside_station_phone_number.append(Provisional)
-    
+
+    else:
+        for i in range(len(waypoints_temple_number)):
+            
+            #waypoints_temple_number[i]そのままでは使えないので変換
+            str_waypoints_temple_number = str(waypoints_temple_number[i]).replace("(","")
+            str_waypoints_temple_number = str_waypoints_temple_number.replace(",","")
+            str_waypoints_temple_number = str_waypoints_temple_number.replace(")","")
+            
+            #名前
+            c_roadside_station.execute("select name from roadsidestation where route_number like ?",("%/" + str_waypoints_temple_number + "/%",))
+            Provisional = c_roadside_station.fetchall()
+            if Provisional != []:
+                # route_roadside_station_articles += len(Provisional)
+                route_roadside_station_name.append(Provisional)
+                
+            # print("str_waypoints_temple_number:::")
+            # print(str_waypoints_temple_number)
+            # print("route_roadside_station_name:::")
+            # print(route_roadside_station_name)
+                
+            #情報
+            c_roadside_station.execute("select information from roadsidestation where route_number like ?",("%/" + str_waypoints_temple_number + "/%",))
+            Provisional = c_roadside_station.fetchall()
+            if Provisional != []:
+                route_roadside_station_information.append(Provisional)
+            # print("route_roadside_station_information:::")
+            # print(route_roadside_station_information)
+                
+            #緯度
+            c_roadside_station.execute("select lat from roadsidestation where route_number like ?",("%/" + str_waypoints_temple_number + "/%",))
+            Provisional = c_roadside_station.fetchall()
+            if Provisional != []:
+                route_roadside_station_lat.append(Provisional)
+            
+            #経度
+            c_roadside_station.execute("select lng from roadsidestation where route_number like ?",("%/" + str_waypoints_temple_number + "/%",))
+            Provisional = c_roadside_station.fetchall()
+            if Provisional != []:
+                route_roadside_station_lng.append(Provisional)
+            
+            #電話番号
+            # c_roadside_station.execute("select phone_number from roadsidestation where route_number like ?",("%/" + str_waypoints_temple_number + "/%",))
+            # Provisional = c_roadside_station.fetchall()
+            # if Provisional != []:
+            #     route_roadside_station_phone_number.append(Provisional)
+        
+
     conn_roadside_station.close()
+    #数をカウント
+    route_roadside_station_name = sum(route_roadside_station_name,[])
+    route_roadside_station_name = get_unique_list(route_roadside_station_name)
+    route_roadside_station_articles = sum(len(v) for v in route_roadside_station_name)
+    # route_roadside_station_name = get_unique_list(route_roadside_station_name)
+    # route_roadside_station_articles = len(route_roadside_station_name[0])
+    # route_roadside_station_articles = sum(len(v) for v in route_roadside_station_name)
+    
+    # print("route_roadside_station_name[0]:::")
+    # print(len(route_roadside_station_name))
+    # print(route_roadside_station_name)
+    # print(route_roadside_station_name[0])
     
     
     
@@ -955,48 +1149,100 @@ def route_map():
     route_interesting_articles = 0
     
     #--------ルート上---------
-    for i in range(len(waypoints_temple_number)):
-        
+    if only_two_temples == True:
         #waypoints_temple_number[i]そのままでは使えないので変換
-        str_waypoints_temple_number = str(waypoints_temple_number[i]).replace("(","")
-        str_waypoints_temple_number = str_waypoints_temple_number.replace(",","")
-        str_waypoints_temple_number = str_waypoints_temple_number.replace(")","")
+        str_waypoints_temple_number0 = str(waypoints_temple_number[0]).replace("(","")
+        str_waypoints_temple_number0 = str_waypoints_temple_number0.replace(",","")
+        str_waypoints_temple_number0 = str_waypoints_temple_number0.replace(")","")
+        
+        str_waypoints_temple_number1 = str(waypoints_temple_number[1]).replace("(","")
+        str_waypoints_temple_number1 = str_waypoints_temple_number1.replace(",","")
+        str_waypoints_temple_number1 = str_waypoints_temple_number1.replace(")","")
         
         #名前
-        c_interesting.execute("select name from interesting_place where route_number like ?",("%/" + str_waypoints_temple_number + "/%",))
+        c_interesting.execute("select name from interesting_place where route_number = ?",("/" + str_waypoints_temple_number0 + "/" + str_waypoints_temple_number1 + "/",))
         Provisional = c_interesting.fetchall()
         if Provisional != []:
-            route_interesting_articles += len(Provisional)
             route_interesting_name.append(Provisional)
-            
+        
         #情報
-        c_interesting.execute("select information from interesting_place where route_number like ?",("%/" + str_waypoints_temple_number + "/%",))
+        c_interesting.execute("select information from interesting_place where route_number = ?",("/" + str_waypoints_temple_number0 + "/" + str_waypoints_temple_number1 + "/",))
         Provisional = c_interesting.fetchall()
         if Provisional != []:
             route_interesting_information.append(Provisional)
-        # print("route_interesting_information:::")
-        # print(route_interesting_information)
             
         #緯度
-        c_interesting.execute("select lat from interesting_place where route_number like ?",("%/" + str_waypoints_temple_number + "/%",))
+        c_interesting.execute("select lat from interesting_place where route_number = ?",("/" + str_waypoints_temple_number0 + "/" + str_waypoints_temple_number1 + "/",))
         Provisional = c_interesting.fetchall()
         if Provisional != []:
             route_interesting_lat.append(Provisional)
         
         #経度
-        c_interesting.execute("select lng from interesting_place where route_number like ?",("%/" + str_waypoints_temple_number + "/%",))
+        c_interesting.execute("select lng from interesting_place where route_number = ?",("/" + str_waypoints_temple_number0 + "/" + str_waypoints_temple_number1 + "/",))
         Provisional = c_interesting.fetchall()
         if Provisional != []:
             route_interesting_lng.append(Provisional)
         
         #電話番号
-        # c_roadside_station.execute("select phone_number from roadsidestation where route_number like ?",("%/" + str_waypoints_temple_number + "/%",))
+        # c_roadside_station.execute("select phone_number from roadside_station_place where route_number = ?",("/" + str_waypoints_temple_number0 + "/" + str_waypoints_temple_number1 + "/",))
         # Provisional = c_roadside_station.fetchall()
         # if Provisional != []:
         #     route_roadside_station_phone_number.append(Provisional)
-    
+
+    else:
+        for i in range(len(waypoints_temple_number)):
+            
+            #waypoints_temple_number[i]そのままでは使えないので変換
+            str_waypoints_temple_number = str(waypoints_temple_number[i]).replace("(","")
+            str_waypoints_temple_number = str_waypoints_temple_number.replace(",","")
+            str_waypoints_temple_number = str_waypoints_temple_number.replace(")","")
+            
+            #名前
+            c_interesting.execute("select name from interesting_place where route_number like ?",("%/" + str_waypoints_temple_number + "/%",))
+            Provisional = c_interesting.fetchall()
+            if Provisional != []:
+                # route_interesting_articles += len(Provisional)
+                route_interesting_name.append(Provisional)
+                
+            #情報
+            c_interesting.execute("select information from interesting_place where route_number like ?",("%/" + str_waypoints_temple_number + "/%",))
+            Provisional = c_interesting.fetchall()
+            if Provisional != []:
+                route_interesting_information.append(Provisional)
+            # print("route_interesting_information:::")
+            # print(route_interesting_information)
+                
+            #緯度
+            c_interesting.execute("select lat from interesting_place where route_number like ?",("%/" + str_waypoints_temple_number + "/%",))
+            Provisional = c_interesting.fetchall()
+            if Provisional != []:
+                route_interesting_lat.append(Provisional)
+            
+            #経度
+            c_interesting.execute("select lng from interesting_place where route_number like ?",("%/" + str_waypoints_temple_number + "/%",))
+            Provisional = c_interesting.fetchall()
+            if Provisional != []:
+                route_interesting_lng.append(Provisional)
+                
+
+            #電話番号
+            # c_roadside_station.execute("select phone_number from roadsidestation where route_number like ?",("%/" + str_waypoints_temple_number + "/%",))
+            # Provisional = c_roadside_station.fetchall()
+            # if Provisional != []:
+            #     route_roadside_station_phone_number.append(Provisional)
+
     conn_interesting.close()
+    #数をカウント
+    route_interesting_name = sum(route_interesting_name,[])
+    route_interesting_name = get_unique_list(route_interesting_name)
+    route_interesting_articles = sum(len(v) for v in route_interesting_name)
     
+    print("route_interesting_name:::")
+    print(route_interesting_name)
+    print("SandG_interesting_articles:::")
+    print(SandG_interesting_articles)
+    print("route_interesting_articles:::")
+    print(route_interesting_articles)
     
     
     #コンビニ---------------
@@ -1056,47 +1302,92 @@ def route_map():
     route_convenience_articles = 0
     
     #--------ルート上---------
-    for i in range(len(waypoints_temple_number)):
-        
+    if only_two_temples == True:
         #waypoints_temple_number[i]そのままでは使えないので変換
-        str_waypoints_temple_number = str(waypoints_temple_number[i]).replace("(","")
-        str_waypoints_temple_number = str_waypoints_temple_number.replace(",","")
-        str_waypoints_temple_number = str_waypoints_temple_number.replace(")","")
+        str_waypoints_temple_number0 = str(waypoints_temple_number[0]).replace("(","")
+        str_waypoints_temple_number0 = str_waypoints_temple_number0.replace(",","")
+        str_waypoints_temple_number0 = str_waypoints_temple_number0.replace(")","")
+        
+        str_waypoints_temple_number1 = str(waypoints_temple_number[1]).replace("(","")
+        str_waypoints_temple_number1 = str_waypoints_temple_number1.replace(",","")
+        str_waypoints_temple_number1 = str_waypoints_temple_number1.replace(")","")
         
         #名前
-        c_convenience.execute("select name from convenience_place where route_number like ?",("%/" + str_waypoints_temple_number + "/%",))
+        c_convenience.execute("select name from convenience_place where route_number = ?",("/" + str_waypoints_temple_number0 + "/" + str_waypoints_temple_number1 + "/",))
         Provisional = c_convenience.fetchall()
         if Provisional != []:
-            route_convenience_articles += len(Provisional)
             route_convenience_name.append(Provisional)
-            
-        #情報
-        # c_convenience.execute("select information from convenience_place where route_number like ?",("%/" + str_waypoints_temple_number + "/%",))
+        
+        # #情報
+        # c_convenience.execute("select information from convenience_place where route_number = ?",("/" + str_waypoints_temple_number0 + "/" + str_waypoints_temple_number1 + "/",))
         # Provisional = c_convenience.fetchall()
         # if Provisional != []:
         #     route_convenience_information.append(Provisional)
-        # print("route_convenience_information:::")
-        # print(route_interesting_information)
             
         #緯度
-        c_convenience.execute("select lat from convenience_place where route_number like ?",("%/" + str_waypoints_temple_number + "/%",))
+        c_convenience.execute("select lat from convenience_place where route_number = ?",("/" + str_waypoints_temple_number0 + "/" + str_waypoints_temple_number1 + "/",))
         Provisional = c_convenience.fetchall()
         if Provisional != []:
             route_convenience_lat.append(Provisional)
         
         #経度
-        c_convenience.execute("select lng from convenience_place where route_number like ?",("%/" + str_waypoints_temple_number + "/%",))
+        c_convenience.execute("select lng from convenience_place where route_number = ?",("/" + str_waypoints_temple_number0 + "/" + str_waypoints_temple_number1 + "/",))
         Provisional = c_convenience.fetchall()
         if Provisional != []:
             route_convenience_lng.append(Provisional)
         
         #電話番号
-        # c_roadside_station.execute("select phone_number from roadsidestation where route_number like ?",("%/" + str_waypoints_temple_number + "/%",))
+        # c_roadside_station.execute("select phone_number from roadside_station_place where route_number = ?",("/" + str_waypoints_temple_number0 + "/" + str_waypoints_temple_number1 + "/",))
         # Provisional = c_roadside_station.fetchall()
         # if Provisional != []:
         #     route_roadside_station_phone_number.append(Provisional)
-    
+
+    else:
+        for i in range(len(waypoints_temple_number)):
+            
+            #waypoints_temple_number[i]そのままでは使えないので変換
+            str_waypoints_temple_number = str(waypoints_temple_number[i]).replace("(","")
+            str_waypoints_temple_number = str_waypoints_temple_number.replace(",","")
+            str_waypoints_temple_number = str_waypoints_temple_number.replace(")","")
+            
+            #名前
+            c_convenience.execute("select name from convenience_place where route_number like ?",("%/" + str_waypoints_temple_number + "/%",))
+            Provisional = c_convenience.fetchall()
+            if Provisional != []:
+                # route_convenience_articles += len(Provisional)
+                route_convenience_name.append(Provisional)
+                
+            #情報
+            # c_convenience.execute("select information from convenience_place where route_number like ?",("%/" + str_waypoints_temple_number + "/%",))
+            # Provisional = c_convenience.fetchall()
+            # if Provisional != []:
+            #     route_convenience_information.append(Provisional)
+            # print("route_convenience_information:::")
+            # print(route_interesting_information)
+                
+            #緯度
+            c_convenience.execute("select lat from convenience_place where route_number like ?",("%/" + str_waypoints_temple_number + "/%",))
+            Provisional = c_convenience.fetchall()
+            if Provisional != []:
+                route_convenience_lat.append(Provisional)
+            
+            #経度
+            c_convenience.execute("select lng from convenience_place where route_number like ?",("%/" + str_waypoints_temple_number + "/%",))
+            Provisional = c_convenience.fetchall()
+            if Provisional != []:
+                route_convenience_lng.append(Provisional)
+            
+            #電話番号
+            # c_roadside_station.execute("select phone_number from roadsidestation where route_number like ?",("%/" + str_waypoints_temple_number + "/%",))
+            # Provisional = c_roadside_station.fetchall()
+            # if Provisional != []:
+            #     route_roadside_station_phone_number.append(Provisional)
+
     conn_convenience.close()
+    #数をカウント
+    route_convenience_name = sum(route_convenience_name,[])
+    route_convenience_name = get_unique_list(route_convenience_name)
+    route_convenience_articles = sum(len(v) for v in route_convenience_name)
     
     
     return render_template("route_map.html",
@@ -1172,7 +1463,7 @@ def route_map():
                             inn_articles = SandG_inn_articles + route_inn_articles,
                             roadside_station_articles = SandG_roadside_station_articles + route_roadside_station_articles,
                             interesting_articles = SandG_interesting_articles + route_interesting_articles,
-                            convenience_articles = SandG_convenience_articles + route_convenience_articles
+                            convenience_articles = SandG_convenience_articles + route_convenience_articles,
                             
                         )
 

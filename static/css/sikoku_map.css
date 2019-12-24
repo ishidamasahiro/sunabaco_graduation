@@ -1,9 +1,76 @@
-/* 吹き出しの中身 */
-.information{
-    color: cyan;
-}
-
 #map {
     height: 400px;
     width: 100%;
+}
+
+/* ページの装飾 */
+/*ハンバーガーメニュー*/
+.hum {
+	position: relative;
+	width: 40px;
+	height: 40px;
+    cursor: pointer;
+    border-radius: 10px;
+	background-color: aqua;
+}
+.hum_line {
+	position: absolute;
+	left: 10px;
+	width: 20px;
+	height: 3px;
+    background-color: #333333;
+}
+.hum_line1 {
+	top: 10px;
+}
+.hum_line2 {
+	top: 18px;
+}
+.hum_line3 {
+	top: 26px;
+}
+
+.header_temple_search_select{
+    display: flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+/*ヘッダーロゴ*/
+.header_temple_search_select img{
+    width: 40%;
+    height: auto;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.pulldown_top_wrapper{
+    background-color: #92D4F5;
+}
+
+.pulldown_top_container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 63px;
+}
+
+/* 一番上の表示 */
+#top_name{
+    color: white;
+    border-radius: 5px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    /* width: 50px; */
+    /* margin-bottom: 5px; */
+    background-color: #92D4F5;
+}
+
+/*背景の雲*/
+.wrapper{
+    background-image: url("../img/cloud.svg");
+    background-size: 40% auto;
+    height: 100vh;
+    /* opacity: 0.5; */
 }
