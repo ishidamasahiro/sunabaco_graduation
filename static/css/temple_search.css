@@ -90,13 +90,28 @@ p{
 .pulldown_container{
     width: 80%;
     margin: 0 auto;
-    padding: 20px, 0;
 }
 
 .pulldown{
     padding-top: 20px;
     padding-bottom: 20px;
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; 
+    flex-direction: column;
+    width: 80%;
+    margin: 0 auto;
+}
+
+
+.title_tokushima{
+    color: white;
+    border-radius: 5px;
+    height: 30px;
+    line-height: 30px;
+    width: 50px;
+    background-color: #228b22;
+    margin-bottom: 5px;
 }
 
 .pulldown_form{
@@ -147,6 +162,10 @@ select{
     background-repeat: no-repeat;
     background-size: 32px 30px;
     background-position: right 10px center;
+}
+
+form{
+    width: 100%;
 }
 
 input{

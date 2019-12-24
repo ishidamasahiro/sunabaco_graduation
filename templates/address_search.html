@@ -21,17 +21,13 @@
     </div>
 </div>
 
-<div class="pulldown_wrapper">
-    <div class="pulldown_container">
-        <div class="pulldown">
+<div class="address_search_wrapper">
+    <div class="address_search_container">
+        <div class="address_search_form">
         <!-- プルダウンを表示 -->
-            <p>住所を入力してください</p>
-            <form  action="/temple_search_select" method="post">
-                <select class ="pulldown_tokushima" name="temple_number">
-                    <option value="" hidden>選択してください</option>
-                </select>
-                <input type="submit" name="save" value="検索">
-            </form>
+            <label for="name">住所を入力してください</label>
+            <input type="text" name="address" id="address">
+            <input type="submit" name="save" value="検索" id="submit">    
         </div>
     </div>
 </div>

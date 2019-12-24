@@ -96,6 +96,11 @@
     color: #BFEBFB;
     font-weight: bolder;
     margin-bottom: 0px;
+    align-items: left;
+}
+
+.title span {
+    display: inline-block;
 }
 
 .information_text_wrapper{
@@ -124,8 +129,25 @@
     background-color: white;
 }
 
+
 .icon{
     display: flex;
     justify-content: flex-start;
+    align-items: center; 
     width: 100%;
+    height: 80px;
+}
+
+#temple_icon img{
+    width: 38px;
+    height: 37px;
+}
+
+.icon img{
+    width: 40px;
+    height: 53px;
+}
+
+.icon p{
+    margin-left: 16px;
 }
