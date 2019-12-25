@@ -1,10 +1,25 @@
 ######################################
 #今後の展望
-#JS,Pythonの処理を関数やクラスにしてまとめることで行を削減
+#JS,Pythonの処理を関数やクラスにしてまとめることで行を削減。jsは特にやれるはず
 # (sikoku_map.jsは少しやってる。関数をまとめた別ファイルをつくって使いまわしたい)
 #
 #Python>JS間の変数受け渡しをJSonを使うことで簡略化←こっちもめんどくさそう
 #
+#宇宙人にしゃべらせる
+#ルートの合計
+#画面下の隙間に絵
+#逆、順めぐり
+#現在地取得
+#住所から検索
+#言語対応
+#コンビニ他リアルタイム取得（スクレイピング？
+#SNS連携
+#
+#地図の操作をスマホ対応に
+#APIキーの設定
+#フラスクのインストール（サーバー側で必要なら
+#プルダウンをスマフォ実機対応
+#ピンの画像へのリンク
 ######################################
 
 
@@ -775,13 +790,13 @@ def route_map():
     conn_gourmet.close()
     
     #数をカウント
-    route_gourmet_name = sum(route_gourmet_name,[])
-    route_gourmet_name = get_unique_list(route_gourmet_name)
-    route_gourmet_articles = sum(len(v) for v in route_gourmet_name)
+    Pre_route_gourmet_name = sum(route_gourmet_name,[])
+    Pre_route_gourmet_name = get_unique_list(Pre_route_gourmet_name)
+    route_gourmet_articles = sum(len(v) for v in Pre_route_gourmet_name)
     
-    print("route_gourmet_articles:::")
-    print(route_gourmet_name)
-    print(route_gourmet_articles)
+    # print("route_gourmet_articles:::")
+    # print(route_gourmet_name)
+    # print(route_gourmet_articles)
     
     
     #宿----------
@@ -927,9 +942,9 @@ def route_map():
     conn_inn.close()
     
     #数をカウント
-    route_inn_name = sum(route_inn_name,[])
-    route_inn_name = get_unique_list(route_inn_name)
-    route_inn_articles = sum(len(v) for v in route_inn_name)
+    Pre_route_inn_name = sum(route_inn_name,[])
+    Pre_route_inn_name = get_unique_list(Pre_route_inn_name)
+    route_inn_articles = sum(len(v) for v in Pre_route_inn_name)
     
     
     #道の駅----------
@@ -1078,9 +1093,9 @@ def route_map():
 
     conn_roadside_station.close()
     #数をカウント
-    route_roadside_station_name = sum(route_roadside_station_name,[])
-    route_roadside_station_name = get_unique_list(route_roadside_station_name)
-    route_roadside_station_articles = sum(len(v) for v in route_roadside_station_name)
+    Pre_route_roadside_station_name = sum(route_roadside_station_name,[])
+    Pre_route_roadside_station_name = get_unique_list(Pre_route_roadside_station_name)
+    route_roadside_station_articles = sum(len(v) for v in Pre_route_roadside_station_name)
     # route_roadside_station_name = get_unique_list(route_roadside_station_name)
     # route_roadside_station_articles = len(route_roadside_station_name[0])
     # route_roadside_station_articles = sum(len(v) for v in route_roadside_station_name)
@@ -1233,16 +1248,16 @@ def route_map():
 
     conn_interesting.close()
     #数をカウント
-    route_interesting_name = sum(route_interesting_name,[])
-    route_interesting_name = get_unique_list(route_interesting_name)
-    route_interesting_articles = sum(len(v) for v in route_interesting_name)
+    Pre_route_interesting_name = sum(route_interesting_name,[])
+    Pre_route_interesting_name = get_unique_list(Pre_route_interesting_name)
+    route_interesting_articles = sum(len(v) for v in Pre_route_interesting_name)
     
-    print("route_interesting_name:::")
-    print(route_interesting_name)
-    print("SandG_interesting_articles:::")
-    print(SandG_interesting_articles)
-    print("route_interesting_articles:::")
-    print(route_interesting_articles)
+    # print("route_interesting_name:::")
+    # print(route_interesting_name)
+    # print("SandG_interesting_articles:::")
+    # print(SandG_interesting_articles)
+    # print("route_interesting_articles:::")
+    # print(route_interesting_articles)
     
     
     #コンビニ---------------
@@ -1385,9 +1400,9 @@ def route_map():
 
     conn_convenience.close()
     #数をカウント
-    route_convenience_name = sum(route_convenience_name,[])
-    route_convenience_name = get_unique_list(route_convenience_name)
-    route_convenience_articles = sum(len(v) for v in route_convenience_name)
+    Pre_route_convenience_name = sum(route_convenience_name,[])
+    Pre_route_convenience_name = get_unique_list(Pre_route_convenience_name)
+    route_convenience_articles = sum(len(v) for v in Pre_route_convenience_name)
     
     
     return render_template("route_map.html",

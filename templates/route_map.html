@@ -6,8 +6,8 @@
     <header>
         <div class="header_temple_search_select">
             <!-- <div class="logo_temple_search_select"> -->
-                <img src="../static/img/header_logo.png" ><!-- てくてくおへんろロゴ -->
-    
+                <!-- <img src="../static/img/header_logo.png" > -->
+                <a href="http://127.0.0.1:5000/"><img src="../static/img/header_logo.png" ></a><!-- てくてくおへんろロゴ -->
             <div class="hum"> <!-- このクラスがハンバーガーボタンになる -->
                 <span class="hum_line hum_line1"></span>
                 <span class="hum_line hum_line2"></span>
@@ -119,6 +119,37 @@
         <div id = "roadside_station">道の駅:{{roadside_station_articles}}件</div>
         <div id = "interesting">スポット:{{interesting_articles}}件</div>
         <div id = "convenience">コンビニ:{{convenience_articles}}件</div>
+
+
+        <div class="information_wrapper">
+            <div class="information_container">
+                <p class="title">マップに掲載されている情報と<span>アイコン</span></p>
+                <div class="icon" id="temple_icon">
+                    <img src="../static/img/temple_pin01.png" alt="お寺">
+                    <p>８８箇所霊場の寺。<br>番号は札番です。</p>
+                </div>
+                <div class="icon" id="hotel_icon">
+                    <img src="../static/img/inn_pin.png" alt="宿">
+                    <p>宿の位置です。<br>GoogleMapで評価の高いものを掲載しています。</p>
+                </div>
+                <div class="icon" id="restaurant_icon">
+                    <img src="../static/img/gourmet_pin.png" alt="グルメ">
+                    <p>軽食などを含めた食事ポイントです。</p>
+                </div>
+                <div class="icon" id="convenience_store_icon">
+                    <img src="../static/img/convenience_pin.png" alt="コンビニ">
+                    <p>コンビニの位置です。</p>
+                </div>
+                <div class="icon" id="road_station_icon">
+                    <img src="../static/img/roadside_pin.png" alt="道の駅">
+                    <p>道の駅の位置です</p>
+                </div>
+                <div class="icon" id="sightseeing_spot_icon">
+                    <img src="../static/img/interesting_pin.png" alt="観光">
+                    <p>見どころポイントです。<br>弘法大師ゆかりの場所や観光スポットなどを示しています。</p>
+                </div>
+            </div>
+        </div>
 
     </div>
 

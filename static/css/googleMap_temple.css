@@ -43,10 +43,17 @@
 
 /*ヘッダーロゴ*/
 .header_temple_search_select img{
-    width: 40%;
+    width: 100%;
     height: auto;
     padding-top: 10px;
     padding-bottom: 10px;
+}
+
+.header_temple_search_select a{
+    width: 40%;
+    height: auto;
+    /* padding-top: 10px; */
+    /* padding-bottom: 10px; */
 }
 
 .pulldown_top_wrapper{
@@ -64,8 +71,9 @@
 .wrapper{
     background-image: url("../img/cloud.svg");
     background-size: 40% auto;
-    height: 100vh;
+    /* height: 100vh; */
     /* opacity: 0.5; */
+    /* background-attachment: scroll; */
 }
 
 /* 一番上の寺名表示 */
@@ -140,14 +148,14 @@
     height:40px;
 } */
 
-.pulldown p{
+#another_temple{
     margin: 10px 0px 0px 0px;
     color: white;
     border-radius: 5px;
     height: 30px;
     line-height: 30px;
     text-align: center;
-    /* width: 50px; */
+    width: 100%;
     /* margin-bottom: 5px; */
     background-color: #92D4F5;
 }
@@ -167,4 +175,53 @@ select{
     background-repeat: no-repeat;
     background-size: 32px 30px;
     background-position: right 10px center;
+}
+
+/*アイコン説明*/
+.title {
+    color: #BFEBFB;
+    font-weight: bolder;
+    margin-bottom: 0px;
+    align-items: left;
+}
+
+.title span {
+    display: inline-block;
+}
+
+.information_wrapper{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.information_container{
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    flex-direction: column;
+    width: 80%;
+    margin: 0 auto;
+    background-color: white;
+}
+
+.icon{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center; 
+    width: 100%;
+    height: 80px;
+}
+
+#temple_icon img{
+    width: 38px;
+    height: 37px;
+}
+
+.icon img{
+    width: 40px;
+    height: 53px;
+}
+
+.icon p{
+    margin-left: 16px;
 }

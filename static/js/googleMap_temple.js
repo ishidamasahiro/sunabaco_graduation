@@ -323,7 +323,7 @@ function initMap() {
             map: map,
             icon:{
                 url:"http://127.0.0.1:5000/static/img/gourmet_pin.png",
-                scaledSize : new google.maps.Size(41, 54)
+                scaledSize : new google.maps.Size(30, 41)
             }
         });
 
@@ -397,7 +397,7 @@ function initMap() {
             map: map,
             icon:{
                 url:"http://127.0.0.1:5000/static/img/inn_pin.png",
-                scaledSize : new google.maps.Size(41, 54)
+                scaledSize : new google.maps.Size(30, 41)
             }
         });
 
@@ -453,7 +453,7 @@ function initMap() {
             map: map,
             icon:{
                 url:"http://127.0.0.1:5000/static/img/convenience_pin.png",
-                scaledSize : new google.maps.Size(41, 54)
+                scaledSize : new google.maps.Size(30, 41)
             }
         });
 
@@ -516,7 +516,7 @@ function initMap() {
             map: map,
             icon:{
                 url:"http://127.0.0.1:5000/static/img/interesting_pin.png",
-                scaledSize : new google.maps.Size(41, 54)
+                scaledSize : new google.maps.Size(30, 41)
             }
         });
 
@@ -570,7 +570,7 @@ function initMap() {
             map: map,
             icon:{
                 url:"http://127.0.0.1:5000/static/img/roadside_pin.png",
-                scaledSize : new google.maps.Size(41, 54)
+                scaledSize : new google.maps.Size(30, 41)
             }
         });
 

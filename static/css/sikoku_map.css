@@ -38,10 +38,17 @@
 
 /*ヘッダーロゴ*/
 .header_temple_search_select img{
-    width: 40%;
+    width: 100%;
     height: auto;
     padding-top: 10px;
     padding-bottom: 10px;
+}
+
+.header_temple_search_select a{
+    width: 40%;
+    height: auto;
+    /* padding-top: 10px; */
+    /* padding-bottom: 10px; */
 }
 
 .pulldown_top_wrapper{
@@ -64,7 +71,7 @@
     text-align: center;
     /* width: 50px; */
     /* margin-bottom: 5px; */
-    background-color: #92D4F5;
+    background-color:#F4B6DB;
 }
 
 /*背景の雲*/

@@ -118,7 +118,7 @@ function initMap() {
         //吹き出し
         //中に各神社ページへのリンクを仕込む
         info_html[i] = "<div class='information'>" + all_temple_number[i] + "番札所:" + all_temple_name[i] + "<br>"+ all_temple_information[i] + "<br>" 
-                        + "<form  action='/temple_search_select' method='post' value = '1'>" + "<input type = 'hidden' name = 'temple_number' value = " + "'" + all_temple_number[i] + "'" + ">" + "<input type = 'submit' name = 'link' value = 'お寺周辺へ'>" + "</form>" + "</div>";//informationをhtmlに変換
+                        + "<form  action='/temple_search_select' method='post' value = '1'>" + "<input type = 'hidden' name = 'temple_number' value = " + "'" + all_temple_number[i] + "'" + ">" + "<input class = 'button' type = 'submit' name = 'link' value = 'お寺周辺へ'>" + "</form>" + "</div>";//informationをhtmlに変換
         // console.log(info_html);
         temple_infoWindow[i] = new google.maps.InfoWindow({
             content: info_html[i] // 吹き出しに表示する内容 改行したいときはdb内で<br>を記述

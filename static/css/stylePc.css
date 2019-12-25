@@ -1,6 +1,66 @@
 #pcOnly{
-    color: aquamarine;
 }
+
+.container { 
+    display: flex; 
+    /* display: inline-ﬂex; */
+
+    /* flex-direction: column; */
+    justify-content: center;
+    align-items: center;
+    /* width: 100px; 見た目用 */
+    /* height: 50px; 見た目用 */
+    /* flex-basis:30%; */
+    /* margin: 100px 0px 0px 0px; */
+    padding: 100px 0px 0px 0px;
+}
+
+/* セリフ */
+#Serif{
+    /* flex-basis: content; */
+    flex-basis: 300px;
+    position: relative;
+}
+
+#Serif p{
+    position: absolute;
+    color:#E4007F;
+    font-weight: bold; /*太字に*/
+    font-size: 2em;/*サイズ2倍*/
+    font-family :Quicksand, sans-serif;/*Google Font*/
+
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%,-50%);
+    -webkit-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+    margin:0;
+    padding:0;
+}
+
+#bubble{
+    /* flex-basis: 500px; */
+    width: 100%;
+}
+
+/* 宇宙人 */
+#henro_alien{
+    width:20%;
+    /* flex-basis: 500px; */
+    /* width: 500px;
+    height: 500px; */
+}
+
+
+/*背景の雲*/
+.wrapper{
+    background-image: url("../img/cloud.svg");
+    background-size: 40% auto;
+    height: 100vh;
+    /* opacity: 0.5; */
+    /* background-attachment: scroll; */
+}
+
 
 #spOnly{
     display: none;
