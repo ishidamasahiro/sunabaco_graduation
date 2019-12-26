@@ -159,6 +159,8 @@ function initMap() {
     // });
 
     //マーカーの画像
+    //image = "URL"の部分は公開するときのURLに合わせて変えなくてはならない
+    //ここ以外のマーカー画像も同じく
     var image;
     if(temple_number < 10)
     {

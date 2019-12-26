@@ -1,16 +1,18 @@
 {% extends "base.html" %}
 {% block content %}
 <link rel="stylesheet" type="text/css" href="../static/css/temple_search.css">
+<link rel="stylesheet" type="text/css" href="../static/css/ham_menu.css">
+<script type="text/javascript" src="../static/js/ham_menu.js"></script>
 
 <header>
     <div class="header_temple_search_select">
         <!-- <div class="logo_temple_search_select"> -->
             <img src="../static/img/header_logo.png" ><!-- てくてくおへんろロゴ -->
 
-        <div class="hum"> <!-- このクラスがハンバーガーボタンになる -->
-            <span class="hum_line hum_line1"></span>
-            <span class="hum_line hum_line2"></span>
-            <span class="hum_line hum_line3"></span>
+        <div class="ham" id="ham"> <!-- このクラスがハンバーガーボタンになる -->
+            <span class="ham_line ham_line1"></span>
+            <span class="ham_line ham_line2"></span>
+            <span class="ham_line ham_line3"></span>
         </div>
     </div>
 </header>
@@ -24,9 +26,9 @@
 
 <div class="pulldown_wrapper">
     <div class="pulldown_container">
-        <div class="pulldown">
+        <div class="pulldown tokushima">
         <!-- プルダウンを表示 -->
-            <p class = "title_tokushima">徳島県</p>
+            <p class = "title title_tokushima">徳島県</p>
             <!-- プルダウンを選びボタンを押すと寺の番がapp.pyの/temple_search_selectに送られる -->
             <form  action="/temple_search_select" method="post">
                 <select class ="pulldown_tokushima" name="temple_number">
@@ -60,7 +62,7 @@
         </div>
 
         <div class="pulldown">
-            <p>高知県</p>
+            <p class = "title title_kochi">高知県</p>
             <form action="/temple_search_select" method="post">
                 <select class ="pulldown_kochi" name="temple_number">
                     <option value="000">選択してください</option>
@@ -86,7 +88,7 @@
         </div>
 
         <div class="pulldown">
-            <p>愛媛県</p>
+            <p class = "title title_ehime">愛媛県</p>
             <form action="/temple_search_select" method="post">
                 <select class="pulldown_ehime" name="temple_number">
                     <option value="000">選択してください</option>
@@ -123,7 +125,7 @@
         </div>
 
         <div class="pulldown">
-            <p>香川県</p>
+            <p class = "title title_kagawa">香川県</p>
             <form  action="/temple_search_select" method="post">
                 <select class="pulldown_kagawa" name="temple_number">
                     <option value="000">選択してください</option>

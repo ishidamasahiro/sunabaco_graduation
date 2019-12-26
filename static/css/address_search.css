@@ -5,32 +5,6 @@ p{
     margin-bottom: 0;
 }
 
-/*ハンバーガーメニュー*/
-.hum {
-	position: relative;
-	width: 40px;
-	height: 40px;
-    cursor: pointer;
-    border-radius: 10px;
-	background-color: aqua;
-}
-.hum_line {
-	position: absolute;
-	left: 10px;
-	width: 20px;
-	height: 3px;
-    background-color: #333333;
-}
-.hum_line1 {
-	top: 10px;
-}
-.hum_line2 {
-	top: 18px;
-}
-.hum_line3 {
-	top: 26px;
-}
-
 .header_address_search{
     display: flex;
     justify-content:space-between;
@@ -74,7 +48,6 @@ p{
     background-image: url("../img/cloud.svg");
     background-size: 40% auto;
     height: 100vh;
-    opacity: 0.5;
 }
     /*animation: bgiLoop 10s linear infinite;
 }
@@ -88,17 +61,52 @@ p{
 }
 
 .address_search_container{
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    flex-direction: column;
     width: 80%;
     margin: 0 auto;
     text-align: center;
-    padding: 20px 0;
+    padding: 50px 0;
+}
+
+.address_search_form{
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    flex-direction: column;
+    width: 80%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.address_search_form p{
+    color: white;
+    border-radius: 5px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    width: 250px;
+    margin-bottom: 5px;
+    background-color: #CBE069;
 }
 
 #address{
     height: 35px;
-    width: 200px;
-    border-radius: 5px;
-    border-color: #228b22;
+    width: 250px;
+    border-radius: 10px;
+    border-color: #CBE069;
+}
+
+.now_place_search_form{
+    padding: 30px 0;
+}
+
+button{
+    height: 50px;
+    width: 250px;
+    border-radius: 10px;
 }
 
 #submit{
@@ -107,4 +115,51 @@ p{
     background-color: cornsilk;
 }
 
+.henro_alien{
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    height: 200px;
+}
 
+.balloon{
+    align-self: flex-start;
+    position: relative;
+    display: inline-block;
+    margin: 1.5em 15px 1.5em 0;
+    padding: 0 5px;
+    width: 90px;
+    height: 90px;
+    line-height: 90px;
+    text-align: center;
+    color: #FFF;
+    font-size: 16px;
+    font-weight: bold;
+    background: aqua;
+    border-radius: 50%;
+    box-sizing: border-box;
+}
+
+.balloon:before{
+    content: "";
+    position: absolute;
+    bottom: -8px;
+    right: -8px;
+    margin-top: -15px;
+    border: 15px solid transparent;
+    border-left: 15px solid aqua;
+    z-index: 0;
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+.henro_alien img{
+    align-self: flex-end;
+    width: 40%;
+    height: auto;
+}
+
+button{
+    background-color: #CBE069;
+    font-size: 16px;
+}

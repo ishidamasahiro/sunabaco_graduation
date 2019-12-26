@@ -6,20 +6,26 @@
 #Python>JS間の変数受け渡しをJSonを使うことで簡略化←こっちもめんどくさそう
 #
 #宇宙人にしゃべらせる
-#ルートの合計
+#ルート距離の合計
 #画面下の隙間に絵
 #逆、順めぐり
 #現在地取得
 #住所から検索
 #言語対応
-#コンビニ他リアルタイム取得（スクレイピング？
+#コンビニ他リアルタイム取得（スクレイピング？googleMapApi?
 #SNS連携
 #
+######公開するにあたりしなくてはいけないと思われること######
 #地図の操作をスマホ対応に
 #APIキーの設定
 #フラスクのインストール（サーバー側で必要なら
 #プルダウンをスマフォ実機対応
-#ピンの画像へのリンク
+#ピンの画像へのリンク(googleMap_temple.js 160行付近//マーカーの画像 を見てください)
+#
+######データベースへの入力######
+#1<>88間のルートは/1/88/と入力
+#[]()',全角スペースは使わない
+#
 ######################################
 
 
@@ -64,6 +70,7 @@ G_roadside_station_lng = None
 
 G_route_BandA = None
 G_route_distance = None
+G_route_caution = None
 
 #リストのダブりを消す関数
 def get_unique_list(seq):
@@ -328,6 +335,7 @@ def temple_search_select():
 
     global G_route_BandA
     global G_route_distance
+    global G_route_caution
     
     G_temple_place = temple_place
 
@@ -359,6 +367,7 @@ def temple_search_select():
 
     G_route_BandA = route_BandA
     G_route_distance = route_distance
+    G_route_caution = route_caution
     
     # print("G_temple_place001:::")
     # print(G_temple_place)
@@ -434,6 +443,7 @@ def route_map():
     waypoints_temple_lng = []
     
     only_two_temples = False#寺が隣り合っているときの判定
+    just_1_88 = False#1番と88番の時の判定
     # print("G_temple_place:::")
     # print(G_temple_place)
     
@@ -471,21 +481,31 @@ def route_map():
                             roadside_station_lng = G_roadside_station_lng,
                             
                             route_BandA = G_route_BandA,
-                            route_distance = G_route_distance
+                            route_distance = G_route_distance,
+                            route_caution = G_route_caution
                         )
     
     
     #寺が隣り合ってるなら
     elif int(Goal_temple_number) - int(Start_temple_number) == 1 or int(Goal_temple_number) - int(Start_temple_number) == -1 or int(Goal_temple_number) - int(Start_temple_number) == 87 or int(Goal_temple_number) - int(Start_temple_number) == -87:
         #逆めぐり
-        if int(Goal_temple_number) - int(Start_temple_number) == -1:
+        if int(Goal_temple_number) - int(Start_temple_number) == -1 or int(Goal_temple_number) - int(Start_temple_number) == -87:
             waypoints_temple_number.append(Goal_temple_number)
             waypoints_temple_number.append(Start_temple_number)
+            # print("88>1")
+            # print("waypoints_temple_number")
+            # print(waypoints_temple_number)
         
         #順めぐり
-        else:
+        elif int(Goal_temple_number) - int(Start_temple_number) == 1 or int(Goal_temple_number) - int(Start_temple_number) == 87:
             waypoints_temple_number.append(Start_temple_number)
             waypoints_temple_number.append(Goal_temple_number)
+            # print("1>88")
+            # print("waypoints_temple_number")
+            # print(waypoints_temple_number)
+            
+        if int(Goal_temple_number) - int(Start_temple_number) == -87 or int(Goal_temple_number) - int(Start_temple_number) == 87:
+            just_1_88 = True
             
         only_two_temples = True
         
@@ -604,7 +624,7 @@ def route_map():
     conn_temple.close()
     
     #---------------------------------------------------------------------------------
-    #ルート上の物件
+    #各物件
     #---------------------------------------------------------------------------------
     #グルメ-----------------------------------------
     #寺番号
@@ -626,59 +646,95 @@ def route_map():
     SandG_gourmet_articles = 0
     
     #-------寺周辺-------
-    for i in range(int(pre_Start_temple_number),int(pre_Goal_temple_number)+1):
-        #名前
-        c_gourmet.execute("select name from gourmet_place where temple_number = ?",
-                        (i,))
+    #1>88 or 88>1
+    if just_1_88 == True:
+        c_gourmet.execute("select name from gourmet_place where temple_number = 1 or temple_number = 88")
         Provisional = c_gourmet.fetchall()
         if Provisional != []:
             SandG_gourmet_articles += len(Provisional)
-            # print("SandG_gourmet_articles:::")
-            # print(SandG_gourmet_articles)
-            #print(i)
-            #print(Provisional)
-            # print(len(Provisional))
-            # print(Provisional)
             SandG_gourmet_name.append(Provisional)
-        # print("SandG_gourmet_name:::::")
-        # print(SandG_gourmet_name)
-        # print(len(SandG_gourmet_name))
-        #[[('ひわさ屋',), ('居酒屋つくし',), ('むらかみ旅館 味処 むらかみ',), ('てこ屋',)], [('うどん本陣＿山田家本店',), ('Remza',), ('パテハウス',)]]
-            
+
         #情報
-        c_gourmet.execute("select information from gourmet_place where temple_number = ?",
-                        (i,))
+        c_gourmet.execute("select information from gourmet_place where temple_number = 1 or temple_number = 88")
         Provisional = c_gourmet.fetchall()
         if Provisional != []:
             SandG_gourmet_information.append(Provisional)
         
         #緯度
-        c_gourmet.execute("select lat from gourmet_place where temple_number = ?",
-                        (i,))
+        c_gourmet.execute("select lat from gourmet_place where temple_number = 1 or temple_number = 88")
         #SandG_gourmet_lat.append(c_gourmet.fetchall())
         Provisional = c_gourmet.fetchall()
         if Provisional != []:
             SandG_gourmet_lat.append(Provisional)
         
         #経度
-        c_gourmet.execute("select lng from gourmet_place where temple_number = ?",
-                        (i,))
+        c_gourmet.execute("select lng from gourmet_place where temple_number = 1 or temple_number = 88")
         #SandG_gourmet_lng.append(c_gourmet.fetchall())
         Provisional = c_gourmet.fetchall()
         if Provisional != []:
             SandG_gourmet_lng.append(Provisional)
         
         #電話番号
-        c_gourmet.execute("select phone_number from gourmet_place where temple_number = ?",
-                        (i,))
+        c_gourmet.execute("select phone_number from gourmet_place where temple_number = 1 or temple_number = 88")
         #SandG_gourmet_phone_number.append(c_gourmet.fetchall())
         Provisional = c_gourmet.fetchall()
         if Provisional != []:
             SandG_gourmet_phone_number.append(Provisional)
             
-        #print("SandG_gourmet_phone_number:::::")
-        #print(SandG_gourmet_phone_number)#[('0884-77-3528',), ('090-9773-9905',), ('0884-77-0083',), ('0884-77-0073',)]
-        
+    else:
+        for i in range(int(pre_Start_temple_number),int(pre_Goal_temple_number)+1):
+            #名前
+            c_gourmet.execute("select name from gourmet_place where temple_number = ?",
+                            (i,))
+            Provisional = c_gourmet.fetchall()
+            if Provisional != []:
+                SandG_gourmet_articles += len(Provisional)
+                # print("SandG_gourmet_articles:::")
+                # print(SandG_gourmet_articles)
+                #print(i)
+                #print(Provisional)
+                # print(len(Provisional))
+                # print(Provisional)
+                SandG_gourmet_name.append(Provisional)
+            # print("SandG_gourmet_name:::::")
+            # print(SandG_gourmet_name)
+            # print(len(SandG_gourmet_name))
+            #[[('ひわさ屋',), ('居酒屋つくし',), ('むらかみ旅館 味処 むらかみ',), ('てこ屋',)], [('うどん本陣＿山田家本店',), ('Remza',), ('パテハウス',)]]
+                
+            #情報
+            c_gourmet.execute("select information from gourmet_place where temple_number = ?",
+                            (i,))
+            Provisional = c_gourmet.fetchall()
+            if Provisional != []:
+                SandG_gourmet_information.append(Provisional)
+            
+            #緯度
+            c_gourmet.execute("select lat from gourmet_place where temple_number = ?",
+                            (i,))
+            #SandG_gourmet_lat.append(c_gourmet.fetchall())
+            Provisional = c_gourmet.fetchall()
+            if Provisional != []:
+                SandG_gourmet_lat.append(Provisional)
+            
+            #経度
+            c_gourmet.execute("select lng from gourmet_place where temple_number = ?",
+                            (i,))
+            #SandG_gourmet_lng.append(c_gourmet.fetchall())
+            Provisional = c_gourmet.fetchall()
+            if Provisional != []:
+                SandG_gourmet_lng.append(Provisional)
+            
+            #電話番号
+            c_gourmet.execute("select phone_number from gourmet_place where temple_number = ?",
+                            (i,))
+            #SandG_gourmet_phone_number.append(c_gourmet.fetchall())
+            Provisional = c_gourmet.fetchall()
+            if Provisional != []:
+                SandG_gourmet_phone_number.append(Provisional)
+                
+            #print("SandG_gourmet_phone_number:::::")
+            #print(SandG_gourmet_phone_number)#[('0884-77-3528',), ('090-9773-9905',), ('0884-77-0083',), ('0884-77-0073',)]
+            
     
     route_gourmet_name = []
     route_gourmet_information = []
@@ -811,10 +867,9 @@ def route_map():
     SandG_inn_articles = 0
     
     #-------寺周辺-------
-    for i in range(int(pre_Start_temple_number),int(pre_Goal_temple_number)+1):
-        #名前
-        c_inn.execute("select name from inn_place where temple_number = ?",
-                        (i,))
+    if just_1_88 == True:
+                #名前
+        c_inn.execute("select name from inn_place where temple_number = 1 or temple_number = 88")
         Provisional = c_inn.fetchall()
         if Provisional != []:
             SandG_inn_articles += len(Provisional)
@@ -824,33 +879,70 @@ def route_map():
         #print(SandG_inn_name)
 
         #情報
-        c_inn.execute("select information from inn_place where temple_number = ?",
-                        (i,))
+        c_inn.execute("select information from inn_place where temple_number = 1 or temple_number = 88")
         Provisional = c_inn.fetchall()
         if Provisional != []:
             SandG_inn_information.append(Provisional)
         
         #緯度
-        c_inn.execute("select lat from inn_place where temple_number = ?",
-                        (i,))
+        c_inn.execute("select lat from inn_place where temple_number = 1 or temple_number = 88")
         Provisional = c_inn.fetchall()
         if Provisional != []:
             SandG_inn_lat.append(Provisional)
         
         #経度
-        c_inn.execute("select lng from inn_place where temple_number = ?",
-                        (i,))
+        c_inn.execute("select lng from inn_place where temple_number = 1 or temple_number = 88")
         Provisional = c_inn.fetchall()
         if Provisional != []:
             SandG_inn_lng.append(Provisional)
         
         #電話番号
-        c_inn.execute("select phone_number from inn_place where temple_number = ?",
-                        (i,))
+        c_inn.execute("select phone_number from inn_place where temple_number = 1 or temple_number = 88")
         Provisional = c_inn.fetchall()
         if Provisional != []:
             SandG_inn_phone_number.append(Provisional)
     
+    else:
+        for i in range(int(pre_Start_temple_number),int(pre_Goal_temple_number)+1):
+            #名前
+            c_inn.execute("select name from inn_place where temple_number = ?",
+                            (i,))
+            Provisional = c_inn.fetchall()
+            if Provisional != []:
+                SandG_inn_articles += len(Provisional)
+                SandG_inn_name.append(Provisional)
+                
+            #print("SandG_inn_name:::")
+            #print(SandG_inn_name)
+
+            #情報
+            c_inn.execute("select information from inn_place where temple_number = ?",
+                            (i,))
+            Provisional = c_inn.fetchall()
+            if Provisional != []:
+                SandG_inn_information.append(Provisional)
+            
+            #緯度
+            c_inn.execute("select lat from inn_place where temple_number = ?",
+                            (i,))
+            Provisional = c_inn.fetchall()
+            if Provisional != []:
+                SandG_inn_lat.append(Provisional)
+            
+            #経度
+            c_inn.execute("select lng from inn_place where temple_number = ?",
+                            (i,))
+            Provisional = c_inn.fetchall()
+            if Provisional != []:
+                SandG_inn_lng.append(Provisional)
+            
+            #電話番号
+            c_inn.execute("select phone_number from inn_place where temple_number = ?",
+                            (i,))
+            Provisional = c_inn.fetchall()
+            if Provisional != []:
+                SandG_inn_phone_number.append(Provisional)
+        
     route_inn_name = []
     route_inn_information = []
     route_inn_lat = []
@@ -959,42 +1051,69 @@ def route_map():
     SandG_roadside_station_articles = 0
     
     #-------寺周辺-------
-    for i in range(int(pre_Start_temple_number),int(pre_Goal_temple_number)+1):
-        #名前
-        c_roadside_station.execute("select name from roadsidestation where temple_number = ?",
-                        (i,))
+    if just_1_88 == True:
+                #名前
+        c_roadside_station.execute("select name from roadsidestation where temple_number = 1 or temple_number = 88")
         Provisional = c_roadside_station.fetchall()
         if Provisional != []:
             SandG_roadside_station_articles += len(Provisional)
             SandG_roadside_station_name.append(Provisional)
 
         #情報
-        c_roadside_station.execute("select information from roadsidestation where temple_number = ?",
-                        (i,))
+        c_roadside_station.execute("select information from roadsidestation where temple_number = 1 or temple_number = 88")
         Provisional = c_roadside_station.fetchall()
         if Provisional != []:
             SandG_roadside_station_information.append(Provisional)
         
         #緯度
-        c_roadside_station.execute("select lat from roadsidestation where temple_number = ?",
-                        (i,))
+        c_roadside_station.execute("select lat from roadsidestation where temple_number = 1 or temple_number = 88")
         Provisional = c_roadside_station.fetchall()
         if Provisional != []:
             SandG_roadside_station_lat.append(Provisional)
         
         #経度
-        c_roadside_station.execute("select lng from roadsidestation where temple_number = ?",
-                        (i,))
+        c_roadside_station.execute("select lng from roadsidestation where temple_number = 1 or temple_number = 88")
         Provisional = c_roadside_station.fetchall()
         if Provisional != []:
             SandG_roadside_station_lng.append(Provisional)
-        
-        #電話番号
-        # c_roadside_station.execute("select phone_number from roadsidestation where temple_number = ?",
-        #                 (i,))
-        # Provisional = c_roadside_station.fetchall()
-        # if Provisional != []:
-        #     SandG_roadside_station_phone_number.append(Provisional)
+            
+    else:
+        for i in range(int(pre_Start_temple_number),int(pre_Goal_temple_number)+1):
+            #名前
+            c_roadside_station.execute("select name from roadsidestation where temple_number = ?",
+                            (i,))
+            Provisional = c_roadside_station.fetchall()
+            if Provisional != []:
+                SandG_roadside_station_articles += len(Provisional)
+                SandG_roadside_station_name.append(Provisional)
+
+            #情報
+            c_roadside_station.execute("select information from roadsidestation where temple_number = ?",
+                            (i,))
+            Provisional = c_roadside_station.fetchall()
+            if Provisional != []:
+                SandG_roadside_station_information.append(Provisional)
+            
+            #緯度
+            c_roadside_station.execute("select lat from roadsidestation where temple_number = ?",
+                            (i,))
+            Provisional = c_roadside_station.fetchall()
+            if Provisional != []:
+                SandG_roadside_station_lat.append(Provisional)
+            
+            #経度
+            c_roadside_station.execute("select lng from roadsidestation where temple_number = ?",
+                            (i,))
+            Provisional = c_roadside_station.fetchall()
+            if Provisional != []:
+                SandG_roadside_station_lng.append(Provisional)
+            
+            #電話番号
+            # c_roadside_station.execute("select phone_number from roadsidestation where temple_number = ?",
+            #                 (i,))
+            # Provisional = c_roadside_station.fetchall()
+            # if Provisional != []:
+            #     SandG_roadside_station_phone_number.append(Provisional)
     
     route_roadside_station_name = []
     route_roadside_station_information = []
@@ -1119,43 +1238,69 @@ def route_map():
     SandG_interesting_articles = 0
     
     #-------寺周辺-------
-    for i in range(int(pre_Start_temple_number),int(pre_Goal_temple_number)+1):
+    if just_1_88 == True:
         #名前
-        c_interesting.execute("select name from interesting_place where temple_number = ?",
-                        (i,))
+        c_interesting.execute("select name from interesting_place where temple_number = 1 or temple_number = 88")
         Provisional = c_interesting.fetchall()
         if Provisional != []:
             SandG_interesting_articles += len(Provisional)
             SandG_interesting_name.append(Provisional)
 
         #情報
-        c_interesting.execute("select information from interesting_place where temple_number = ?",
-                        (i,))
+        c_interesting.execute("select information from interesting_place where temple_number = 1 or temple_number = 88")
         Provisional = c_interesting.fetchall()
         if Provisional != []:
             SandG_interesting_information.append(Provisional)
         
         #緯度
-        c_interesting.execute("select lat from interesting_place where temple_number = ?",
-                        (i,))
+        c_interesting.execute("select lat from interesting_place where temple_number = 1 or temple_number = 88")
         Provisional = c_interesting.fetchall()
         if Provisional != []:
             SandG_interesting_lat.append(Provisional)
         
         #経度
-        c_interesting.execute("select lng from interesting_place where temple_number = ?",
-                        (i,))
+        c_interesting.execute("select lng from interesting_place where temple_number = 1 or temple_number = 88")
         Provisional = c_interesting.fetchall()
         if Provisional != []:
             SandG_interesting_lng.append(Provisional)
+    else:
+        for i in range(int(pre_Start_temple_number),int(pre_Goal_temple_number)+1):
+            #名前
+            c_interesting.execute("select name from interesting_place where temple_number = ?",
+                            (i,))
+            Provisional = c_interesting.fetchall()
+            if Provisional != []:
+                SandG_interesting_articles += len(Provisional)
+                SandG_interesting_name.append(Provisional)
+
+            #情報
+            c_interesting.execute("select information from interesting_place where temple_number = ?",
+                            (i,))
+            Provisional = c_interesting.fetchall()
+            if Provisional != []:
+                SandG_interesting_information.append(Provisional)
+            
+            #緯度
+            c_interesting.execute("select lat from interesting_place where temple_number = ?",
+                            (i,))
+            Provisional = c_interesting.fetchall()
+            if Provisional != []:
+                SandG_interesting_lat.append(Provisional)
+            
+            #経度
+            c_interesting.execute("select lng from interesting_place where temple_number = ?",
+                            (i,))
+            Provisional = c_interesting.fetchall()
+            if Provisional != []:
+                SandG_interesting_lng.append(Provisional)
+            
+            #電話番号
+            # c_roadside_station.execute("select phone_number from roadsidestation where temple_number = ?",
+            #                 (i,))
+            # Provisional = c_roadside_station.fetchall()
+            # if Provisional != []:
+            #     SandG_roadside_station_phone_number.append(Provisional)
         
-        #電話番号
-        # c_roadside_station.execute("select phone_number from roadsidestation where temple_number = ?",
-        #                 (i,))
-        # Provisional = c_roadside_station.fetchall()
-        # if Provisional != []:
-        #     SandG_roadside_station_phone_number.append(Provisional)
-    
     route_interesting_name = []
     route_interesting_information = []
     route_interesting_lat = []
@@ -1272,43 +1417,63 @@ def route_map():
     SandG_convenience_articles = 0
     
     #-------寺周辺-------
-    for i in range(int(pre_Start_temple_number),int(pre_Goal_temple_number)+1):
-        #名前
-        c_convenience.execute("select name from convenience_place where temple_number = ?",
-                        (i,))
+    if just_1_88 == True:
+                #名前
+        c_convenience.execute("select name from convenience_place where temple_number = 1 or temple_number = 88")
         Provisional = c_convenience.fetchall()
         if Provisional != []:
             SandG_convenience_articles += len(Provisional)
             SandG_convenience_name.append(Provisional)
-
-        # #情報
-        # c_convenience.execute("select information from convenience_place where temple_number = ?",
-        #                 (i,))
-        # Provisional = c_convenience.fetchall()
-        # if Provisional != []:
-        #     SandG_convenience_information.append(Provisional)
-        
         #緯度
-        c_convenience.execute("select lat from convenience_place where temple_number = ?",
-                        (i,))
+        c_convenience.execute("select lat from convenience_place where temple_number = 1 or temple_number = 88")
         Provisional = c_convenience.fetchall()
         if Provisional != []:
             SandG_convenience_lat.append(Provisional)
         
         #経度
-        c_convenience.execute("select lng from convenience_place where temple_number = ?",
-                        (i,))
+        c_convenience.execute("select lng from convenience_place where temple_number = 1 or temple_number = 88")
         Provisional = c_convenience.fetchall()
         if Provisional != []:
             SandG_convenience_lng.append(Provisional)
+            
+    else:
+        for i in range(int(pre_Start_temple_number),int(pre_Goal_temple_number)+1):
+            #名前
+            c_convenience.execute("select name from convenience_place where temple_number = ?",
+                            (i,))
+            Provisional = c_convenience.fetchall()
+            if Provisional != []:
+                SandG_convenience_articles += len(Provisional)
+                SandG_convenience_name.append(Provisional)
+
+            # #情報
+            # c_convenience.execute("select information from convenience_place where temple_number = ?",
+            #                 (i,))
+            # Provisional = c_convenience.fetchall()
+            # if Provisional != []:
+            #     SandG_convenience_information.append(Provisional)
+            
+            #緯度
+            c_convenience.execute("select lat from convenience_place where temple_number = ?",
+                            (i,))
+            Provisional = c_convenience.fetchall()
+            if Provisional != []:
+                SandG_convenience_lat.append(Provisional)
+            
+            #経度
+            c_convenience.execute("select lng from convenience_place where temple_number = ?",
+                            (i,))
+            Provisional = c_convenience.fetchall()
+            if Provisional != []:
+                SandG_convenience_lng.append(Provisional)
+            
+            #電話番号
+            # c_roadside_station.execute("select phone_number from roadsidestation where temple_number = ?",
+            #                 (i,))
+            # Provisional = c_roadside_station.fetchall()
+            # if Provisional != []:
+            #     SandG_roadside_station_phone_number.append(Provisional)
         
-        #電話番号
-        # c_roadside_station.execute("select phone_number from roadsidestation where temple_number = ?",
-        #                 (i,))
-        # Provisional = c_roadside_station.fetchall()
-        # if Provisional != []:
-        #     SandG_roadside_station_phone_number.append(Provisional)
-    
     route_convenience_name = []
     #route_convenience_information = []
     route_convenience_lat = []

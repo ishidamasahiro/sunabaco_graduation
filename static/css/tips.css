@@ -6,7 +6,7 @@ p {
 }
 
 /*ハンバーガーメニュー*/
-.hum {
+.ham {
 	position: relative;
 	width: 40px;
 	height: 40px;
@@ -14,22 +14,23 @@ p {
     border-radius: 10px;
 	background-color: aqua;
 }
-.hum_line {
+.ham_line {
 	position: absolute;
 	left: 10px;
 	width: 20px;
 	height: 3px;
     background-color: #333333;
 }
-.hum_line1 {
+.ham_line1 {
 	top: 10px;
 }
-.hum_line2 {
+.ham_line2 {
 	top: 18px;
 }
-.hum_line3 {
+.ham_line3 {
 	top: 26px;
 }
+/*-----------------------------------------------*/
 
 .header_tips{
     display: flex;
@@ -67,7 +68,6 @@ p {
     background-image: url("../img/cloud.svg");
     background-size: 40% auto;
     background-attachment: scroll;
-    opacity: 0.5;
 }
     /*animation: bgiLoop 10s linear infinite;
 }

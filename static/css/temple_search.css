@@ -6,7 +6,7 @@ p{
 }
 
 /*ハンバーガーメニュー*/
-.hum {
+.ham {
 	position: relative;
 	width: 40px;
 	height: 40px;
@@ -14,22 +14,24 @@ p{
     border-radius: 10px;
 	background-color: aqua;
 }
-.hum_line {
+.ham_line {
 	position: absolute;
 	left: 10px;
 	width: 20px;
 	height: 3px;
     background-color: #333333;
 }
-.hum_line1 {
+.ham_line1 {
 	top: 10px;
 }
-.hum_line2 {
+.ham_line2 {
 	top: 18px;
 }
-.hum_line3 {
+.ham_line3 {
 	top: 26px;
 }
+/*-----------------------------------------------*/
+
 
 .header_temple_search_select{
     display: flex;
@@ -74,7 +76,6 @@ p{
     background-image: url("../img/cloud.svg");
     background-size: 40% auto;
     height: 100vh;
-    opacity: 0.5;
 }
     /*animation: bgiLoop 10s linear infinite;
 }
@@ -97,22 +98,42 @@ p{
     padding-bottom: 20px;
     display: flex;
     justify-content: center;
-    align-items: flex-start; 
+    align-items: center; 
     flex-direction: column;
     width: 80%;
     margin: 0 auto;
 }
 
+.tokushima{
+    padding-top: 50px;
+}
 
-.title_tokushima{
+.title{
     color: white;
     border-radius: 5px;
     height: 30px;
     line-height: 30px;
-    width: 50px;
-    background-color: #228b22;
+    text-align: center;
+    width: 250px;
     margin-bottom: 5px;
 }
+
+.title_tokushima{
+    background-color: #228b22;
+}
+
+.title_kochi{
+    background-color: #4682b4;
+}
+
+.title_ehime{
+    background-color: #ffa500;
+}
+
+.title_kagawa{
+    background-color: #ffb6c1;
+}
+
 
 .pulldown_form{
     width:200px; 
@@ -156,7 +177,7 @@ select{
     border-style: solid;
     border-radius: 10px;
     border-width: 3px;
-    width:200px; 
+    width:250px; 
     height:35px; 
     background-image: url(../img/ifn0244.png);
     background-repeat: no-repeat;
@@ -165,7 +186,10 @@ select{
 }
 
 form{
-    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    flex-direction: column;
 }
 
 input{

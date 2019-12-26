@@ -1,17 +1,48 @@
 {% extends "base.html" %}
 {% block content %}
 <link rel="stylesheet" type="text/css" href="../static/css/address_search.css">
+<link rel="stylesheet" type="text/css" href="../static/css/ham_menu.css">
+<script type="text/javascript" src="../static/js/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="../static/js/ham_menu.js"></script>
 
 <header>
     <div class="header_address_search">
             <img src="../static/img/header_logo.png" ><!-- てくてくおへんろロゴ -->
 
-        <div class="hum"><!-- このクラスがハンバーガーボタンになる -->
-            <span class="hum_line hum_line1"></span>
-            <span class="hum_line hum_line2"></span>
-            <span class="hum_line hum_line3"></span>
+
+        <div class="navi-btn" id="navi-btn"><!-- このクラスがハンバーガーボタンになる -->
+            <span class="ham_line1"></span>
+            <span class="ham_line2"></span>
+            <span class="ham_line3"></span>
+            <p>メニュー</p>
         </div>
+        <div class="navi-menu" id="navi-menu">
+            <li><a href="/">トップへ戻る</a></li>
+            <li><a href="/sikoku_map">エリアからえらぶ</a></li>
+            <li><a href="/temple_search">お寺からえらぶ</a></li>
+            <li><a href="/tips">お遍路豆知識</a></li>
+        </div>
+<!-- 
+        <div class="ham" id="ham">
+            <span class="ham_line ham_line1"></span>
+            <span class="ham_line ham_line2"></span>
+            <span class="ham_line ham_line3"></span>
+        </div>
+        <div class="ham_menu_wrapper" id="ham_menu_wrapper">
+            <div class="ham_menu">
+                <ul>
+                    <li><a href="/">トップページへ戻る</a></li>
+                    <li><a href="/sikoku_map">エリアからえらぶ</a></li>
+                    <li><a href="/temple_search">お寺からえらぶ</a></li>
+                    <li><a href="/tips">お遍路豆知識</a></li>
+                </ul>
+            </div>
+        </div>
+    このクラスがハンバーガーボタンになる -->
     </div>
+
+
+
 </header>
 
 <div class="address_search_top_wrapper">
@@ -25,12 +56,24 @@
     <div class="address_search_container">
         <div class="address_search_form">
         <!-- プルダウンを表示 -->
-            <label for="name">住所を入力してください</label>
+            <p>住所を入力してください</p>
             <input type="text" name="address" id="address">
             <input type="submit" name="save" value="検索" id="submit">    
         </div>
+        <div class="now_place_search_form">
+            <button>現在地からえらぶ</button>
+        </div>
+    </div>
+    <div class="henro_alien_container">
+        <div class="henro_alien">
+            <div class="balloon">
+                工事中だよ
+            </div>
+            <img src="../static/img/henro_alien.png" alt="エイリアン">
+        </div>
     </div>
 </div>
+
 
 
 {% endblock %}

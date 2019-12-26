@@ -2,7 +2,6 @@
 .background{
     background-image: url("../img/cloud.svg");
     background-size: 40%;
-    /* opacity: 0.5; */
     background-attachment: scroll;
 }
 
@@ -51,6 +50,10 @@
     align-items: center; 
     border-radius: 10px;
     box-shadow: 0 4px 6px #7e8183e6;
+}
+
+.menus a{
+    text-decoration: none;
 }
 
 /* メニューアイコン */
