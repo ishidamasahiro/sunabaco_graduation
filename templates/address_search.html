@@ -7,41 +7,38 @@
 
 <header>
     <div class="header_address_search">
-            <img src="../static/img/header_logo.png" ><!-- てくてくおへんろロゴ -->
-
-
-        <div class="navi-btn" id="navi-btn"><!-- このクラスがハンバーガーボタンになる -->
-            <span class="ham_line1"></span>
-            <span class="ham_line2"></span>
-            <span class="ham_line3"></span>
-            <p>メニュー</p>
-        </div>
-        <div class="navi-menu" id="navi-menu">
-            <li><a href="/">トップへ戻る</a></li>
-            <li><a href="/sikoku_map">エリアからえらぶ</a></li>
-            <li><a href="/temple_search">お寺からえらぶ</a></li>
-            <li><a href="/tips">お遍路豆知識</a></li>
-        </div>
-<!-- 
-        <div class="ham" id="ham">
-            <span class="ham_line ham_line1"></span>
-            <span class="ham_line ham_line2"></span>
-            <span class="ham_line ham_line3"></span>
-        </div>
-        <div class="ham_menu_wrapper" id="ham_menu_wrapper">
-            <div class="ham_menu">
-                <ul>
-                    <li><a href="/">トップページへ戻る</a></li>
-                    <li><a href="/sikoku_map">エリアからえらぶ</a></li>
-                    <li><a href="/temple_search">お寺からえらぶ</a></li>
-                    <li><a href="/tips">お遍路豆知識</a></li>
-                </ul>
+        <!-- <img src="../static/img/header_logo.png" > -->
+        <!-- てくてくおへんろロゴ -->
+        <a href="http://127.0.0.1:5000/"><img src="../static/img/header_logo.png" ></a>
+        
+        <div class="el_humburger"><!--ハンバーガーボタン-->
+            <div class="el_humburger_wrapper">
+                <span class="el_humburger_bar top"></span>
+                <span class="el_humburger_bar middle"></span>
+                <span class="el_humburger_bar bottom"></span>
             </div>
         </div>
-    このクラスがハンバーガーボタンになる -->
+        <div class="navi"><!--ハンバーガーナビゲーション-->
+            <div class="navi_inner">
+                <div class="navi_item" >
+                    <a href="/">トップへ戻る</a>
+                </div>
+                <div class="navi_item" >
+                    <a href="/sikoku_map">
+                        <img src="../static/img/map_select.png" alt="四国">地図からえらぶ
+                    </a>
+                </div>
+                <div class="navi_item" >
+                    <a href="/temple_search"><img src="../static/img/tenple_select.png" alt="お寺">お寺からえらぶ</a>
+                </div>
+                <div class="navi_item" >
+                    <a href="/tips"><img src="../static/img/henro_info.png" id="henro_info" alt="豆電球">お遍路豆知識</a>
+                </div>
+                
+            </div>
+        </div>
+        
     </div>
-
-
 
 </header>
 

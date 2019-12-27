@@ -2,12 +2,14 @@
 {% block content %}
 <link rel="stylesheet" type="text/css" href="../static/css/temple_search.css">
 <link rel="stylesheet" type="text/css" href="../static/css/ham_menu.css">
-<script type="text/javascript" src="../static/js/ham_menu.js"></script>
+
 
 <header>
     <div class="header_temple_search_select">
         <!-- <div class="logo_temple_search_select"> -->
-            <img src="../static/img/header_logo.png" ><!-- てくてくおへんろロゴ -->
+            <!-- <img src="../static/img/header_logo.png" > -->
+            <!-- てくてくおへんろロゴ -->
+            <a href="http://127.0.0.1:5000/"><img src="../static/img/header_logo.png" ></a>
 
         <div class="ham" id="ham"> <!-- このクラスがハンバーガーボタンになる -->
             <span class="ham_line ham_line1"></span>
@@ -158,5 +160,6 @@
     </div>
 </div>
 
-
+<script type="text/javascript" src="../static/js/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="../static/js/ham_menu.js"></script>
 {% endblock %}

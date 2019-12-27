@@ -1,4 +1,125 @@
+/*ナビメニューのスタイルを指定*/
 
+/*
+.NavMenu{
+/*	position: fixed; /*表示位置を固定*/
+/*	z-index: 200; /*重ね順を変更*/
+/*	top: 60px; /*表示位置を指定*/
+/*	left: 50%; /*表示位置を指定*/
+/*	background: #fff;/*背景を白にする*/
+/*	color: #000; /*文字色を黒にする*/
+/*	text-align: center; /*テキストを中央揃え*/
+/*	width: 50%; /*全幅表示*/
+/*	right: -320px; /*ナビを上に隠す*/
+/*	transition: all 0.6s; /*アニメーションの時間を指定*/
+/*}
+
+.NavMenu ul{
+		background: aqua; /*背景をグレーにする*/
+/*		width: 80%;
+/		margin: 0 auto;
+		padding: 0;
+}
+	
+nav.NavMenu ul li{
+	font-size: 1.1em;
+	list-style-type: none;
+	padding: 0;
+	width: 80%;
+	border-bottom: 1px dotted #333;
+}
+
+nav.NavMenu ul li:last-child{
+	padding-bottom: 0;
+	border-bottom: none; /*最後のメニュー項目のみ下線を消す*/
+/*}
+
+nav.NavMenu ul li a{
+	display: block; /*クリックできる領域を広げる*/
+/*	color: #000;
+	padding: 1em 0;
+}
+
+
+.nav_bg {
+	opacity: 0;
+	transition: all .6s;
+	width: 100vw;
+	height: 100vh;
+	z-index: 100;
+	top: 0;
+	left: 0;
+	visibility: hidden;
+	background-color: #000;
+	cursor: pointer;
+	position: fixed;
+}
+
+.nav_open .nav_bg {
+	opacity: .8;
+	visibility: visible;
+}
+
+/*トグルボタンが押されたときに付与するクラス*/
+/*nav.NavMenu.active{
+	transform: translateY(0%);
+}
+
+/*トグルボタンのスタイルを指定*/
+/*.Toggle {
+    display: block;
+    position: fixed;    /* bodyに対しての絶対位置指定 */
+/*    right: 13px;
+    top: 12px;
+    width: 42px;
+    height: 42px;
+    cursor: pointer;
+    z-index: 3;
+}
+
+.Toggle span {
+    display: block;
+    position: absolute;
+    width: 30px;
+    border-bottom: solid 3px #000;
+    -webkit-transition: .35s ease-in-out;	/*変化の速度を指定*/
+/*    -moz-transition: .35s ease-in-out;		/*変化の速度を指定*/
+/*    transition: .35s ease-in-out;			/*変化の速度を指定*/
+/*    left: 6px;
+}
+
+.Toggle span:nth-child(1) {
+    top: 9px;
+}
+
+.Toggle span:nth-child(2) {
+    top: 18px;
+}
+
+.Toggle span:nth-child(3) {
+    top: 27px;
+}
+
+/* 最初のspanをマイナス45度に */
+/*.Toggle.active span:nth-child(1) {
+    top: 18px;
+    left: 6px;
+    -webkit-transform: rotate(-45deg);
+    -moz-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+}
+
+/* 2番目と3番目のspanを45度に */
+/*.Toggle.active span:nth-child(2),
+.Toggle.active span:nth-child(3) {
+    top: 18px;
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+
+/*
 .navi-btn {
 	width: 50px;
 	height: 50px;
@@ -123,3 +244,243 @@
 .clicked .ham_menu {
 	left: 10px;
 }*/
+
+	
+.el_humburger {
+	position: fixed;
+	top: 45px;
+	right: 60px;
+	width: 46px;
+	height: 25px;
+	padding-top: 20px;
+	box-sizing: border-box;
+	padding-top: 0px;
+	z-index: 20;
+	cursor: pointer;
+	pointer-events: auto;
+	color: #000;
+	text-align: center;
+	background-color: #54BDE8;
+	margin: 30px 30px;
+	border-radius: 10px;
+}
+
+@media screen and (max-width: 840px) {
+	.el_humburger {
+	display: block;
+	right: 0;
+	top: 0;
+	margin: 30px 30px;
+	padding: 10px 0;
+	width: 50px;
+	height: 50px;}
+	#factory .el_humburger {
+		display: none; 
+	} 
+}
+
+.el_humburger_wrapper {
+	margin-bottom: 5px;
+	width: 42px;
+	display: inline-block; 
+}
+
+
+@media screen and (max-width: 840px) {
+.el_humburger_wrapper {
+	margin-bottom: 5px;
+	width: 30px; 
+	} 
+}
+
+.el_humburger_text {
+	font-size: 12px;
+	letter-spacing: 0.1em;
+}
+
+.js_humburgerOpen .el_humburger_text.el_humburger_text__menu {
+	display: none; 
+}
+
+.el_humburger_text.el_humburger_text__close {
+	display: none; 
+}
+
+.js_humburgerOpen .el_humburger_text.el_humburger_text__close {
+	display: block; 
+}
+
+
+@media screen and (max-width: 840px) {
+	.el_humburger_text {
+		font-size: 10px;
+		padding-top: 2px; 
+	} 
+}
+
+@media screen and (max-width: 840px) {
+	.el_humburger_text svg path {
+		-webkit-transition: all 200ms cubic-bezier(0.16, 0.52, 0.25, 1);
+		-o-transition: all 200ms cubic-bezier(0.16, 0.52, 0.25, 1);
+		transition: all 200ms cubic-bezier(0.16, 0.52, 0.25, 1);
+		fill: #000; 
+	} 
+}
+
+@media screen and (max-width: 840px) {
+	.js_humburgerOpen .el_humburger_text svg path {
+		fill: #000; 
+	} 
+}
+
+.el_humburger span.el_humburger_bar {
+	display: block;
+	width: 100%;
+	margin: 0 auto 9px;
+	height: 3px;
+	background: #000;
+	-webkit-transition: all .2s ease-in-out;
+	-o-transition: all .2s ease-in-out;
+	transition: all .2s ease-in-out; 
+}
+
+.el_humburger span.el_humburger_bar:last-child {
+	margin-bottom: 0; 
+}
+
+.js_humburgerOpen .el_humburger span.el_humburger_bar {
+	background: #000; 
+}
+
+
+@media screen and (max-width: 840px) {
+	.el_humburger span.el_humburger_bar {
+		left: 0;
+		top: 0;
+		background: #000; 
+	} 
+}
+
+.js_humburgerOpen .el_humburger span.el_humburger_bar.top {
+	-webkit-transform: translateY(9px) rotate(-45deg);
+	-ms-transform: translateY(9px) rotate(-45deg);
+	transform: translateY(9px) rotate(-45deg); 
+}
+
+.js_humburgerOpen .el_humburger span.el_humburger_bar.middle {
+	opacity: 0; 
+}
+
+.js_humburgerOpen .el_humburger span.el_humburger_bar.bottom {
+	-webkit-transform: translateY(-14px) rotate(45deg);
+	-ms-transform: translateY(-14px) rotate(45deg);
+	transform: translateY(-14px) rotate(45deg); 
+}
+
+.el_humburgerButton.el_humburgerButton__close {
+	top: 2%;
+	right: 2%; }
+
+.el_humburgerButton__close span.el_humburger_bar {
+	display: block;
+	width: 35px;
+	margin: 0 auto;
+	height: 4px;
+	background: #000; 
+}
+
+.el_humburgerButton__close span.el_humburger_bar.top {
+	-webkit-transform: translateY(5px) rotate(-45deg);
+	-ms-transform: translateY(5px) rotate(-45deg);
+	transform: translateY(5px) rotate(-45deg); 
+}
+
+.el_humburgerButton__close span.el_humburger_bar.bottom {
+	-webkit-transform: translateY(-6px) rotate(45deg);
+	-ms-transform: translateY(-6px) rotate(45deg);
+	transform: translateY(-6px) rotate(45deg); }
+
+.navi {
+	position: fixed;
+	right: 0;
+	background-color:#54BDE8;
+	width: 0;
+	z-index: 10;
+	padding-top: 100px;
+	box-sizing: border-box;
+	transition: all 600ms ease-out;
+	overflow: hidden; 
+}
+
+
+.navi_inner{
+	display: flex;
+    justify-content: center;
+    align-items: center; 
+    flex-direction: column;
+}
+
+.navi_item{
+	display: flex;
+	justify-content: flex-start;
+	align-self:flex-end;
+    width: 100%;
+}
+
+.js_humburgerOpen .navi {
+	width: 60%; 
+	top: 80px;
+}
+
+@media screen and (max-width: 840px) {
+	.js_humburgerOpen .navi {
+		top: 80px;
+		width: 60%;
+		padding: 10px 5% 0; 
+	} 
+}
+
+.navi_item {
+	margin-bottom: 28px;
+	font-size: 20px;
+	white-space: nowrap;
+	margin-left: 90px; 
+}
+	
+.navi_item img{
+	width: 20%;
+	height: auto;
+	padding: 0 20px 0 0;
+}
+
+.navi_item #henro_info{
+	width: 10%;
+	height: auto;
+	padding-right: 40px;
+}
+
+.navi_item a{
+	font-weight: 300;
+	color: cornsilk;
+	padding-top: 10px;
+}
+
+.navi_item.op_innerLink {
+	cursor: pointer; 
+}
+
+
+@media screen and (max-width: 840px) {
+	.navi_item {
+		margin-left: 0;
+		font-size: 18px; 
+	} 
+}
+
+@media screen and (max-width: 840px) {
+	.js_humburgerClose .navi {
+		top: 80px;
+		right: -60%;
+		padding: 10px 5% 0; 
+	} 
+}

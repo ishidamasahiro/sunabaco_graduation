@@ -39,27 +39,43 @@ p {
 }
 
 /*ヘッダーロゴ*/
-.header_tips img{
+.header_tips a{
     width: 40%;
+    height: auto;
+    /* padding-top: 10px; */
+    /* padding-bottom: 10px; */
+}
+
+.header_tips img{
+    width: 100%;
     height: auto;
     padding-top: 10px;
     padding-bottom: 10px;
 }
+
+
 
 .tips_top_wrapper{
     background-color: #ED7D31;
 }
 
 .tips_top_container{
-    margin: 0 auto;
-    text-align:center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     height: 63px;
 }
 
+.tips_top_container img{
+    width: 8%;
+    height: auto;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-right: 20px;
+}
+
 .tips_top_container p{
-    color: white;
     font-size: 20px;
-    line-height: 63px;
 }
 
 

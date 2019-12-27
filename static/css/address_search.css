@@ -12,12 +12,26 @@ p{
 }
 
 /*ヘッダーロゴ*/
-.header_address_search img{
+.header_address_search a{
     width: 40%;
+    height: auto;
+    /* padding-top: 10px; */
+    /* padding-bottom: 10px; */
+}
+
+.header_address_search img{
+    width: 100%;
     height: auto;
     padding-top: 10px;
     padding-bottom: 10px;
 }
+
+/* .header_temple_search_select a{
+    width: 90%;
+    height: auto;
+    /* padding-top: 10px; */
+    /* padding-bottom: 10px; */
+/*}*/ 
 
 .address_search_top_wrapper{
     background-color: #CBE069;
@@ -135,7 +149,7 @@ button{
     color: #FFF;
     font-size: 16px;
     font-weight: bold;
-    background: aqua;
+    background: #54BDE8;
     border-radius: 50%;
     box-sizing: border-box;
 }
@@ -147,7 +161,7 @@ button{
     right: -8px;
     margin-top: -15px;
     border: 15px solid transparent;
-    border-left: 15px solid aqua;
+    border-left: 15px solid #54BDE8;
     z-index: 0;
     -webkit-transform: rotate(45deg);
     transform: rotate(45deg);

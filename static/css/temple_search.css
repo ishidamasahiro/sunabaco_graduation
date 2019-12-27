@@ -40,8 +40,15 @@ p{
 }
 
 /*ヘッダーロゴ*/
-.header_temple_search_select img{
+.header_temple_search_select a{
     width: 40%;
+    height: auto;
+    /* padding-top: 10px; */
+    /* padding-bottom: 10px; */
+}
+
+.header_temple_search_select img{
+    width: 100%;
     height: auto;
     padding-top: 10px;
     padding-bottom: 10px;
