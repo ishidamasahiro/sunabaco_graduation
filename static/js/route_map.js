@@ -122,106 +122,24 @@ let route_convenience_lat = [];
 let route_convenience_lng = [];
 //let route_interesting_phone_number = [];
 
-function initialize() {
-    //geocoder = new google.maps.Geocoder();
-    latlng = new google.maps.LatLng(-34.397, 150.644);
-    var mapOptions = {
-        zoom: 16,
-        center: latlng,
-        gestureHandling: "greedy",
-        styles:
-        [
-            {
-                "featureType": "administrative.land_parcel",
-                "elementType": "labels",
-                "stylers": [
-                {
-                    "visibility": "off"
-                }
-                ]
-            },
-            {
-                "featureType": "poi",
-                "elementType": "labels.text",
-                "stylers": [
-                {
-                    "visibility": "off"
-                }
-                ]
-            },
-            {
-                "featureType": "poi.business",
-                "stylers": [
-                {
-                    "visibility": "off"
-                }
-                ]
-            },
-            {
-                "featureType": "poi.park",
-                "elementType": "labels.text",
-                "stylers": [
-                {
-                    "visibility": "off"
-                }
-                ]
-            },
-            {
-                "featureType": "road.local",
-                "elementType": "labels",
-                "stylers": [
-                {
-                    "visibility": "off"
-                }
-                ]
-            }
-        ]
-    }
-    map = new google.maps.Map(document.getElementById('map'), mapOptions);
-    //bounds = new google.maps.LatLngBounds();
-}
-
 //------------------------------------------------------------------------------------
 function initMap_WayPoints() {
 
     // マップの生成
-    initialize();
+    initialize(16);
     bounds = new google.maps.LatLngBounds();
 
     //物件のピンを立てる-------------------------------------------------------
 
     //寺周辺の物件情報------------------------
     //グルメ----------
-    SandG_gourmet_name = document.getElementById( "SandG_gourmet_name" ).value;
-    SandG_gourmet_name = SandG_gourmet_name.split(/[(',)]/);
-    SandG_gourmet_name = SandG_gourmet_name.filter(Boolean);
-
-    //console.log("SandG_gourmet_name:::" + SandG_gourmet_name);
-    //console.log("SandG_gourmet_name.length:::" + SandG_gourmet_name.length);
-
-    SandG_gourmet_information = document.getElementById( "SandG_gourmet_information" ).value;
-    SandG_gourmet_information = SandG_gourmet_information.split(/[(',)]/);
-    SandG_gourmet_information = SandG_gourmet_information.filter(Boolean);
-
-    SandG_gourmet_lat = document.getElementById( "SandG_gourmet_lat" ).value;
-    SandG_gourmet_lat = SandG_gourmet_lat.split(/[(',)]/);
-    SandG_gourmet_lat = SandG_gourmet_lat.filter(Boolean);
-
-    SandG_gourmet_lng = document.getElementById( "SandG_gourmet_lng" ).value;
-    SandG_gourmet_lng = SandG_gourmet_lng.split(/[(',)]/);
-    SandG_gourmet_lng = SandG_gourmet_lng.filter(Boolean);
-
-    //console.log("SandG_gourmet_lng:::" + SandG_gourmet_lng);
-    //console.log("SandG_gourmet_name.lng:::" + SandG_gourmet_lng.length);
-
-    SandG_gourmet_phone_number = document.getElementById( "SandG_gourmet_phone_number" ).value;
-    //console.log("SandG_gourmet_phone_number1:::" + SandG_gourmet_phone_number)
-    SandG_gourmet_phone_number = SandG_gourmet_phone_number.split(/[(',)]/);
-    SandG_gourmet_phone_number = SandG_gourmet_phone_number.filter(Boolean);
-
-    //console.log("SandG_gourmet_phone_number:::" + SandG_gourmet_phone_number)
-    //console.log("SandG_gourmet_phone_number.length:::" + SandG_gourmet_phone_number.length);
-
+    SandG_gourmet_element = values_to_list("SandG_gourmet");
+    SandG_gourmet_name = SandG_gourmet_element[0];
+    SandG_gourmet_lat = SandG_gourmet_element[1];
+    SandG_gourmet_lng = SandG_gourmet_element[2];
+    SandG_gourmet_information = SandG_gourmet_element[3];
+    SandG_gourmet_phone_number = SandG_gourmet_element[4];
+    
     //ピンを立てる----------
     for(let i = 0; i < SandG_gourmet_name.length; i++)
     {
@@ -248,25 +166,12 @@ function initMap_WayPoints() {
     }
 
     //宿----------
-    SandG_inn_name = document.getElementById( "SandG_inn_name" ).value;
-    SandG_inn_name = SandG_inn_name.split(/[(',)]/);
-    SandG_inn_name = SandG_inn_name.filter(Boolean);
-
-    SandG_inn_information = document.getElementById( "SandG_inn_information" ).value;
-    SandG_inn_information = SandG_inn_information.split(/[(',)]/);
-    SandG_inn_information = SandG_inn_information.filter(Boolean);
-
-    SandG_inn_lat = document.getElementById( "SandG_inn_lat" ).value;
-    SandG_inn_lat = SandG_inn_lat.split(/[(',)]/);
-    SandG_inn_lat = SandG_inn_lat.filter(Boolean);
-
-    SandG_inn_lng = document.getElementById( "SandG_inn_lng" ).value;
-    SandG_inn_lng = SandG_inn_lng.split(/[(',)]/);
-    SandG_inn_lng = SandG_inn_lng.filter(Boolean);
-
-    SandG_inn_phone_number = document.getElementById( "SandG_inn_phone_number" ).value;
-    SandG_inn_phone_number = SandG_inn_phone_number.split(/[(',)]/);
-    SandG_inn_phone_number = SandG_inn_phone_number.filter(Boolean);
+    SandG_inn_element = values_to_list("SandG_inn");
+    SandG_inn_name = SandG_inn_element[0];
+    SandG_inn_lat = SandG_inn_element[1];
+    SandG_inn_lng = SandG_inn_element[2];
+    SandG_inn_information = SandG_inn_element[3];
+    SandG_inn_phone_number = SandG_inn_element[4];
 
     //ピンを立てる----------
     for(let i = 0; i < SandG_inn_name.length; i++)
@@ -294,25 +199,10 @@ function initMap_WayPoints() {
     }
 
     //道の駅----------
-    SandG_roadside_station_name = document.getElementById( "SandG_roadside_station_name" ).value;
-    SandG_roadside_station_name = SandG_roadside_station_name.split(/[(',)]/);
-    SandG_roadside_station_name = SandG_roadside_station_name.filter(Boolean);
-
-    SandG_roadside_station_information = document.getElementById( "SandG_roadside_station_information" ).value;
-    SandG_roadside_station_information = SandG_roadside_station_information.split(/[(',)]/);
-    SandG_roadside_station_information = SandG_roadside_station_information.filter(Boolean);
-
-    SandG_roadside_station_lat = document.getElementById( "SandG_roadside_station_lat" ).value;
-    SandG_roadside_station_lat = SandG_roadside_station_lat.split(/[(',)]/);
-    SandG_roadside_station_lat = SandG_roadside_station_lat.filter(Boolean);
-
-    SandG_roadside_station_lng = document.getElementById( "SandG_roadside_station_lng" ).value;
-    SandG_roadside_station_lng = SandG_roadside_station_lng.split(/[(',)]/);
-    SandG_roadside_station_lng = SandG_roadside_station_lng.filter(Boolean);
-
-    // SandG_roadside_station_phone_number = document.getElementById( "SandG_roadside_station_phone_number" ).value;
-    // SandG_roadside_station_phone_number = SandG_roadside_station_phone_number.split(/[(',)]/);
-    // SandG_roadside_station_phone_number = SandG_roadside_station_phone_number.filter(Boolean);
+    SandG_roadside_station_name = valueToList("SandG_roadside_station_name");
+    SandG_roadside_station_lat = valueToList("SandG_roadside_station_lat");
+    SandG_roadside_station_lng = valueToList("SandG_roadside_station_lng");
+    SandG_roadside_station_information = valueToList("SandG_roadside_station_information");
 
     //ピンを立てる----------
     for(let i = 0; i < SandG_roadside_station_name.length; i++)
@@ -341,25 +231,12 @@ function initMap_WayPoints() {
     }
 
     //スポット----------
-    SandG_interesting_name = document.getElementById( "SandG_interesting_name" ).value;
-    SandG_interesting_name = SandG_interesting_name.split(/[(',)]/);
-    SandG_interesting_name = SandG_interesting_name.filter(Boolean);
-
-    SandG_interesting_information = document.getElementById( "SandG_interesting_information" ).value;
-    SandG_interesting_information = SandG_interesting_information.split(/[(',)]/);
-    SandG_interesting_information = SandG_interesting_information.filter(Boolean);
-
-    SandG_interesting_lat = document.getElementById( "SandG_interesting_lat" ).value;
-    SandG_interesting_lat = SandG_interesting_lat.split(/[(',)]/);
-    SandG_interesting_lat = SandG_interesting_lat.filter(Boolean);
-
-    SandG_interesting_lng = document.getElementById( "SandG_interesting_lng" ).value;
-    SandG_interesting_lng = SandG_interesting_lng.split(/[(',)]/);
-    SandG_interesting_lng = SandG_interesting_lng.filter(Boolean);
-
-    // SandG_interesting_phone_number = document.getElementById( "SandG_roadside_station_phone_number" ).value;
-    // SandG_interesting_phone_number = SandG_roadside_station_phone_number.split(/[(',)]/);
-    // SandG_interesting_phone_number = SandG_roadside_station_phone_number.filter(Boolean);
+    //SandG_interesting_element = values_to_list("SandG_interesting");
+    SandG_interesting_name = valueToList("SandG_interesting_name");
+    SandG_interesting_lat = valueToList("SandG_interesting_lat");
+    SandG_interesting_lng = valueToList("SandG_interesting_lng");
+    SandG_interesting_information = valueToList("SandG_interesting_information");
+    //SandG_inn_phone_number = SandG_inn_element[4];
 
     //ピンを立てる----------
     for(let i = 0; i < SandG_interesting_name.length; i++)
@@ -372,7 +249,6 @@ function initMap_WayPoints() {
                 url:"http://127.0.0.1:5000/static/img/interesting_pin.png",
                 scaledSize : new google.maps.Size(20, 27)
             }
-
         });
 
         //吹き出し
@@ -389,25 +265,10 @@ function initMap_WayPoints() {
     }
 
     //コンビニ----------
-    SandG_convenience_name = document.getElementById( "SandG_convenience_name" ).value;
-    SandG_convenience_name = SandG_convenience_name.split(/[(',)]/);
-    SandG_convenience_name = SandG_convenience_name.filter(Boolean);
-
-    // SandG_convenience_information = document.getElementById( "SandG_convenience_information" ).value;
-    // SandG_convenience_information = SandG_interesting_information.split(/[(',)]/);
-    // SandG_convenience_information = SandG_interesting_information.filter(Boolean);
-
-    SandG_convenience_lat = document.getElementById( "SandG_convenience_lat" ).value;
-    SandG_convenience_lat = SandG_convenience_lat.split(/[(',)]/);
-    SandG_convenience_lat = SandG_convenience_lat.filter(Boolean);
-
-    SandG_convenience_lng = document.getElementById( "SandG_convenience_lng" ).value;
-    SandG_convenience_lng = SandG_convenience_lng.split(/[(',)]/);
-    SandG_convenience_lng = SandG_convenience_lng.filter(Boolean);
-
-    // SandG_interesting_phone_number = document.getElementById( "SandG_roadside_station_phone_number" ).value;
-    // SandG_interesting_phone_number = SandG_roadside_station_phone_number.split(/[(',)]/);
-    // SandG_interesting_phone_number = SandG_roadside_station_phone_number.filter(Boolean);
+    SandG_convenience_name = valueToList("SandG_convenience_name");
+    SandG_convenience_lat = valueToList("SandG_convenience_lat");
+    SandG_convenience_lng = valueToList("SandG_convenience_lng");
+    //SandG_convenience_information = valueToList("SandG_convenience_name");
 
     //ピンを立てる----------
     for(let i = 0; i < SandG_convenience_name.length; i++)
@@ -439,25 +300,12 @@ function initMap_WayPoints() {
     //ルート中の物件情報---------------------------
 
     //グルメ
-    route_gourmet_name = document.getElementById( "route_gourmet_name" ).value;
-    route_gourmet_name = route_gourmet_name.split(/[(',)]/);
-    route_gourmet_name = route_gourmet_name.filter(Boolean);
-
-    route_gourmet_information = document.getElementById( "route_gourmet_information" ).value;
-    route_gourmet_information = route_gourmet_information.split(/[(',)]/);
-    route_gourmet_information = route_gourmet_information.filter(Boolean);
-
-    route_gourmet_lat = document.getElementById( "route_gourmet_lat" ).value;
-    route_gourmet_lat = route_gourmet_lat.split(/[(',)]/);
-    route_gourmet_lat = route_gourmet_lat.filter(Boolean);
-
-    route_gourmet_lng = document.getElementById( "route_gourmet_lng" ).value;
-    route_gourmet_lng = route_gourmet_lng.split(/[(',)]/);
-    route_gourmet_lng = route_gourmet_lng.filter(Boolean);
-
-    route_gourmet_phone_number = document.getElementById( "route_gourmet_phone_number" ).value;
-    route_gourmet_phone_number = route_gourmet_phone_number.split(/[(',)]/);
-    route_gourmet_phone_number = route_gourmet_phone_number.filter(Boolean);
+    route_gourmet_element = values_to_list("route_gourmet");
+    route_gourmet_name = route_gourmet_element[0];
+    route_gourmet_lat = route_gourmet_element[1];
+    route_gourmet_lng = route_gourmet_element[2];
+    route_gourmet_information = route_gourmet_element[3];
+    route_gourmet_phone_number = route_gourmet_element[4];
 
     //ピンを立てる----------
     for(let i = 0; i < route_gourmet_name.length; i++)
@@ -485,25 +333,12 @@ function initMap_WayPoints() {
     }
 
     //宿
-    route_inn_name = document.getElementById( "route_inn_name" ).value;
-    route_inn_name = route_inn_name.split(/[(',)]/);
-    route_inn_name = route_inn_name.filter(Boolean);
-
-    route_inn_information = document.getElementById( "route_inn_information" ).value;
-    route_inn_information = route_inn_information.split(/[(',)]/);
-    route_inn_information = route_inn_information.filter(Boolean);
-
-    route_inn_lat = document.getElementById( "route_inn_lat" ).value;
-    route_inn_lat = route_inn_lat.split(/[(',)]/);
-    route_inn_lat = route_inn_lat.filter(Boolean);
-
-    route_inn_lng = document.getElementById( "route_inn_lng" ).value;
-    route_inn_lng = route_inn_lng.split(/[(',)]/);
-    route_inn_lng = route_inn_lng.filter(Boolean);
-
-    route_inn_phone_number = document.getElementById( "route_inn_phone_number" ).value;
-    route_inn_phone_number = route_inn_phone_number.split(/[(',)]/);
-    route_inn_phone_number = route_inn_phone_number.filter(Boolean);
+    route_inn_element = values_to_list("route_inn");
+    route_inn_name = route_inn_element[0];
+    route_inn_lat = route_inn_element[1];
+    route_inn_lng = route_inn_element[2];
+    route_inn_information = route_inn_element[3];
+    route_inn_phone_number = route_inn_element[4];
 
     //ピンを立てる----------
     for(let i = 0; i < route_inn_name.length; i++)
@@ -531,27 +366,10 @@ function initMap_WayPoints() {
     }
 
     //道の駅
-    route_roadside_station_name = document.getElementById( "route_roadside_station_name" ).value;
-    route_roadside_station_name = route_roadside_station_name.split(/[(',)]/);
-    route_roadside_station_name = route_roadside_station_name.filter(Boolean);
-    //console.log("route_roadside_station_name :::" + route_roadside_station_name )
-
-    route_roadside_station_information = document.getElementById( "route_roadside_station_information" ).value;
-    route_roadside_station_information = route_roadside_station_information.split(/[(',)]/);
-    route_roadside_station_information = route_roadside_station_information.filter(Boolean);
-
-    route_roadside_station_lat = document.getElementById( "route_roadside_station_lat" ).value;
-    route_roadside_station_lat = route_roadside_station_lat.split(/[(',)]/);
-    route_roadside_station_lat = route_roadside_station_lat.filter(Boolean);
-    //console.log("route_roadside_station_lat :::" + route_roadside_station_lat )
-
-    route_roadside_station_lng = document.getElementById( "route_roadside_station_lng" ).value;
-    route_roadside_station_lng = route_roadside_station_lng.split(/[(',)]/);
-    route_roadside_station_lng = route_roadside_station_lng.filter(Boolean);
-
-    // route_roadside_station_phone_number = document.getElementById( "route_roadside_station_phone_number" ).value;
-    // route_roadside_station_phone_number = route_roadside_station_phone_number.split(/[(',)]/);
-    // route_roadside_station_phone_number = route_roadside_station_phone_number.filter(Boolean);
+    route_roadside_station_name = valueToList("route_roadside_station_name");
+    route_roadside_station_lat = valueToList("route_roadside_station_lat");
+    route_roadside_station_lng = valueToList("route_roadside_station_lng");
+    route_roadside_station_information = valueToList("route_roadside_station_information");
 
     //ピンを立てる----------
     for(let i = 0; i < route_roadside_station_name.length; i++)
@@ -581,23 +399,10 @@ function initMap_WayPoints() {
 
 
     //スポット
-    route_interesting_name = document.getElementById( "route_interesting_name" ).value;
-    route_interesting_name = route_interesting_name.split(/[(',)]/);
-    route_interesting_name = route_interesting_name.filter(Boolean);
-    //console.log("route_roadside_station_name :::" + route_roadside_station_name )
-
-    route_interesting_information = document.getElementById( "route_interesting_information" ).value;
-    route_interesting_information = route_interesting_information.split(/[(',)]/);
-    route_interesting_information = route_interesting_information.filter(Boolean);
-
-    route_interesting_lat = document.getElementById( "route_interesting_lat" ).value;
-    route_interesting_lat = route_interesting_lat.split(/[(',)]/);
-    route_interesting_lat = route_interesting_lat.filter(Boolean);
-    //console.log("route_roadside_station_lat :::" + route_roadside_station_lat )
-
-    route_interesting_lng = document.getElementById( "route_interesting_lng" ).value;
-    route_interesting_lng = route_interesting_lng.split(/[(',)]/);
-    route_interesting_lng = route_interesting_lng.filter(Boolean);
+    route_interesting_name = valueToList("route_interesting_name");
+    route_interesting_lat = valueToList("route_interesting_lat");
+    route_interesting_lng = valueToList("route_interesting_lng");
+    route_interesting_information = valueToList("route_interesting_information");
 
     //ピンを立てる----------
     for(let i = 0; i < route_interesting_name.length; i++)
@@ -626,23 +431,10 @@ function initMap_WayPoints() {
     }
 
     //コンビニ
-    route_convenience_name = document.getElementById( "route_convenience_name" ).value;
-    route_convenience_name = route_convenience_name.split(/[(',)]/);
-    route_convenience_name = route_convenience_name.filter(Boolean);
-    //console.log("route_roadside_station_name :::" + route_roadside_station_name )
-
-    // route_convenience_information = document.getElementById( "route_convenience_information" ).value;
-    // route_convenience_information = route_convenience_information.split(/[(',)]/);
-    // route_convenience_information = route_convenience_information.filter(Boolean);
-
-    route_convenience_lat = document.getElementById( "route_convenience_lat" ).value;
-    route_convenience_lat = route_convenience_lat.split(/[(',)]/);
-    route_convenience_lat = route_convenience_lat.filter(Boolean);
-    //console.log("route_roadside_station_lat :::" + route_roadside_station_lat )
-
-    route_convenience_lng = document.getElementById( "route_convenience_lng" ).value;
-    route_convenience_lng = route_convenience_lng.split(/[(',)]/);
-    route_convenience_lng = route_convenience_lng.filter(Boolean);
+    route_convenience_name = valueToList("route_convenience_name");
+    route_convenience_lat = valueToList("route_convenience_lat");
+    route_convenience_lng = valueToList("route_convenience_lng");
+    //route_convenience_information = valueToList("route_convenience_information");
 
     //ピンを立てる----------
     for(let i = 0; i < route_convenience_name.length; i++)
@@ -671,31 +463,11 @@ function initMap_WayPoints() {
     }
 
     //経由地の情報---------------------------------------------------------------------
-    //寺番号
-    waypoints_temple_number = document.getElementById( "waypoints_temple_number" ).value;
-    waypoints_temple_number = waypoints_temple_number.split(/[(',)]/);
-    waypoints_temple_number = waypoints_temple_number.filter(Boolean);
-
-    //名前
-    waypoints_temple_name = document.getElementById( "waypoints_temple_name" ).value;
-    waypoints_temple_name = waypoints_temple_name.split(/[(',)]/);
-    waypoints_temple_name = waypoints_temple_name.filter(Boolean);
-
-    //情報
-    waypoints_temple_information = document.getElementById( "waypoints_temple_information" ).value;
-    waypoints_temple_information = waypoints_temple_information.split(/[(',)]/);
-    waypoints_temple_information = waypoints_temple_information.filter(Boolean);
-    
-    //経由地の緯度
-    waypoints_temple_lat = document.getElementById( "waypoints_temple_lat" ).value;
-    waypoints_temple_lat = waypoints_temple_lat.split(/[(',)]/);
-    waypoints_temple_lat = waypoints_temple_lat.filter(Boolean);
-
-    //経由地の経度
-    waypoints_temple_lng = document.getElementById( "waypoints_temple_lng" ).value;
-    waypoints_temple_lng = waypoints_temple_lng.split(/[(',)]/);
-    waypoints_temple_lng = waypoints_temple_lng.filter(Boolean);
-    //console.log("経度：" + waypoints_temple_lng[0]);
+    waypoints_temple_number = valueToList("waypoints_temple_number");
+    waypoints_temple_name = valueToList("waypoints_temple_name");
+    waypoints_temple_lat = valueToList("waypoints_temple_lat");
+    waypoints_temple_lng = valueToList("waypoints_temple_lng");
+    waypoints_temple_information = valueToList("waypoints_temple_information");
 
     var strmaekakko = "[";
     var strusirokakko = "]";
@@ -778,30 +550,36 @@ function initMap_WayPoints() {
     let Goal_temple_number = document.getElementById( "Goal_temple_number" ).value;//ゴールの札番
 
     //スタートとゴールの各種情報
-    //寺番号
-    temple_number = document.getElementById( "temple_number" ).value;
-    temple_number = temple_number.split(/[(',)]/);
-    temple_number = temple_number.filter(Boolean);
+    temple_number = valueToList("temple_number");
+    temple_name = valueToList("temple_name");
+    temple_lat = valueToList("temple_lat");
+    temple_lng = valueToList("temple_lng");
+    temple_information = valueToList("temple_information");
 
-    //名前
-    temple_name = document.getElementById( "temple_name" ).value;
-    temple_name = temple_name.split(/[(',)]/);
-    temple_name = temple_name.filter(Boolean);
+    // //寺番号
+    // temple_number = document.getElementById( "temple_number" ).value;
+    // temple_number = temple_number.split(/[(',)]/);
+    // temple_number = temple_number.filter(Boolean);
 
-    //情報
-    temple_information = document.getElementById( "temple_information" ).value;
-    temple_information = temple_information.split(/[(',)]/);
-    temple_information = temple_information.filter(Boolean);
+    // //名前
+    // temple_name = document.getElementById( "temple_name" ).value;
+    // temple_name = temple_name.split(/[(',)]/);
+    // temple_name = temple_name.filter(Boolean);
 
-    //緯度
-    temple_lat = document.getElementById( "temple_lat" ).value;
-    temple_lat = temple_lat.split(/[(',)]/);
-    temple_lat = temple_lat.filter(Boolean);
+    // //情報
+    // temple_information = document.getElementById( "temple_information" ).value;
+    // temple_information = temple_information.split(/[(',)]/);
+    // temple_information = temple_information.filter(Boolean);
 
-    //経度
-    temple_lng = document.getElementById( "temple_lng" ).value;
-    temple_lng = temple_lng.split(/[(',)]/);
-    temple_lng = temple_lng.filter(Boolean);
+    // //緯度
+    // temple_lat = document.getElementById( "temple_lat" ).value;
+    // temple_lat = temple_lat.split(/[(',)]/);
+    // temple_lat = temple_lat.filter(Boolean);
+
+    // //経度
+    // temple_lng = document.getElementById( "temple_lng" ).value;
+    // temple_lng = temple_lng.split(/[(',)]/);
+    // temple_lng = temple_lng.filter(Boolean);
 
     //bounds = new google.maps.LatLngBounds();
 
@@ -995,146 +773,5 @@ function initMap_WayPoints() {
     }, 500);
 //-----------------------------------------------------------------------------------
 }
-
-// function initMap() {
-
-//     initialize();
-//     bounds = new google.maps.LatLngBounds();
-
-//     //寺のピンを立てる------------------------------------------------------------------------------------------------------------------------------------------------
-//     let Start_temple_number = document.getElementById( "Start_temple_number" ).value;//スタートの札番
-//     let Goal_temple_number = document.getElementById( "Goal_temple_number" ).value;//ゴールの札番
-
-//     //スタートとゴールの各種情報
-//     //寺番号
-//     temple_number = document.getElementById( "temple_number" ).value;
-//     temple_number = temple_number.split(/[(',)]/);
-//     temple_number = temple_number.filter(Boolean);
-
-//     //名前
-//     temple_name = document.getElementById( "temple_name" ).value;
-//     temple_name = temple_name.split(/[(',)]/);
-//     temple_name = temple_name.filter(Boolean);
-
-//     //情報
-//     temple_information = document.getElementById( "temple_information" ).value;
-//     temple_information = temple_information.split(/[(',)]/);
-//     temple_information = temple_information.filter(Boolean);
-
-//     //緯度
-//     temple_lat = document.getElementById( "temple_lat" ).value;
-//     temple_lat = temple_lat.split(/[(',)]/);
-//     temple_lat = temple_lat.filter(Boolean);
-
-//     //経度
-//     temple_lng = document.getElementById( "temple_lng" ).value;
-//     temple_lng = temple_lng.split(/[(',)]/);
-//     temple_lng = temple_lng.filter(Boolean);
-
-//     bounds = new google.maps.LatLngBounds();
-
-//     for (let i = 0; i < temple_name.length; i++) {//ピンを多数立てるためにリストの数だけ回す
-
-//         //マーカーを立てる
-//         //temple_latlng = {lat:parseFloat(temple_lat[i]),lng:parseFloat(temple_lng[i])};
-//         temple_marker[i] = new google.maps.Marker({
-//             position: {lat:parseFloat(temple_lat[i]),lng:parseFloat(temple_lng[i])},
-//             map: map
-//         });
-
-//         //全ての寺が表示されるようにzoom
-//         zoomlat = parseFloat(temple_lat[i]);
-//         zoomlng = parseFloat(temple_lng[i]);
-//         if(isNaN(zoomlat) == false && isNaN(zoomlng) == false){
-//             latLngzoom = new google.maps.LatLng(zoomlat,zoomlng)
-//             bounds.extend(latLngzoom);
-//         }
-
-//         //console.log(parseFloat(temple_lat[i]));
-//         //bounds.extend(latLngtest);
-//         //console.log(bounds);
-
-//         //地図の中心に設定
-//         // if(temple_number[i] == Start_temple_number)
-//         // {
-//         //     map.setCenter({lat:parseFloat(temple_lat[i]),lng:parseFloat(temple_lng[i])});
-//         // }
-
-//         //吹き出し
-//         temple_information_html[i] = "<div class='information'>"+ temple_number[i] + "番札所:" + temple_name[i] + "<br>" + temple_information[i] + "</div>";//informationをhtmlに変換
-//         temple_infoWindow[i] = new google.maps.InfoWindow({
-//             content: temple_information_html[i] // 吹き出しに表示する内容 改行したいときはdb内で<br>を記述
-//         });
-
-//         //マーカーをクリックしたとき吹き出しを表示
-//         temple_marker[i].addListener('click', function() {
-//             temple_infoWindow[i].open(map, temple_marker[i]);
-//         });
-
-//         //スタートとゴールを保存。ルート表示に使う
-//         if(temple_number[i] == Start_temple_number)
-//         {
-//             startlat = parseFloat(temple_lat[i]);
-//             startlng = parseFloat(temple_lng[i]);
-//         }
-
-//         if(temple_number[i] == Goal_temple_number)
-//         {
-//             goallat = parseFloat(temple_lat[i]);
-//             goallng = parseFloat(temple_lng[i]);
-//         }
-
-//     }
-//     //console.log(bounds);
-//     //map.fitBounds(bounds);//zoomの設定
-
-
-//     //ルートの表示----------------------------------------------------------------
-//     let rendererOptions = {
-//         map: map, // 描画先の地図
-//         draggable: true, // ドラッグ可
-//         preserveViewport: true // centerの座標、ズームレベルで表示
-//     };
-    
-//     let directionsDisplay = new google.maps.DirectionsRenderer(rendererOptions);
-//     let directionsService = new google.maps.DirectionsService();
-//     directionsDisplay.setMap(map);
-    
-//     let request = {
-//         origin: new google.maps.LatLng(startlat, startlng), // スタート地点
-//         destination: new google.maps.LatLng(goallat, goallng), // ゴール地点
-//         travelMode: google.maps.DirectionsTravelMode.WALKING, // 移動手段
-
-//         // waypoints: [ // 経由地点(指定なしでも可)
-//         //     { location: new google.maps.LatLng(35.630152,139.74044) },
-//         //     { location: new google.maps.LatLng(35.507456,139.617585) },
-//         //     { location: new google.maps.LatLng(35.25642,139.154904) },
-//         //     { location: new google.maps.LatLng(35.103217,139.07776) },
-//         //     { location: new google.maps.LatLng(35.127152,138.910627) },
-//         //     { location: new google.maps.LatLng(35.142365,138.663199) },
-//         //     { location: new google.maps.LatLng(34.97171,138.38884) },
-//         //     { location: new google.maps.LatLng(34.769758,138.014928) },
-//         // ],
-//         //travelMode: G_TRAVEL_MODE_DRIVING
-//     };
-
-//     directionsService.route(request, function(response,status){
-//         if (status === google.maps.DirectionsStatus.OK) {
-//             new google.maps.DirectionsRenderer({
-//                 map: map,
-//                 directions: response,
-//                 suppressMarkers: true // デフォルトのマーカーを削除
-//             });
-    
-//             //let leg = response.routes[0].legs[0];
-//             //makeMarker(leg.end_location, markers.goalMarker, map);
-    
-//             // setTimeout(function(){
-//             //     map.setZoom(16); // ルート表示後にズーム率を変更
-//             // });
-//         }
-//     });
-// }
-
 
 

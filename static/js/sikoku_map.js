@@ -4,79 +4,11 @@ let img;//ピンの画像
 let info_html = [];//吹き出しの中身html
 let temple_infoWindow = [];//吹き出し
 
-function initialize() {
-    //geocoder = new google.maps.Geocoder();
-    latlng = new google.maps.LatLng(-34.397, 150.644);
-    var mapOptions = {
-        zoom: 7.8,
-        center: latlng,
-        gestureHandling: "greedy",
-        styles:
-        [
-            {
-                "featureType": "administrative.land_parcel",
-                "elementType": "labels",
-                "stylers": [
-                {
-                    "visibility": "off"
-                }
-                ]
-            },
-            {
-                "featureType": "poi",
-                "elementType": "labels.text",
-                "stylers": [
-                {
-                    "visibility": "off"
-                }
-                ]
-            },
-            {
-                "featureType": "poi.business",
-                "stylers": [
-                {
-                    "visibility": "off"
-                }
-                ]
-            },
-            {
-                "featureType": "poi.park",
-                "elementType": "labels.text",
-                "stylers": [
-                {
-                    "visibility": "off"
-                }
-                ]
-            },
-            {
-                "featureType": "road.local",
-                "elementType": "labels",
-                "stylers": [
-                {
-                    "visibility": "off"
-                }
-                ]
-            }
-        ]
-    }
-    map = new google.maps.Map(document.getElementById('map'), mapOptions);
-    //bounds = new google.maps.LatLngBounds();
-}
-
-//htmlから渡された変数を配列化する
-function valueToList(value_id)
-{
-    var value_list = document.getElementById(value_id).value;
-    value_list = value_list.split(/[(',)]/);//\sを加えればスペースもつぶせるがデータベース入力が手間
-    value_list = value_list.filter(Boolean);
-    return value_list;
-}
-
 //------------------------------------------------------------------------------------
 function initMap() {
 
     // マップの生成
-    initialize();
+    initialize(7.8);
     bounds = new google.maps.LatLngBounds();
 
     //各種寺情報を配列化

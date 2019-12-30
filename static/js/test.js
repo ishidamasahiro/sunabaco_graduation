@@ -1,19 +1,24 @@
+
+
+
+
+
 // var mayMap;
 // var service;
 
-var service = new google.maps.places.PlacesService(map);
-service.nearbySearch({
-    location: new google.maps.LatLng(35.70, 139.70),
-    radius: 500,
-    type: ['restrant']
-}, function(results, status) {
-    if (status == google.maps.places.PlacesServiceStatus.OK) {
-        for (var i = 0; i < results.length; i++) {
-            var place = results[i];
-            console.log(place.geometry.location);
-        }
-    }
-});
+// var service = new google.maps.places.PlacesService(map);
+// service.nearbySearch({
+//     location: new google.maps.LatLng(35.70, 139.70),
+//     radius: 500,
+//     type: ['restrant']
+// }, function(results, status) {
+//     if (status == google.maps.places.PlacesServiceStatus.OK) {
+//         for (var i = 0; i < results.length; i++) {
+//             var place = results[i];
+//             console.log(place.geometry.location);
+//         }
+//     }
+// });
 
 // var service = new google.maps.places.PlacesService(map);
 // service.nearbySearch({
