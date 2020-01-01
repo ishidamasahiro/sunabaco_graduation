@@ -32,6 +32,8 @@ let waypoints_temple_infoWindow = [];
 
 
 //ルート中の物件
+//let testlist = ["さかな"];
+
 let SandG_gourmet_marker = [];
 let SandG_gourmet_information_html = [];
 let SandG_gourmet_infoWindow = [];
@@ -125,6 +127,9 @@ let route_convenience_lng = [];
 //------------------------------------------------------------------------------------
 function initMap_WayPoints() {
 
+    // test(testlist);
+    // console.log("testlist:::" + testlist);
+
     // マップの生成
     initialize(16);
     bounds = new google.maps.LatLngBounds();
@@ -143,26 +148,18 @@ function initMap_WayPoints() {
     //ピンを立てる----------
     for(let i = 0; i < SandG_gourmet_name.length; i++)
     {
-        //マーカーを立てる
-        SandG_gourmet_marker[i] = new google.maps.Marker({
-            position: {lat:parseFloat(SandG_gourmet_lat[i]),lng:parseFloat(SandG_gourmet_lng[i])},
-            map: map,
-            icon:{
-                url:"http://127.0.0.1:5000/static/img/gourmet_pin.png",
-                scaledSize : new google.maps.Size(20, 27)
-            }
-        });
-
-        //吹き出し
-        SandG_gourmet_information_html[i] = "<div class='information'>"+ SandG_gourmet_name[i] + "<br>" + SandG_gourmet_information[i] + "<br>TELL:" + SandG_gourmet_phone_number[i] + "</div>";//informationをhtmlに変換
-        SandG_gourmet_infoWindow[i] = new google.maps.InfoWindow({
-            content: SandG_gourmet_information_html[i] // 吹き出しに表示する内容 改行したいときはdb内で<br>を記述
-        });
-
-        //マーカーをクリックしたとき吹き出しを表示
-        SandG_gourmet_marker[i].addListener('click', function() {
-            SandG_gourmet_infoWindow[i].open(map, SandG_gourmet_marker[i]);
-        });
+        Property_markers(
+            SandG_gourmet_marker,
+            SandG_gourmet_lat,
+            SandG_gourmet_lng,
+            "gourmet",
+            20,
+            27,
+            SandG_gourmet_information_html,
+            SandG_gourmet_infoWindow,
+            "<div class='information'>"+ SandG_gourmet_name[i] + "<br>" + SandG_gourmet_information[i] + "<br>TELL:" + SandG_gourmet_phone_number[i] + "</div>",
+            i
+        );
     }
 
     //宿----------
@@ -176,26 +173,18 @@ function initMap_WayPoints() {
     //ピンを立てる----------
     for(let i = 0; i < SandG_inn_name.length; i++)
     {
-        //マーカーを立てる
-        SandG_inn_marker[i] = new google.maps.Marker({
-            position: {lat:parseFloat(SandG_inn_lat[i]),lng:parseFloat(SandG_inn_lng[i])},
-            map: map,
-            icon: {
-                url:"http://127.0.0.1:5000/static/img/inn_pin.png",
-                scaledSize : new google.maps.Size(20, 27)
-            }
-        });
-
-        //吹き出し
-        SandG_inn_information_html[i] = "<div class='information'>"+ SandG_inn_name[i] + "<br>" + SandG_inn_information[i] + "<br>TELL:" + SandG_inn_phone_number[i] + "</div>";//informationをhtmlに変換
-        SandG_inn_infoWindow[i] = new google.maps.InfoWindow({
-            content: SandG_inn_information_html[i] // 吹き出しに表示する内容 改行したいときはdb内で<br>を記述
-        });
-
-        //マーカーをクリックしたとき吹き出しを表示
-        SandG_inn_marker[i].addListener('click', function() {
-            SandG_inn_infoWindow[i].open(map, SandG_inn_marker[i]);
-        });
+        Property_markers(
+            SandG_inn_marker,
+            SandG_inn_lat,
+            SandG_inn_lng,
+            "inn",
+            20,
+            27,
+            SandG_inn_information_html,
+            SandG_inn_infoWindow,
+            "<div class='information'>"+ SandG_inn_name[i] + "<br>" + SandG_inn_information[i] + "<br>TELL:" + SandG_inn_phone_number[i] + "</div>",
+            i
+        );
     }
 
     //道の駅----------
@@ -207,28 +196,20 @@ function initMap_WayPoints() {
     //ピンを立てる----------
     for(let i = 0; i < SandG_roadside_station_name.length; i++)
     {
-        //マーカーを立てる
-        SandG_roadside_station_marker[i] = new google.maps.Marker({
-            position: {lat:parseFloat(SandG_roadside_station_lat[i]),lng:parseFloat(SandG_roadside_station_lng[i])},
-            map: map,
-            icon: {
-                url:"http://127.0.0.1:5000/static/img/roadside_pin.png",
-                scaledSize : new google.maps.Size(20, 27)
-            }
-        });
-
-        //吹き出し
-        SandG_roadside_station_information_html[i] = "<div class='information'>"+ SandG_roadside_station_name[i] + "<br>" + SandG_roadside_station_information[i] + "</div>";//informationをhtmlに変換
-        SandG_roadside_station_infoWindow[i] = new google.maps.InfoWindow({
-            content: SandG_roadside_station_information_html[i] // 吹き出しに表示する内容 改行したいときはdb内で<br>を記述
-        });
-        //console.log("SandG_roadside_station_information_html[i]" + SandG_roadside_station_information_html[i])
-
-        //マーカーをクリックしたとき吹き出しを表示
-        SandG_roadside_station_marker[i].addListener('click', function() {
-            SandG_roadside_station_infoWindow[i].open(map, SandG_roadside_station_marker[i]);
-        });
+        Property_markers(
+            SandG_roadside_station_marker,
+            SandG_roadside_station_lat,
+            SandG_roadside_station_lng,
+            "roadside",
+            20,
+            27,
+            SandG_roadside_station_information_html,
+            SandG_roadside_station_infoWindow,
+            "<div class='information'>"+ SandG_roadside_station_name[i] + "<br>" + SandG_roadside_station_information[i] + "</div>",
+            i
+        );
     }
+
 
     //スポット----------
     //SandG_interesting_element = values_to_list("SandG_interesting");
@@ -241,27 +222,18 @@ function initMap_WayPoints() {
     //ピンを立てる----------
     for(let i = 0; i < SandG_interesting_name.length; i++)
     {
-        //マーカーを立てる
-        SandG_interesting_marker[i] = new google.maps.Marker({
-            position: {lat:parseFloat(SandG_interesting_lat[i]),lng:parseFloat(SandG_interesting_lng[i])},
-            map: map,
-            icon: {
-                url:"http://127.0.0.1:5000/static/img/interesting_pin.png",
-                scaledSize : new google.maps.Size(20, 27)
-            }
-        });
-
-        //吹き出し
-        SandG_interesting_information_html[i] = "<div class='information'>"+ SandG_interesting_name[i] + "<br>" + SandG_interesting_information[i] + "</div>";//informationをhtmlに変換
-        SandG_interesting_infoWindow[i] = new google.maps.InfoWindow({
-            content: SandG_interesting_information_html[i] // 吹き出しに表示する内容 改行したいときはdb内で<br>を記述
-        });
-        //console.log("SandG_interesting_information_html[i]" + SandG_roadside_station_information_html[i])
-
-        //マーカーをクリックしたとき吹き出しを表示
-        SandG_interesting_marker[i].addListener('click', function() {
-            SandG_interesting_infoWindow[i].open(map, SandG_interesting_marker[i]);
-        });
+        Property_markers(
+            SandG_interesting_marker,
+            SandG_interesting_lat,
+            SandG_interesting_lng,
+            "interesting",
+            20,
+            27,
+            SandG_interesting_information_html,
+            SandG_interesting_infoWindow,
+            "<div class='information'>"+ SandG_interesting_name[i] + "<br>" + SandG_interesting_information[i] + "</div>",
+            i
+        );
     }
 
     //コンビニ----------
@@ -273,27 +245,18 @@ function initMap_WayPoints() {
     //ピンを立てる----------
     for(let i = 0; i < SandG_convenience_name.length; i++)
     {
-        //マーカーを立てる
-        SandG_convenience_marker[i] = new google.maps.Marker({
-            position: {lat:parseFloat(SandG_convenience_lat[i]),lng:parseFloat(SandG_convenience_lng[i])},
-            map: map,
-            icon:{
-                url:"http://127.0.0.1:5000/static/img/convenience_pin.png",
-                scaledSize : new google.maps.Size(20, 27)
-            }
-        });
-
-        //吹き出し
-        SandG_convenience_information_html[i] = "<div class='information'>"+ SandG_convenience_name[i] + "</div>";//informationをhtmlに変換
-        SandG_convenience_infoWindow[i] = new google.maps.InfoWindow({
-            content: SandG_convenience_information_html[i] // 吹き出しに表示する内容 改行したいときはdb内で<br>を記述
-        });
-        //console.log("SandG_interesting_information_html[i]" + SandG_roadside_station_information_html[i])
-
-        //マーカーをクリックしたとき吹き出しを表示
-        SandG_convenience_marker[i].addListener('click', function() {
-            SandG_convenience_infoWindow[i].open(map, SandG_convenience_marker[i]);
-        });
+        Property_markers(
+            SandG_convenience_marker,
+            SandG_convenience_lat,
+            SandG_convenience_lng,
+            "convenience",
+            20,
+            27,
+            SandG_convenience_information_html,
+            SandG_convenience_infoWindow,
+            "<div class='information'>"+ SandG_convenience_name[i] + "</div>",
+            i
+        );
     }
 
     //-----------------------------------------------------------
@@ -310,26 +273,18 @@ function initMap_WayPoints() {
     //ピンを立てる----------
     for(let i = 0; i < route_gourmet_name.length; i++)
     {
-        //マーカーを立てる
-        route_gourmet_marker[i] = new google.maps.Marker({
-            position: {lat:parseFloat(route_gourmet_lat[i]),lng:parseFloat(route_gourmet_lng[i])},
-            map: map,
-            icon:{
-                url:"http://127.0.0.1:5000/static/img/gourmet_pin.png",
-                scaledSize : new google.maps.Size(20, 27)
-            }
-        });
-
-        //吹き出し
-        route_gourmet_information_html[i] = "<div class='information'>"+ route_gourmet_name[i] + "<br>" + route_gourmet_information[i] + "<br>TELL:" + route_gourmet_phone_number[i] + "</div>";//informationをhtmlに変換
-        route_gourmet_infoWindow[i] = new google.maps.InfoWindow({
-            content: route_gourmet_information_html[i] // 吹き出しに表示する内容 改行したいときはdb内で<br>を記述
-        });
-
-        //マーカーをクリックしたとき吹き出しを表示
-        route_gourmet_marker[i].addListener('click', function() {
-            route_gourmet_infoWindow[i].open(map, route_gourmet_marker[i]);
-        });
+        Property_markers(
+            route_gourmet_marker,
+            route_gourmet_lat,
+            route_gourmet_lng,
+            "gourmet",
+            20,
+            27,
+            route_gourmet_information_html,
+            route_gourmet_infoWindow,
+            "<div class='information'>"+ route_gourmet_name[i] + "<br>" + route_gourmet_information[i] + "<br>TELL:" + route_gourmet_phone_number[i] + "</div>",
+            i
+        );
     }
 
     //宿
@@ -343,26 +298,18 @@ function initMap_WayPoints() {
     //ピンを立てる----------
     for(let i = 0; i < route_inn_name.length; i++)
     {
-        //マーカーを立てる
-        route_inn_marker[i] = new google.maps.Marker({
-            position: {lat:parseFloat(route_inn_lat[i]),lng:parseFloat(route_inn_lng[i])},
-            map: map,
-            icon:{
-                url:"http://127.0.0.1:5000/static/img/inn_pin.png",
-                scaledSize : new google.maps.Size(20, 27)
-            }
-        });
-
-        //吹き出し
-        route_inn_information_html[i] = "<div class='information'>"+ route_inn_name[i] + "<br>" + route_inn_information[i] + "<br>TELL:" + route_inn_phone_number[i] + "</div>";//informationをhtmlに変換
-        route_inn_infoWindow[i] = new google.maps.InfoWindow({
-            content: route_inn_information_html[i] // 吹き出しに表示する内容 改行したいときはdb内で<br>を記述
-        });
-
-        //マーカーをクリックしたとき吹き出しを表示
-        route_inn_marker[i].addListener('click', function() {
-            route_inn_infoWindow[i].open(map, route_inn_marker[i]);
-        });
+        Property_markers(
+            route_inn_marker,
+            route_inn_lat,
+            route_inn_lng,
+            "inn",
+            20,
+            27,
+            route_inn_information_html,
+            route_inn_infoWindow,
+            "<div class='information'>"+ route_inn_name[i] + "<br>" + route_inn_information[i] + "<br>TELL:" + route_inn_phone_number[i] + "</div>",
+            i
+        );
     }
 
     //道の駅
@@ -374,29 +321,19 @@ function initMap_WayPoints() {
     //ピンを立てる----------
     for(let i = 0; i < route_roadside_station_name.length; i++)
     {
-        //マーカーを立てる
-        route_roadside_station_marker[i] = new google.maps.Marker({
-            position: {lat:parseFloat(route_roadside_station_lat[i]),lng:parseFloat(route_roadside_station_lng[i])},
-            map: map,
-            icon:{
-                url:"http://127.0.0.1:5000/static/img/roadside_pin.png",
-                scaledSize : new google.maps.Size(20, 27)
-            }
-        });
-
-        //吹き出し
-        route_roadside_station_information_html[i] = "<div class='information'>"+ route_roadside_station_name[i] + "<br>" + route_roadside_station_information[i] + "</div>";//informationをhtmlに変換
-        route_roadside_station_infoWindow[i] = new google.maps.InfoWindow({
-            content: route_roadside_station_information_html[i] // 吹き出しに表示する内容 改行したいときはdb内で<br>を記述
-        });
-        //console.log("route_roadside_station_information_html[i]::" + route_roadside_station_information_html[i])
-
-        //マーカーをクリックしたとき吹き出しを表示
-        route_roadside_station_marker[i].addListener('click', function() {
-            route_roadside_station_infoWindow[i].open(map, route_roadside_station_marker[i]);
-        });
+        Property_markers(
+            route_roadside_station_marker,
+            route_roadside_station_lat,
+            route_roadside_station_lng,
+            "roadside",
+            20,
+            27,
+            route_roadside_station_information_html,
+            route_roadside_station_infoWindow,
+            "<div class='information'>"+ route_roadside_station_name[i] + "<br>" + route_roadside_station_information[i] + "</div>",
+            i
+        );
     }
-
 
     //スポット
     route_interesting_name = valueToList("route_interesting_name");
@@ -407,27 +344,18 @@ function initMap_WayPoints() {
     //ピンを立てる----------
     for(let i = 0; i < route_interesting_name.length; i++)
     {
-        //マーカーを立てる
-        route_interesting_marker[i] = new google.maps.Marker({
-            position: {lat:parseFloat(route_interesting_lat[i]),lng:parseFloat(route_interesting_lng[i])},
-            map: map,
-            icon:{
-                url:"http://127.0.0.1:5000/static/img/interesting_pin.png",
-                scaledSize : new google.maps.Size(20, 27)
-            }
-        });
-
-        //吹き出し
-        route_interesting_information_html[i] = "<div class='information'>"+ route_interesting_name[i] + "<br>" + route_interesting_information[i] + "</div>";//informationをhtmlに変換
-        route_interesting_infoWindow[i] = new google.maps.InfoWindow({
-            content: route_interesting_information_html[i] // 吹き出しに表示する内容 改行したいときはdb内で<br>を記述
-        });
-        //console.log("route_roadside_station_information_html[i]::" + route_roadside_station_information_html[i])
-
-        //マーカーをクリックしたとき吹き出しを表示
-        route_interesting_marker[i].addListener('click', function() {
-            route_interesting_infoWindow[i].open(map, route_interesting_marker[i]);
-        });
+        Property_markers(
+            route_interesting_marker,
+            route_interesting_lat,
+            route_interesting_lng,
+            "interesting",
+            20,
+            27,
+            route_interesting_information_html,
+            route_interesting_infoWindow,
+            "<div class='information'>"+ route_interesting_name[i] + "<br>" + route_interesting_information[i] + "</div>",
+            i
+        );
     }
 
     //コンビニ
@@ -439,27 +367,18 @@ function initMap_WayPoints() {
     //ピンを立てる----------
     for(let i = 0; i < route_convenience_name.length; i++)
     {
-        //マーカーを立てる
-        route_convenience_marker[i] = new google.maps.Marker({
-            position: {lat:parseFloat(route_convenience_lat[i]),lng:parseFloat(route_convenience_lng[i])},
-            map: map,
-            icon:{
-                url:"http://127.0.0.1:5000/static/img/convenience_pin.png",
-                scaledSize : new google.maps.Size(20, 27)
-            }
-        });
-
-        //吹き出し
-        route_convenience_information_html[i] = "<div class='information'>"+ route_convenience_name[i] + "</div>";//informationをhtmlに変換
-        route_convenience_infoWindow[i] = new google.maps.InfoWindow({
-            content: route_convenience_information_html[i] // 吹き出しに表示する内容 改行したいときはdb内で<br>を記述
-        });
-        //console.log("route_roadside_station_information_html[i]::" + route_roadside_station_information_html[i])
-
-        //マーカーをクリックしたとき吹き出しを表示
-        route_convenience_marker[i].addListener('click', function() {
-            route_convenience_infoWindow[i].open(map, route_convenience_marker[i]);
-        });
+        Property_markers(
+            route_convenience_marker,
+            route_convenience_lat,
+            route_convenience_lng,
+            "convenience",
+            20,
+            27,
+            route_convenience_information_html,
+            route_convenience_infoWindow,
+            "<div class='information'>"+ route_convenience_name[i] + "</div>",
+            i
+        );
     }
 
     //経由地の情報---------------------------------------------------------------------

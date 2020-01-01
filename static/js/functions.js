@@ -96,3 +96,50 @@ function values_to_list(valueName)
 
     return [name,lat,lng,information,phone_number];
 }
+
+
+//[0]を指定すれば書き変わる
+// function test(list)
+// {
+//     console.log("list1:::" + list);
+//     list[0] = "やさい";
+//     console.log("list2:::" + list);
+// }
+
+
+//寺以外のピン
+function Property_markers
+(
+    Property_marker,
+    Property_lat,
+    Property_lng,
+    pin_name,
+    width,
+    height,
+    Property_information_html,
+    Property_infoWindow,
+    html,
+    i
+)
+{
+    //マーカーを立てる
+    Property_marker[i] = new google.maps.Marker({
+        position: {lat:parseFloat(Property_lat[i]),lng:parseFloat(Property_lng[i])},
+        map: map,
+        icon:{
+            url:"http://127.0.0.1:5000/static/img/" + pin_name + "_pin.png",
+            scaledSize : new google.maps.Size(width, height)
+        }
+    });
+
+    //吹き出し
+    Property_information_html[i] = html;
+    Property_infoWindow[i] = new google.maps.InfoWindow({
+        content: Property_information_html[i] // 吹き出しに表示する内容 改行したいときはdb内で<br>を記述
+    });
+
+    //マーカーをクリックしたとき吹き出しを表示
+    Property_marker[i].addListener('click', function() {
+        Property_infoWindow[i].open(map, Property_marker[i]);
+    });
+}
